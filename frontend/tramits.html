@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policia Departameltal De Cochabamba</title>
+    <!-- Favicon img -->
+    <link rel="shortcut icon" href="assets/images/favicon.png">
+    <!-- Bootstarp min css -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Mean menu css -->
+    <link rel="stylesheet" href="assets/css/meanmenu.css">
+    <!-- All min css -->
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <!-- Swiper bundle min css -->
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <!-- Magnigic popup css -->
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <!-- Animate css -->
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <!-- Nice select css -->
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <!-- Style css -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <!-- Preloader area start -->
+    <div class="loading">
+        <span class="text-capitalize">C</span>
+        <span>a</span>
+        <span>r</span>
+        <span>g</span>
+        <span>a</span>
+        <span>n</span>
+        <span>d</span>
+        <span>o</span>
+    </div>
+    <div id="preloader">
+    </div>
+    <!-- Preloader area end -->
+
+    <!-- Mouse cursor area start here -->
+    <div class="mouse-cursor cursor-outer"></div>
+    <div class="mouse-cursor cursor-inner"></div>
+    <!-- Mouse cursor area end here -->
+
+  <!-- Top header area start here -->
+    <div class="header-top d-none d-lg-block">
+        <div class="container header__container">
+            <div class="header-top-wrp">
+                <ul class="info">
+                    <li><svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M13.8748 8.50453C13.8748 9.85566 12.7757 10.953 11.4263 10.953H3.39325C2.04384 10.953 0.94475 9.85563 0.94475 8.50453V3.39322C0.944449 2.95776 1.06111 2.53021 1.28253 2.15525L5.20216 6.07488C5.78856 6.663 6.57384 6.98706 7.41059 6.98706C8.24563 6.98706 9.03091 6.663 9.61731 6.07488L13.5369 2.15525C13.7584 2.5302 13.875 2.95776 13.8747 3.39322V8.50453H13.8748ZM11.4263 0.94475H3.39325C2.836 0.94475 2.32159 1.13334 1.91009 1.44712L5.86916 5.40791C6.27897 5.81597 6.82591 6.04231 7.41059 6.04231C7.99356 6.04231 8.54053 5.81597 8.95031 5.40791L12.9094 1.44712C12.4979 1.13334 11.9835 0.94475 11.4263 0.94475ZM11.4263 0H3.39325C1.52259 0 0 1.52259 0 3.39325V8.50456C0 10.3769 1.52259 11.8978 3.39325 11.8978H11.4263C13.2969 11.8978 14.8195 10.3769 14.8195 8.50456V3.39322C14.8195 1.52256 13.2969 0 11.4263 0Z"
+                                fill="white" />
+                        </svg>
+
+                        <a href="#0" class="ms-1">policiadepartamentacbba@gmail.com</a>
+                    </li>
+                    <li class="ms-4"><svg width="16" height="15" viewBox="0 0 16 15" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_529_224)">
+                                <path
+                                    d="M14.8984 10.5909C14.8735 10.5703 12.0629 8.57063 11.304 8.69297C10.9379 8.75766 10.7288 9.0075 10.3093 9.50719C10.1933 9.6463 10.0747 9.7832 9.95352 9.91781C9.68836 9.83143 9.42973 9.72616 9.17961 9.60281C7.88845 8.97422 6.84524 7.93101 6.21665 6.63984C6.0933 6.38973 5.98803 6.1311 5.90165 5.86594C6.03946 5.73984 6.23258 5.57719 6.31508 5.50781C6.81243 5.09062 7.0618 4.88109 7.12649 4.51453C7.25915 3.75562 5.24915 0.945937 5.22852 0.920625C5.13698 0.790808 5.01777 0.682933 4.87948 0.604789C4.74118 0.526645 4.58726 0.480181 4.42883 0.46875C3.61415 0.46875 1.28821 3.48563 1.28821 3.99422C1.28821 4.02375 1.33086 7.02562 5.03258 10.7911C8.79383 14.4886 11.7957 14.5312 11.8252 14.5312C12.3334 14.5312 15.3507 12.2053 15.3507 11.3906C15.3392 11.2322 15.2926 11.0783 15.2144 10.94C15.1362 10.8017 15.0282 10.6825 14.8984 10.5909ZM11.7732 13.5909C11.3663 13.5562 8.84446 13.2239 5.69446 10.1297C2.58524 6.96422 2.26133 4.43813 2.22899 4.04672C2.84342 3.08233 3.58545 2.20548 4.43493 1.44C4.45368 1.45875 4.47852 1.48688 4.5104 1.52344C5.16188 2.41276 5.72309 3.36481 6.18571 4.36547C6.03527 4.51682 5.87626 4.65939 5.70946 4.7925C5.4508 4.98959 5.21328 5.21297 5.00071 5.45906C4.96474 5.50953 4.93914 5.56663 4.92538 5.62705C4.91162 5.68748 4.90998 5.75003 4.92055 5.81109C5.01975 6.24081 5.17169 6.65662 5.3729 7.04906C6.09378 8.52939 7.28997 9.72541 8.7704 10.4461C9.16276 10.6476 9.57859 10.7997 10.0084 10.8989C10.0694 10.9097 10.132 10.9082 10.1925 10.8944C10.2529 10.8807 10.31 10.8549 10.3604 10.8188C10.6074 10.6053 10.8315 10.3669 11.0293 10.1072C11.1765 9.93188 11.3729 9.69797 11.4474 9.63188C12.4506 10.094 13.4048 10.6559 14.2956 11.3091C14.3345 11.3419 14.3621 11.3672 14.3804 11.3836C13.6149 12.2333 12.7379 12.9755 11.7732 13.59V13.5909ZM11.6007 7.03125H12.5382C12.5371 6.03703 12.1416 5.08385 11.4386 4.38083C10.7356 3.67781 9.78243 3.28237 8.78821 3.28125V4.21875C9.5339 4.21949 10.2488 4.51605 10.7761 5.04333C11.3034 5.57062 11.6 6.28556 11.6007 7.03125Z"
+                                    fill="white" />
+                                <path
+                                    d="M13.9445 7.03125H14.882C14.8801 5.41566 14.2375 3.86677 13.0951 2.72437C11.9527 1.58198 10.4038 0.939361 8.78821 0.9375V1.875C10.1552 1.87661 11.4658 2.42038 12.4324 3.38701C13.3991 4.35365 13.9428 5.66422 13.9445 7.03125Z"
+                                    fill="white" />
+                            </g>
+                            <defs>
+                                <clipPath>
+                                    <rect width="15" height="15" fill="white" transform="translate(0.819458)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+
+                        <a href="#0" class="ms-1">+591 78594390</a>
+                    </li>
+                </ul>
+               <ul class="link-info">
+                    <li><a href="https://www.facebook.com/PoliciaBolivianaCochabamba"><i class="fa-brands fa-facebook-f"></i></a></li>
+                    <li><a href="#0"><i class="fa-brands fa-instagram"></i></a></li>
+                    <li><a href="https://www.tiktok.com/@cmdo.dptal.cochabamba?is_from_webapp=1&sender_device=pc"><i class="fa-brands fa-tiktok"></i></a></li>
+               </ul>
+
+            </div>
+        </div>
+    </div>
+    <!-- Top header area end here -->
+
+<!-- Header area start here -->
+<header class="header-area">
+    <div class="container header__container">
+        <div class="header__main">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo/logo-light.svg" alt="logo">
+            </a>
+
+            <!-- Menú principal -->
+            <div class="main-menu">
+                <nav>
+                    <ul>
+                        <!-- Home -->
+                        <li>
+                            <a href="index.html">Home</a>
+                        </li>
+                        <!-- Home end-->
+
+                        <!-- Trámites -->
+                        <li>
+                            <a href="tramits.html">Trámites</a>
+                        </li>
+                        <!-- Trámites end -->
+                         <li>
+                                <a href="#0">Institución</a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a href="organization_chart.html">Organigrama</a>
+                                    </li>
+                                    <li>
+                                        <a href="history.html">Reseña historica</a>
+                                    </li>
+                                    <li>
+                                        <a href="values.html">Mision, Vision, Valores y Pricipios</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        <!-- Noticias -->
+                        <li>
+                            <a href="news.html">Noticias</a>
+                        </li>
+                        <!-- Noticias end -->
+
+                        <!-- Contactos -->
+                        <li>
+                            <a href="contact.html">Contactos</a>
+                        </li>
+                        <!-- Contactos end -->
+                         <!-- Transparencia-->
+                        <li>
+                            <a href="transp.html">Transparencia</a>
+                        </li>
+                        <!--Transparencia end-->
+
+                        
+                        
+                        
+                    </ul>
+                </nav>
+            </div>
+            <!-- Botón Iniciar sesión -->
+            <div class="d-none d-lg-inline-block">
+                            <a href="http://127.0.0.1:8000/login" class="btn-one">
+                                Iniciar sesión
+                                <i class="fa-regular fa-arrow-right-long"></i>
+                            </a>
+            </div>
+            <!--Boton de inicio de sesion end-->
+
+            <!-- Botón de barras para abrir sidebar en mobile -->
+            <div class="bars d-block d-lg-none">
+                <i id="openButton" class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header area end here -->
+
+
+    <!-- Sidebar area start here -->
+    <div id="targetElement" class="sidebar-area sidebar__hide">
+        <div class="sidebar__overlay"></div>
+        <a href="index.html" class="logo mb-40">
+            <img src="assets/images/logo/logo.svg" alt="logo">
+        </a>
+        <div class="sidebar__search mb-30">
+            <input type="text" placeholder="Search...">
+            <i class="fa-regular fa-magnifying-glass"></i>
+        </div>
+        <div class="mobile-menu overflow-hidden"></div>
+        <ul class="info pt-40">
+            <li><i class="fa-solid primary-color fa-location-dot"></i> <a href="#0">Plaza 14 de Septiembre/CBBA</a>
+            </li>
+            <li class="py-2"><i class="fa-solid primary-color fa-phone-volume"></i> <a
+                    href="tel:+208-6666-0112">+591 78594390</a>
+            </li>
+            <li><i class="fa-solid primary-color fa-paper-plane"></i> <a href="#0">policiadepartamentacbba@gmail.com</a></li>
+        </ul>
+       <div class="social-icon mt-20">
+    <a href="https://www.facebook.com/PoliciaBolivianaCochabamba"><i class="fa-brands fa-facebook-f"></i></a>
+    <a href="#0"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://www.tiktok.com/@cmdo.dptal.cochabamba?is_from_webapp=1&sender_device=pc"><i class="fa-brands fa-tiktok"></i></a>
+</div>
+
+        <button id="closeButton" class="text-white"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <!-- Sidebar area end here -->
+
+    <main>
+           <!-- Banner area start here -->
+        <div class="banner-three-area">
+            <div class="banner-three__bg">
+                <img class="sway_Y__animation" src="assets/images/bg/banner-three-bg.png" alt="bg-image">
+            </div>
+            <div class="banner-three__shape-left wow slideInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
+                <img class="sway_Y__animationY" src="assets/images/banner/banner-three-left-shape.png" alt="image">
+            </div>
+            <div class="banner-three__shape-right wow slideInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
+                <img class="sway__animationX" src="assets/images/banner/banner-three-right-shape.png" alt="image">
+            </div>
+            <div class="banner-three__container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7 order-2 order-lg-1">
+                        <div class="banner-three__content pt-0 pb-0">
+                            <h1 class="wow fadeInUp text-white" data-wow-delay="200ms" data-wow-duration="1500ms">
+                                Tramites
+                            </h1>
+      <p class="wow fadeInUp mt-20" data-wow-delay="400ms" data-wow-duration="1500ms">
+    Accede de manera rápida y segura a toda la información oficial sobre los trámites que necesitas de la policia en cochabamba. 
+    Aquí podrás encontrar guías detalladas, requisitos actualizados 
+    y pasos claros para realizar tus solicitudes de Certificados de Antecedentes Policiales, 
+    Requerimientos Fiscales, servicios de Apostilla y toda la información destinada a los Postulantes 2026. 
+    Nuestro objetivo es brindarte una experiencia ágil, transparente y confiable, facilitando cada proceso 
+    para que puedas completar tus trámites sin complicaciones.
+</p>
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-5 order-1 order-lg-2 wow fadeInLeft" data-wow-delay="200ms"
+                        data-wow-duration="1500ms">
+                        <div class="image">
+                            <img src="assets/images/banner/banner-tramits.png" alt="image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+      <!-- Banner area end -->
+
+
+ <!-- Tramites area start here -->
+<section class="service-inner-area pt-120 pb-120">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- CERTIFICADOS DE ANTECEDENTES -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-two__item">
+                    <div class="image">
+                        <img src="assets/images/service/service-image1.png" alt="Certificados de Antecedentes Policiales">
+                    </div>
+                    <div class="service-two__content">
+                        <div class="icon">
+                            <img src="assets/images/icon/service-two-icon1.png" alt="icon">
+                        </div>
+                        <div class="shape">
+                            <img src="assets/images/shape/service-two-item-shape.png" alt="shape">
+                        </div>
+                        <h4>
+                            <a href="#" class="primary-hover">Certificados de Antecedentes Policiales</a>
+                        </h4>
+                        <p>Solicita tu Certificado de Antecedentes Policiales, válido a nivel nacional.</p>
+                        <a class="read-more-btn"
+                           href="#"
+                           data-bs-toggle="modal"
+                           data-bs-target="#modalCertificados">
+                            Ver <i class="fa-regular fa-arrow-right-long"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REQUERIMIENTOS FISCALES -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-two__item">
+                    <div class="image">
+                        <img src="assets/images/service/service-image2.png" alt="Requerimientos Fiscales">
+                    </div>
+                    <div class="service-two__content">
+                        <div class="icon">
+                            <img src="assets/images/icon/service-two-icon1.png" alt="icon">
+                        </div>
+                        <div class="shape">
+                            <img src="assets/images/shape/service-two-item-shape.png" alt="shape">
+                        </div>
+                        <h4>
+                            <a href="#" class="primary-hover">Requerimientos Fiscales</a>
+                        </h4>
+                        <p>La Oficina de Servicios Técnicos Auxiliares da respuesta a estos documentos.</p>
+                        <a class="read-more-btn"
+                           href="#"
+                           data-bs-toggle="modal"
+                           data-bs-target="#modalRequerimientos">
+                            Ver <i class="fa-regular fa-arrow-right-long"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- APOSTILLA -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-two__item">
+                    <div class="image">
+                        <img src="assets/images/service/service-image3.png" alt="Apostilla">
+                    </div>
+                    <div class="service-two__content">
+                        <div class="icon">
+                            <img src="assets/images/icon/service-two-icon1.png" alt="icon">
+                        </div>
+                        <div class="shape">
+                            <img src="assets/images/shape/service-two-item-shape.png" alt="shape">
+                        </div>
+                        <h4>
+                            <a href="#" class="primary-hover">Apostilla</a>
+                        </h4>
+                        <p>Certificados y documentos con validez internacional mediante apostilla.</p>
+                        <a class="read-more-btn"
+                           href="#"
+                           data-bs-toggle="modal"
+                           data-bs-target="#modalApostilla">
+                            Ver <i class="fa-regular fa-arrow-right-long"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POSTULANTES 2026 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-two__item">
+                    <div class="image">
+                        <img src="assets/images/service/service-image4.png" alt="Postulantes 2026">
+                    </div>
+                    <div class="service-two__content">
+                        <div class="icon">
+                            <img src="assets/images/icon/service-two-icon1.png" alt="icon">
+                        </div>
+                        <div class="shape">
+                            <img src="assets/images/shape/service-two-item-shape.png" alt="shape">
+                        </div>
+                        <h4>
+                            <a href="#" class="primary-hover">Postulantes 2026</a>
+                        </h4>
+                        <p>Información para postulantes a ANAPOL, FATESCIPOL y ESBAPOLMUS.</p>
+                        <a class="read-more-btn"
+                           href="#"
+                           data-bs-toggle="modal"
+                           data-bs-target="#modalPostulantes">
+                            Ver <i class="fa-regular fa-arrow-right-long"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Tramites area end here -->
+<div class="modal fade tramite-modal" id="modalCertificados" tabindex="-1" aria-labelledby="modalCertificadosLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCertificadosLabel">Certificados de Antecedentes Policiales</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body tramite-body">
+
+        <p class="tramite-intro">
+          Obtén tu certificado de Antecedentes Policiales en la Oficina de Servicios Técnicos Auxiliares de Cochabamba,
+          válido a nivel nacional, de manera rápida y segura para cualquier trámite administrativo o laboral.
+        </p>
+
+        <!-- 1 -->
+        <article class="tramite-item">
+          <h6>Certificado Único de Antecedentes Policiales 3 en 1 (F.E.L.C.C.–F.E.L.C.N.–TRÁNSITO)</h6>
+          <p>Para trámite administrativo, licencia nueva o laboral.</p>
+          <ul>
+            <li>Realizar un depósito de <strong>Bs. 200</strong> en la cuenta N.º <strong>1-5705881</strong> del Banco Unión. Presentar comprobante original.</li>
+            <li>Cédula de Identidad: presentar el original y una copia simple.</li>
+          </ul>
+        </article>
+
+        <!-- 2 -->
+        <article class="tramite-item">
+          <h6>Certificado de Antecedentes Policiales (TRÁNSITO)</h6>
+          <p>Para renovación de licencia, ascenso de categoría, trámite administrativo o laboral.</p>
+          <ul>
+            <li>Realizar un depósito de <strong>Bs. 50</strong> en la cuenta N.º <strong>1-5705881</strong> del Banco Unión. Presentar comprobante original.</li>
+            <li>Cédula de Identidad: presentar el original y una copia simple.</li>
+            <li>Licencia de Conducir original. En caso de no contar con ella, presentar el reporte de SEGELIC.</li>
+          </ul>
+        </article>
+
+        <!-- 3 -->
+        <article class="tramite-item">
+          <h6>Certificado de Antecedentes Policiales de la F.E.L.C.C.</h6>
+          <p>Para trámite administrativo o laboral.</p>
+          <ul>
+            <li>Realizar un depósito de <strong>Bs. 80</strong> en la cuenta N.º <strong>1-5705881</strong> del Banco Unión. Presentar comprobante original.</li>
+            <li>Cédula de Identidad: presentar el original y una fotocopia.</li>
+          </ul>
+        </article>
+
+        <!-- 4 -->
+        <article class="tramite-item">
+          <h6>Certificado de Antecedentes Policiales de la F.E.L.C.N.</h6>
+          <p>Para trámite administrativo o laboral.</p>
+          <ul>
+            <li>Realizar un depósito de <strong>Bs. 80</strong> en la cuenta N.º <strong>1-5705881</strong> del Banco Unión. Presentar comprobante original.</li>
+            <li>Cédula de Identidad: presentar el original y una fotocopia.</li>
+          </ul>
+        </article>
+
+        <!-- 5 -->
+        <article class="tramite-item">
+          <h6>Certificado de Antecedentes Policiales de F.E.L.C.V.</h6>
+          <p>Para trámite administrativo o laboral.</p>
+          <ul>
+            <li>Realizar un depósito de <strong>Bs. 60</strong> en la cuenta N.º <strong>1-4717944</strong> del Banco Unión. Presentar comprobante original.</li>
+            <li>Realizar un depósito de <strong>Bs. 10</strong> en la cuenta N.º <strong>1-4717944</strong> del Banco Unión, correspondiente al pago por la toma de fotografía. Presentar comprobante original.</li>
+            <li>Cédula de Identidad: presentar original y fotocopia.</li>
+          </ul>
+        </article>
+
+        <!-- 6 -->
+        <article class="tramite-item">
+          <h6>Certificado de Antecedentes Policiales de DIPROVE</h6>
+          <p>Para trámite administrativo o laboral.</p>
+          <ul>
+            <li>Realizar un depósito de <strong>Bs. 60</strong> en la cuenta N.º <strong>1-4717944</strong> del Banco Unión. Presentar comprobante original.</li>
+            <li>Realizar un depósito de <strong>Bs. 10</strong> en la cuenta N.º <strong>1-4717944</strong> del Banco Unión, correspondiente al pago por la toma de fotografía. Presentar comprobante original.</li>
+            <li>Cédula de Identidad: presentar original y fotocopia.</li>
+          </ul>
+        </article>
+
+        <!-- 7 -->
+        <article class="tramite-item">
+          <h6>Certificado de Antecedentes Policiales 3 en 1 (F.E.L.C.C., F.E.L.C.N., F.E.L.C.V.)</h6>
+          <p>Para trámite administrativo, apostilla o laboral.</p>
+          <ul>
+            <li>Realizar un depósito de <strong>Bs. 150</strong> en la cuenta N.º <strong>1-4717944</strong> del Banco Unión. Presentar comprobante original.</li>
+            <li>Realizar un depósito de <strong>Bs. 10</strong> en la cuenta N.º <strong>1-4717944</strong> del Banco Unión, correspondiente al pago por la toma de fotografía. Presentar comprobante original.</li>
+            <li>Cédula de Identidad: presentar original y fotocopia.</li>
+          </ul>
+        </article>
+
+        <!-- 8 -->
+        <article class="tramite-item">
+          <h6>Certificado de Antecedentes Policiales T.I.C. (F.E.L.C.C. y Tránsito)</h6>
+          <p>Tarjeta de Identificación del Conductor.</p>
+          <ul>
+            <li>Realizar <strong>dos (2) depósitos de Bs. 15</strong> en la cuenta N.º <strong>1-4717944</strong> del Banco Unión. Presentar comprobantes originales.</li>
+            <li>Cédula de Identidad: presentar original y fotocopia.</li>
+            <li>Presentar la Licencia de Conducir vigente.</li>
+          </ul>
+        </article>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade tramite-modal" id="modalRequerimientos" tabindex="-1" aria-labelledby="modalRequerimientosLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalRequerimientosLabel">Requerimientos Fiscales</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body tramite-body">
+        <p class="tramite-intro">
+          La Oficina de Servicios Técnicos Auxiliares atiende requerimientos fiscales conforme a la normativa vigente.
+        </p>
+        <article class="tramite-item">
+          <h6>Requerimientos fiscales</h6>
+          <ul>
+            <li>El requerimiento fiscal debe estar dirigido al <strong>Sr. Director Departamental de Servicios Técnicos Auxiliares – Cochabamba</strong>.</li>
+            <li>Debe incluir el número de cédula de identidad del denunciado y la copia del documento respectivo.</li>
+            <li>El interesado debe presentar una copia adicional del requerimiento fiscal para su constancia de recepción.</li>
+            <li>La respuesta del requerimiento se entregará en un plazo máximo de <strong>3 días hábiles</strong>, presentando la copia sellada del requerimiento, que sirve como descargo y constancia de recepción.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade tramite-modal" id="modalApostilla" tabindex="-1" aria-labelledby="modalApostillaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalApostillaLabel">Apostilla</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body tramite-body">
+
+        <!-- 1: CUDAP Apostilla -->
+        <article class="tramite-item">
+          <h6>Certificado Único de Antecedentes Policiales (Apostilla)</h6>
+          <ul>
+            <li>La persona interesada puede realizar la solicitud de apostilla de documentos directamente en la página oficial del Ministerio de Relaciones Exteriores de Bolivia: <a href="https://apostilla.rree.gob.bo" target="_blank" rel="noopener">https://apostilla.rree.gob.bo</a></li>
+            <li>Realizar un depósito de <strong>Bs. 150</strong> en la cuenta N.º <strong>1-4717944</strong> del Banco Unión. Presentar comprobante original.</li>
+            <li>Realizar un depósito de <strong>Bs. 10</strong> en la cuenta N.º <strong>1-4717944</strong> del Banco Unión, correspondiente al pago por la toma de fotografía. Presentar comprobante original.</li>
+            <li>Cédula de identidad: presentar el original y una fotocopia.</li>
+          </ul>
+        </article>
+
+        <!-- 2: Registro Domiciliario -->
+        <article class="tramite-item">
+          <h6>Registro Domiciliario de la F.E.L.C.C.</h6>
+          <ul>
+            <li>Solicitud de apostilla en <a href="https://apostilla.rree.gob.bo" target="_blank" rel="noopener">https://apostilla.rree.gob.bo</a>.</li>
+            <li>Certificado de verificación domiciliaria firmado por el Director Departamental de la F.E.L.C.C.</li>
+            <li>Memorial dirigido a la F.E.L.C.C.</li>
+            <li>Fotocopia de cédula de identidad del solicitante (sellado y con pie de firma del personal de la F.E.L.C.C.).</li>
+            <li>Registro de propiedad inmueble (sellado y con pie de firma del personal de la F.E.L.C.C.).</li>
+            <li>Declaración voluntaria notarial del propietario del inmueble (en caso de no ser propietario), con sello y pie de firma de la F.E.L.C.C.</li>
+            <li>Facturas actualizadas de luz y agua (selladas y con pie de firma de la F.E.L.C.C.).</li>
+            <li>Fotocopia de cédula de identidad de dos (2) testigos (selladas y con pie de firma de la F.E.L.C.C.).</li>
+            <li>Croquis del domicilio (sellado y con pie de firma de la F.E.L.C.C.).</li>
+            <li>Acta de verificación domiciliaria, con todos los documentos revisados y verificados por la F.E.L.C.C.</li>
+          </ul>
+        </article>
+
+        <!-- 3: Certificado de Denuncia FELCC -->
+        <article class="tramite-item">
+          <h6>Certificado de Denuncia de la Fuerza Especial de Lucha Contra el Crimen (F.E.L.C.C.)</h6>
+          <ul>
+            <li>Solicitud de apostilla en <a href="https://apostilla.rree.gob.bo" target="_blank" rel="noopener">https://apostilla.rree.gob.bo</a>.</li>
+            <li>Certificación de extravío de DNI firmada por el Director Departamental de la F.E.L.C.C.</li>
+            <li>Memorial dirigido a la F.E.L.C.C.</li>
+            <li>Oficio de remisión de informe referente al extravío de documento para el apostillado.</li>
+            <li>Oficio dirigido al Director Nacional de Servicios Técnicos Auxiliares por parte del Director Departamental de Servicios Técnicos Auxiliares o del Director Nacional de la F.E.L.C.C.</li>
+            <li>Informe de la sección correspondiente sobre el extravío de cédula de identidad extranjera.</li>
+            <li>Fotocopia de cédula de identidad (sellada por personal de la F.E.L.C.C.).</li>
+            <li>Fotocopia de publicación por edicto sobre el extravío de DNI (sellada por personal de la F.E.L.C.C.).</li>
+            <li>Fotocopia de la cédula que se extravió (sellada por personal de la F.E.L.C.C.).</li>
+            <li>Fotocopia de la denuncia de extravío de cédula de identidad (con sello de recepción de la F.E.L.C.C.).</li>
+          </ul>
+        </article>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade tramite-modal" id="modalPostulantes" tabindex="-1" aria-labelledby="modalPostulantesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalPostulantesLabel">Postulantes 2026</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body tramite-body">
+
+        <p class="tramite-intro">
+          Información para postulantes a <strong>ANAPOL</strong>, <strong>FATESCIPOL</strong> y <strong>ESBAPOLMUS</strong> — requisitos, pasos y documentación necesaria para postular.
+        </p>
+
+        <article class="tramite-item">
+          <h6>Aviso importante</h6>
+          <ul>
+            <li>El Certificado de Antecedentes Policiales debe ser obtenido <strong>personalmente</strong> por la o el postulante.</li>
+            <li>Presentar estos documentos:
+              <ul>
+                <li>Depósitos originales.</li>
+                <li>Una fotocopia de cada depósito.</li>
+                <li>Una sola copia del carnet de identidad.</li>
+              </ul>
+            </li>
+          </ul>
+        </article>
+
+        <article class="tramite-item">
+          <h6>Certificado Único de Antecedentes Policiales (CUDAP) – FELCC, FELCN y Tránsito</h6>
+          <ul>
+            <li>Realizar un depósito de <strong>Bs. 200</strong> en la cuenta N.º <strong>1-5705881</strong> del Banco Unión. Presentar comprobante original.</li>
+            <li>Cédula de identidad: presentar el original.</li>
+          </ul>
+        </article>
+
+        <article class="tramite-item">
+          <h6>Certificado de Antecedentes Policiales F.E.L.C.V.</h6>
+          <ul>
+            <li>Realizar un depósito de <strong>Bs. 60</strong> en la cuenta N.º <strong>1-4717944</strong> del Banco Unión. Presentar comprobante original.</li>
+            <li>Cédula de identidad: presentar el original.</li>
+          </ul>
+        </article>
+
+        <article class="tramite-item">
+          <h6>Certificado de Antecedentes Policiales DIPROVE</h6>
+          <ul>
+            <li>Realizar un depósito de <strong>Bs. 60</strong> en la cuenta N.º <strong>1-4717944</strong> del Banco Unión. Presentar comprobante original.</li>
+            <li>Cédula de identidad: presentar el original.</li>
+          </ul>
+        </article>
+
+        <article class="tramite-item">
+          <h6>Pago de fotografías para F.E.L.C.V. y DIPROVE</h6>
+          <ul>
+            <li>Realizar un depósito de <strong>Bs. 10</strong> en la cuenta N.º <strong>1-4717944</strong> del Banco Unión por las fotografías. Presentar comprobante original.</li>
+          </ul>
+        </article>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </main>
+
+    
+ <!-- Footer area start here -->
+   <footer class="footer-area secondary-bg">
+    <div class="footer__shape-regular-left wow slideInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
+        <img src="assets/images/shape/footer-regular-left.png" alt="shape">
+    </div>
+    <div class="footer__shape-solid-left wow slideInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
+        <img class="sway_Y__animation" src="assets/images/shape/footer-solid-left.png" alt="shape">
+    </div>
+    <div class="footer__shape-solid-right wow slideInRight" data-wow-delay="00ms" data-wow-duration="1500ms">
+        <img class="sway_Y__animation" src="assets/images/shape/footer-regular-right.png" alt="shape">
+    </div>
+    <div class="footer__shape-regular-right wow slideInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
+        <img src="assets/images/shape/footer-solid-right.png" alt="shape">
+    </div>
+    <div class="footer__shadow-shape">
+        <img src="assets/images/shape/footer-shadow-shape.png" alt="shodow">
+    </div>
+
+    <div class="container">
+        <div class="footer__wrp pt-100 pb-100">
+            <!-- Columna 1: Título + descripción -->
+            <div class="footer__item item-big wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                <a href="index.html" class="logo mb-30">
+                    <img src="assets/images/logo/logo.svg" alt="image">
+                </a>
+                <h3 class="footer-title">Conoce  más de<br> la página</h3>
+                <p>Una plataforma clara y funcional para acceder a noticias, trámites y servicios sin complicaciones.</p>
+            </div>
+
+            <!-- Columna 2: Servicios -->
+            <div class="footer__item item-sm wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                <h3 class="footer-title">Servicios</h3>
+                <ul>
+                    <li><a href="#0"><i class="fa-regular fa-angles-right me-1"></i> Trámites</a></li>
+                    <li><a href="#0"><i class="fa-regular fa-angles-right me-1"></i> Consultas</a></li>
+                    <li><a href="#0"><i class="fa-regular fa-angles-right me-1"></i> Información pública</a></li>
+                    <li><a href="#0"><i class="fa-regular fa-angles-right me-1"></i> Noticias</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna 3: Soporte -->
+            <div class="footer__item item-big wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
+                <h3 class="footer-title">Soporte</h3>
+                <ul class="footer-contact">
+                    <li>
+                        <i class="fa-regular fa-envelope"></i>
+                        <div class="info">
+                            <h5>Correo:</h5>
+                            <p>Policiabolivianacochabamba@gmail.com</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa-regular fa-location-dot"></i>
+                        <div class="info">
+                            <h5>Dirección:</h5>
+                            <p>Plaza 14 de Septiembre., Cochabamba</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="social-icon mt-20">
+                    <a href="https://www.tiktok.com/@cmdo.dptal.cochabamba?is_from_webapp=1&sender_device=pc"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.facebook.com/PoliciaBolivianaCochabamba"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#0"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer__copyright">
+        <div class="container">
+            <div class="d-flex gap-1 flex-wrap align-items-center justify-content-md-between justify-content-center">
+                <p class="wow fadeInDown" data-wow-delay="00ms" data-wow-duration="1500ms">
+                    &copy; 2025 Copyright, Policía Departamental Cochabamba - Todos los derechos reservados
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Footer area end here -->
+
+    <!-- Back to top area start here -->
+    <div class="scroll-up">
+        <svg class="scroll-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+    <!-- Back to top area end here -->
+
+    <!-- Jquery 3.7.0 Min Js -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap min Js -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- Mean menu Js -->
+    <script src="assets/js/meanmenu.js"></script>
+    <!-- Swiper bundle min Js -->
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <!-- Counterup min Js -->
+    <script src="assets/js/jquery.counterup.min.js"></script>
+    <!-- Wow min Js -->
+    <script src="assets/js/wow.min.js"></script>
+    <!-- Pace min Js -->
+    <script src="assets/js/pace.min.js"></script>
+    <!-- Magnific popup min Js -->
+    <script src="assets/js/magnific-popup.min.js"></script>
+    <!-- Nice select min Js -->
+    <script src="assets/js/nice-select.min.js"></script>
+    <!-- Isotope pkgd min Js -->
+    <script src="assets/js/isotope.pkgd.min.js"></script>
+    <!-- Waypoints Js -->
+    <script src="assets/js/jquery.waypoints.js"></script>
+    <!-- Script Js -->
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>

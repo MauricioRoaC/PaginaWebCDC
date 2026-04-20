@@ -1,0 +1,12 @@
+# Laravel
+.env
+/vendor
+/node_modules
+
+# dentro de backend también
+backend/.env
+backend/vendor
+backend/node_modules
+
+# otros
+.DS_Store
