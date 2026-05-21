@@ -29,7 +29,8 @@
     <li class="nav-item mb-1">
         <a href="{{ route('admin.dashboard') }}"
            class="nav-link @if(request()->routeIs('admin.dashboard')) active @endif">
-            Dashboard
+           <i class='bx bxs-dashboard'></i>
+<span>Dashboard</span>
         </a>
     </li>
 
@@ -39,13 +40,15 @@
         {{-- SUPERADMIN: acceso normal --}}
         <a href="{{ route('admin.users.index') }}"
            class="nav-link @if(request()->routeIs('admin.users.*')) active @endif">
-            Usuarios
+            <i class='bx bx-user'></i>
+<span>Usuarios</span>
         </a>
     @if(auth()->user()->role === 'superadmin')
     <li class="nav-item mb-1">
     <a href="{{ route('admin.units.index') }}"
        class="nav-link @if(request()->routeIs('admin.units.*')) active @endif">
-        Unidades
+        <i class='bx bx-buildings'></i>
+<span>Unidades</span>
     </a>
 </li>
 @endif
@@ -53,7 +56,8 @@
     @else
         {{-- ADMIN NORMAL: acceso bloqueado + mensaje de alerta --}}
         <a href="#" class="nav-link user-no-access">
-            Usuarios
+            <i class='bx bx-user'></i>
+<span>Usuarios</span>
         </a>
     @endif
 
@@ -62,33 +66,38 @@
     <li class="nav-item mb-1">
         <a href="{{ route('admin.news.index') }}"
            class="nav-link @if(request()->routeIs('admin.news.*')) active @endif">
-            Noticias
+            <i class='bx bx-news'></i>
+<span>Noticias</span>
         </a>
     </li>
     <li class="nav-item mb-1">
     <a href="{{ route('admin.lives.index') }}"
        class="nav-link @if(request()->routeIs('admin.lives.*')) active @endif">
-        Lives
+        <i class='bx bx-broadcast'></i>
+<span>Lives</span>
     </a>
 </li>
     <li class="nav-item mb-1">
         <a href="{{ route('admin.messages.index') }}"
            class="nav-link @if(request()->routeIs('admin.messages.*')) active @endif">
-            Mensajes
+            <i class='bx bx-message-square-detail'></i>
+<span>Mensajes</span>
         </a>
     </li>
 
     <li class="nav-item mb-1">
         <a href="{{ route('admin.events.index') }}"
            class="nav-link @if(request()->routeIs('admin.events.*')) active @endif">
-            Calendario
+            <i class='bx bx-calendar'></i>
+<span>Calendario</span>
         </a>
     </li>
 
     <li class="nav-item mb-1">
         <a href="{{ route('admin.documents.index') }}"
            class="nav-link @if(request()->routeIs('admin.documents.*')) active @endif">
-            Documentos
+            <i class='bx bx-file'></i>
+<span>Documentos</span>
         </a>
     </li>
 
@@ -96,28 +105,26 @@
     <li class="nav-item mb-1">
         <a href="{{ route('admin.contacts.index') }}"
            class="nav-link @if(request()->routeIs('admin.contacts.*')) active @endif">
-            Contactos
+            <i class='bx bx-phone'></i>
+<span>Contactos</span>
         </a>
     </li>
 
-    <li class="nav-item mb-1">
-        <a href="{{ route('admin.contact-categories.index') }}"
-           class="nav-link @if(request()->routeIs('admin.contact-categories.*')) active @endif">
-            Categorías de contacto
-        </a>
-    </li>
+
 @if(auth()->user()->role === 'superadmin')
 <li class="nav-item mb-1">
     <a href="{{ route('admin.activity_logs.index') }}"
        class="nav-link @if(request()->routeIs('admin.activity_logs.*')) active @endif">
-        Historial
+        <i class='bx bx-history'></i>
+<span>Historial</span>
     </a>
 </li>
 @endif
     <li class="nav-item mb-1">
         <a href="{{ route('admin.profile.edit') }}"
            class="nav-link @if(request()->routeIs('admin.profile.*')) active @endif">
-            Perfil
+            <i class='bx bx-user-circle'></i>
+<span>Perfil</span>
         </a>
     </li>
 </ul>

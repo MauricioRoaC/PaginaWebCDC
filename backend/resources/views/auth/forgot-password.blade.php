@@ -1,72 +1,300 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Recuperar contraseña - Comando Cochabamba</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>
+        Recuperar contraseña | Comando Cochabamba
+    </title>
 
-    <style>
-        body { min-height: 100vh; }
-        .card-custom {
-            max-width: 420px;
-            border-radius: 1.25rem;
-            border: none;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.10);
-        }
-    </style>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <!-- BOOTSTRAP -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- BOXICONS -->
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'
+          rel='stylesheet'>
+
+    <!-- ADMIN CSS -->
+
+    <link rel="stylesheet"
+          href="{{ asset('css/admin.css') }}">
+
 </head>
-<body class="bg-light d-flex align-items-center">
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-5 col-lg-4">
-            <div class="card card-custom">
-                <div class="card-body p-4">
+<body class="login-body">
 
-                    <h5 class="mb-2 text-center">Recuperar contraseña</h5>
-                    <p class="text-muted small mb-4 text-center">
-                        Ingresa tu correo electrónico. Si está registrado, te enviaremos un enlace para restablecer tu contraseña.
-                    </p>
+    <!-- ========================================
+        BACKGROUND EFFECTS
+    ========================================= -->
 
-                    @if(session('status'))
-                        <div class="alert alert-success py-2">{{ session('status') }}</div>
-                    @endif
+    <div class="login-bg-overlay"></div>
 
-                    @if($errors->any())
-                        <div class="alert alert-danger py-2">
-                            {{ $errors->first() }}
-                        </div>
-                    @endif
+    <div class="login-glow login-glow-1"></div>
 
-                    <form method="POST" action="{{ route('admin.password.email') }}"
->
-                        @csrf
+    <div class="login-glow login-glow-2"></div>
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Correo electrónico</label>
-                            <input type="email" name="email" id="email"
-                                   class="form-control" required autofocus
-                                   value="{{ old('email') }}">
-                        </div>
+    <!-- ========================================
+        WRAPPER
+    ========================================= -->
 
-                        <button type="submit" class="btn w-100 text-white"
-                                style="background:#637227; border-color:#637227;">
-                            Enviar enlace
-                        </button>
-                    </form>
+    <div class="login-wrapper forgot-wrapper">
 
-                    <div class="text-center mt-3">
-                        <a href="{{ route('login') }}" class="small">Volver al inicio de sesión</a>
+        <!-- ========================================
+            LEFT SIDE
+        ========================================= -->
+
+        <div class="login-brand-panel">
+
+            <div class="login-brand-content">
+
+                <div class="login-brand-badge">
+
+                    <i class='bx bx-lock-open-alt'></i>
+
+                    Recuperación segura de acceso
+
+                </div>
+
+                <div class="login-brand-logo">
+
+                    <img src="{{ asset('assets/images/logoadmin/logo.svg') }}"
+                         alt="Logo institucional">
+
+                </div>
+
+                <h1>
+                    Restablecimiento
+                    de contraseña
+                </h1>
+
+                <p>
+                    Recupera el acceso a tu cuenta institucional
+                    mediante un enlace seguro enviado a tu correo.
+                </p>
+
+                <div class="login-brand-stats">
+
+                    <div class="login-stat-card">
+
+                        <strong>
+                            100%
+                        </strong>
+
+                        <span>
+                            Acceso seguro
+                        </span>
+
+                    </div>
+
+                    <div class="login-stat-card">
+
+                        <strong>
+                            SSL
+                        </strong>
+
+                        <span>
+                            Protección cifrada
+                        </span>
+
+                    </div>
+
+                    <div class="login-stat-card">
+
+                        <strong>
+                            Email
+                        </strong>
+
+                        <span>
+                            Verificación oficial
+                        </span>
+
                     </div>
 
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            </div>
+
+        </div>
+
+        <!-- ========================================
+            RIGHT SIDE
+        ========================================= -->
+
+        <div class="login-form-panel">
+
+            <div class="login-card forgot-card">
+
+                <!-- TOP -->
+
+                <div class="login-card-top">
+
+                    <div class="login-mobile-logo">
+
+                        <img src="{{ asset('assets/images/logoadmin/logo.svg') }}"
+                             alt="Logo">
+
+                    </div>
+
+                    <div class="login-form-badge">
+
+                        Recuperación institucional
+
+                    </div>
+
+                    <h2>
+                        ¿Olvidaste tu contraseña?
+                    </h2>
+
+                    <p>
+                        Ingresa tu correo institucional y te enviaremos
+                        un enlace seguro para restablecer tu acceso.
+                    </p>
+
+                </div>
+
+                <!-- ALERT SUCCESS -->
+
+                @if(session('status'))
+
+                    <div class="login-alert login-alert-success">
+
+                        <i class='bx bx-check-circle'></i>
+
+                        <span>
+                            {{ session('status') }}
+                        </span>
+
+                    </div>
+
+                @endif
+
+                <!-- ALERT ERROR -->
+
+                @if($errors->any())
+
+                    <div class="login-alert login-alert-danger">
+
+                        <i class='bx bx-error-circle'></i>
+
+                        <span>
+                            {{ $errors->first() }}
+                        </span>
+
+                    </div>
+
+                @endif
+
+                <!-- FORM -->
+
+                <form method="POST"
+                      action="{{ route('admin.password.email') }}"
+
+                      class="login-form">
+
+                    @csrf
+
+                    <!-- EMAIL -->
+
+                    <div class="login-input-group">
+
+                        <label for="email">
+
+                            Correo electrónico institucional
+
+                        </label>
+
+                        <div class="login-input-wrapper">
+
+                            <i class='bx bx-envelope'></i>
+
+                            <input type="email"
+                                   name="email"
+
+                                   id="email"
+
+                                   placeholder="usuario@institucion.gob"
+
+                                   value="{{ old('email') }}"
+
+                                   required
+
+                                   autofocus>
+
+                        </div>
+
+                    </div>
+
+                    <!-- SUBMIT -->
+
+                    <button type="submit"
+                            class="login-submit-btn">
+
+                        <i class='bx bx-send'></i>
+
+                        Enviar enlace de recuperación
+
+                    </button>
+
+                </form>
+
+                <!-- EXTRA -->
+
+                <div class="forgot-extra-box">
+
+                    <div class="forgot-extra-icon">
+
+                        <i class='bx bx-shield-quarter'></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Seguridad institucional
+                        </strong>
+
+                        <p>
+                            El enlace expirará automáticamente
+                            después de un tiempo por seguridad.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- FOOTER -->
+
+                <div class="login-footer">
+
+                    <a href="{{ route('login') }}"
+                       class="forgot-back-btn">
+
+                        <i class='bx bx-arrow-back'></i>
+
+                        Volver al inicio de sesión
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOOTSTRAP -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>

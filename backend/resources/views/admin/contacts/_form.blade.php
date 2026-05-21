@@ -1,70 +1,259 @@
-<div class="mb-3">
-    <label class="form-label">Nombre del contacto / unidad</label>
-    <input type="text" name="name" class="form-control"
-           value="{{ old('name', $contact->name ?? '') }}" required>
-</div>
+{{-- ========================================
+    BASIC INFO
+======================================== --}}
 
-<div class="mb-3">
-    <label class="form-label">Categoría</label>
-    <select name="contact_category_id" class="form-select">
-        <option value="">Sin categoría</option>
-        @foreach($categories as $category)
-            <option value="{{ $category->id }}"
-                @selected(old('contact_category_id', $contact->contact_category_id ?? '') == $category->id)>
-                {{ $category->name }}
+<div class="contact-form-card">
+
+    <div class="contact-section-title">
+
+        <i class='bx bx-buildings'></i>
+
+        <span>
+            Información institucional
+        </span>
+
+    </div>
+
+    <!-- NAME -->
+
+    <div class="contact-group">
+
+        <label>
+            Nombre de la unidad o contacto
+        </label>
+
+        <input type="text"
+               name="name"
+
+               id="contactName"
+
+               class="contact-input"
+
+               placeholder="Ej: Patrulla Caminera"
+
+               value="{{ old('name', $contact->name ?? '') }}"
+
+               required>
+
+    </div>
+
+    <!-- CATEGORY -->
+
+    <div class="contact-group">
+
+        <label>
+            Categoría
+        </label>
+
+        <select name="contact_category_id"
+                class="contact-input">
+
+            <option value="">
+                Sin categoría
             </option>
-        @endforeach
-    </select>
-    <small class="text-muted">Si no existe, créala en "Categorías de contacto".</small>
-</div>
 
-<div class="mb-3">
-    <label class="form-label">Descripción</label>
-    <textarea name="description" rows="3"
-              class="form-control">{{ old('description', $contact->description ?? '') }}</textarea>
-</div>
+            @foreach($categories as $category)
 
-<div class="mb-3">
-    <label class="form-label">Número de contacto</label>
-    <input type="text" name="phone" class="form-control"
-           value="{{ old('phone', $contact->phone ?? '') }}">
-</div>
+                <option value="{{ $category->id }}"
+                    @selected(old('contact_category_id', $contact->contact_category_id ?? '') == $category->id)>
 
-<div class="mb-3">
-    <label class="form-label">URL de Google Maps</label>
-    <input type="text" name="map_url" class="form-control"
-           value="{{ old('map_url', $contact->map_url ?? '') }}">
-    <small class="text-muted">Pega aquí el enlace de Google Maps (se abrirá al hacer clic en el marcador).</small>
-</div>
+                    {{ $category->name }}
 
-<div class="row">
-    <div class="col-md-6 mb-3">
-        <label class="form-label">Latitud</label>
-        <input type="text" name="lat" class="form-control"
-               value="{{ old('lat', $contact->lat ?? '') }}">
+                </option>
+
+            @endforeach
+
+        </select>
+
+        <small class="contact-help-text">
+
+            Puedes crear nuevas categorías
+            desde el apartado correspondiente.
+
+        </small>
+
     </div>
-    <div class="col-md-6 mb-3">
-        <label class="form-label">Longitud</label>
-        <input type="text" name="lng" class="form-control"
-               value="{{ old('lng', $contact->lng ?? '') }}">
-    </div>
-</div>
-<small class="text-muted d-block mb-3">
-    Puedes copiar latitud/longitud desde Google Maps (clic derecho → "¿Qué hay aquí?").
-</small>
 
-<div class="mb-3">
-    <label class="form-label">Logo / Imagen (opcional)</label>
-    <input type="file" name="logo" class="form-control">
-    @if(!empty($contact->logo_path))
-        <div class="mt-2">
-            <img src="{{ asset('storage/'.$contact->logo_path) }}" alt="" style="max-height: 60px;">
+    <!-- DESCRIPTION -->
+
+    <div class="contact-group">
+
+        <label>
+            Descripción
+        </label>
+
+        <textarea name="description"
+                  id="contactDescription"
+
+                  class="contact-textarea"
+
+                  placeholder="Describe brevemente la función de esta unidad o contacto...">{{ old('description', $contact->description ?? '') }}</textarea>
+
+    </div>
+
+</div>
+
+{{-- ========================================
+    CONTACT INFO
+======================================== --}}
+
+<div class="contact-form-card">
+
+    <div class="contact-section-title">
+
+        <i class='bx bx-phone'></i>
+
+        <span>
+            Información de contacto
+        </span>
+
+    </div>
+
+    <!-- PHONE -->
+
+    <div class="contact-group">
+
+        <label>
+            Número de contacto
+        </label>
+
+        <input type="text"
+               name="phone"
+
+               id="contactPhone"
+
+               class="contact-input"
+
+               placeholder="+591 4441234"
+
+               value="{{ old('phone', $contact->phone ?? '') }}">
+
+    </div>
+
+    <!-- MAP -->
+
+    <div class="contact-group">
+
+        <label>
+            URL de Google Maps
+        </label>
+
+        <input type="text"
+               name="map_url"
+
+               class="contact-input"
+
+               placeholder="https://maps.google.com/..."
+
+               value="{{ old('map_url', $contact->map_url ?? '') }}">
+
+        <small class="contact-help-text">
+
+            Se abrirá automáticamente desde
+            el frontend público.
+
+        </small>
+
+    </div>
+
+    <!-- LAT LNG -->
+
+    <div class="contact-coordinates-grid">
+
+        <div class="contact-group">
+
+            <label>
+                Latitud
+            </label>
+
+            <input type="text"
+                   name="lat"
+
+                   class="contact-input"
+
+                   placeholder="-17.393"
+
+                   value="{{ old('lat', $contact->lat ?? '') }}">
+
         </div>
-    @endif
+
+        <div class="contact-group">
+
+            <label>
+                Longitud
+            </label>
+
+            <input type="text"
+                   name="lng"
+
+                   class="contact-input"
+
+                   placeholder="-66.157"
+
+                   value="{{ old('lng', $contact->lng ?? '') }}">
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="form-check form-switch mb-3">
-    <input class="form-check-input" type="checkbox" name="is_visible" id="is_visible"
-           value="1" {{ old('is_visible', $contact->is_visible ?? true) ? 'checked' : '' }}>
-    <label class="form-check-label" for="is_visible">Visible en la página pública</label>
+{{-- ========================================
+    LOGO
+======================================== --}}
+
+<div class="contact-form-card">
+
+    <div class="contact-section-title">
+
+        <i class='bx bx-image'></i>
+
+        <span>
+            Imagen institucional
+        </span>
+
+    </div>
+
+    <label class="contact-upload-box">
+
+        <input type="file"
+               name="logo"
+
+               id="contactLogo"
+
+               hidden>
+
+        <div class="contact-upload-icon">
+
+            <i class='bx bx-cloud-upload'></i>
+
+        </div>
+
+        <h4>
+            Arrastra una imagen aquí
+        </h4>
+
+        <p>
+            JPG, PNG • Máximo 5MB
+        </p>
+
+    </label>
+
+    {{-- EXISTING IMAGE --}}
+
+    @if(!empty($contact->logo_path))
+
+        <div class="contact-existing-logo">
+
+            <img src="{{ asset('storage/'.$contact->logo_path) }}"
+                 alt="Logo actual"
+
+                 class="contact-existing-image">
+
+        </div>
+
+    @endif
+
+    <div id="contactPreview"></div>
+
 </div>

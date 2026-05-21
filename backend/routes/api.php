@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Public\EventApiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\NewsController;

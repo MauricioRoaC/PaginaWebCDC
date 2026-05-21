@@ -10,7 +10,7 @@ class DocumentApiController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Document::where('is_public', true);
+       $query = Document::query()->where('is_public', true);
 
         if ($request->has('type')) {
             $query->where('type', $request->query('type'));

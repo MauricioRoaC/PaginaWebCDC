@@ -11,13 +11,30 @@ use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
 {
-    // 🔹 ESTE index es SOLO para el PANEL (vista Blade)
-    public function index()
-    {
-        // aquí no queremos mainImage ni JSON, solo listar para la tabla
-        $news = News::latest()->paginate(10);
-        return view('admin.news.index', compact('news'));
+    // 🔹 index para el panel administrativo (tabla de noticias)
+public function index(Request $request)
+{
+    $query = News::query();
+
+    // 🔍 BUSCADOR
+
+    if ($request->search) {
+
+        $query->where(function ($q) use ($request) {
+
+            $q->where('title', 'like', '%' . $request->search . '%')
+              ->orWhere('description', 'like', '%' . $request->search . '%');
+        });
+
     }
+
+    $news = $query
+        ->latest()
+        ->paginate(10)
+        ->withQueryString();
+
+    return view('admin.news.index', compact('news'));
+}
 
     public function create()
     {
@@ -30,13 +47,17 @@ class NewsController extends Controller
             'title'       => 'required|string|max:255',
             'description' => 'required|string|max:500',
             'body'        => 'nullable|string',
-            'images.*'    => 'nullable|image|max:2048', // 2MB por imagen
+            'images.*'    => 'nullable|image|max:1500', // Limitado a 1.5MB para proteger el almacenamiento
+            'status'      => 'required|in:draft,published,scheduled',
+
+            'main_image_index' => 'nullable|integer',
         ]);
 
         if ($request->file('images') && count($request->file('images')) > 10) {
             return back()->withErrors(['images' => 'Máximo 10 fotos.'])->withInput();
         }
 
+        // Generación del Slug único
         $slugBase = Str::slug($data['title']);
         $slug     = $slugBase;
         $counter  = 1;
@@ -46,33 +67,42 @@ class NewsController extends Controller
             $counter++;
         }
 
+        // Crear la noticia
         $news = News::create([
             'title'        => $data['title'],
             'slug'         => $slug,
             'description'  => $data['description'],
             'body'         => $data['body'] ?? null,
-            'is_published' => true,
-            'published_at' => now(),
+            'status'       => $data['status'],
+            'is_published' => $data['status'] === 'published',
+            'published_at' => $data['status'] === 'published' ? now() : null,
             'user_id'      => Auth::id(),
         ]);
 
-        logActivity('create', 'news', 'Creó noticia: ' . $news->title);
-
-        if ($request->hasFile('images')) {
-            $isFirst = true;
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('news', 'public');
-
-                $news->images()->create([
-                    'path'    => $path,
-                    'is_main' => $isFirst, // la primera será principal
-                ]);
-
-                $isFirst = false;
-            }
+        if (function_exists('logActivity')) {
+            logActivity('create', 'news', 'Creó noticia: ' . $news->title);
         }
-        
-        
+
+        // 📁 Almacenamiento nativo de imágenes
+        if ($request->hasFile('images')) {
+           foreach ($request->file('images') as $index => $image) {
+
+    $path = $image->store('news', 'public');
+
+    $isMain =
+        $index ==
+        $request->main_image_index;
+
+    $news->images()->create([
+
+        'path'    => $path,
+
+        'is_main' => $isMain,
+
+    ]);
+
+}
+        }
 
         return redirect()->route('admin.news.index')
             ->with('success', 'Noticia creada correctamente.');
@@ -84,71 +114,82 @@ class NewsController extends Controller
         return view('admin.news.edit', compact('news'));
     }
 
-   public function update(Request $request, News $news)
-{
-    $data = $request->validate([
-        'title'       => 'required|string|max:255',
-        'description' => 'required|string|max:500',
-        'body'        => 'nullable|string',
-        'images.*'    => 'nullable|image|max:2048',
-    ]);
+    public function update(Request $request, News $news)
+    {
+        $data = $request->validate([
+            'title'       => 'required|string|max:255',
+            'description' => 'required|string|max:500',
+            'body'        => 'nullable|string',
+            'images.*'    => 'nullable|image|max:1500',
+            'status'      => 'required|in:draft,published,scheduled',
 
-    if ($request->file('images') && count($request->file('images')) > 10) {
-        return back()->withErrors(['images' => 'Máximo 10 fotos.'])->withInput();
-    }
+            'main_image_index' => 'nullable|integer',
+        ]);
 
-    // actualizar datos básicos
-    $news->update([
-        'title'       => $data['title'],
-        'description' => $data['description'],
-        'body'        => $data['body'] ?? null,
-    ]);
-
-    // 🔥 LOG DESPUÉS DEL UPDATE (correcto)
-    logActivity('update', 'news', 'Actualizó noticia: ' . $news->title);
-
-    // manejo de imágenes
-    if ($request->hasFile('images')) {
-        foreach ($news->images as $img) {
-            Storage::disk('public')->delete($img->path);
-            $img->delete();
+        if ($request->file('images') && count($request->file('images')) > 10) {
+            return back()->withErrors(['images' => 'Máximo 10 fotos.'])->withInput();
         }
 
-        $isFirst = true;
-        foreach ($request->file('images') as $image) {
-            $path = $image->store('news', 'public');
+        $news->update([
+            'title'        => $data['title'],
+            'description'  => $data['description'],
+            'body'         => $data['body'] ?? null,
+            'status'       => $data['status'],
+            'is_published' => $data['status'] === 'published',
+            'published_at' => $data['status'] === 'published' ? ($news->published_at ?? now()) : null,
+        ]);
 
-            $news->images()->create([
-                'path'    => $path,
-                'is_main' => $isFirst,
-            ]);
-
-            $isFirst = false;
+        if (function_exists('logActivity')) {
+            logActivity('update', 'news', 'Actualizó noticia: ' . $news->title);
         }
-    }
 
-    return redirect()->route('admin.news.index')
-        ->with('success', 'Noticia actualizada correctamente.');
+        // Actualización de imágenes
+        if ($request->hasFile('images')) {
+            // Eliminar las imágenes anteriores tanto del disco como de la BD
+            foreach ($news->images as $img) {
+                Storage::disk('public')->delete($img->path);
+                $img->delete();
+            }
+
+           foreach ($request->file('images') as $index => $image) {
+
+    $path = $image->store('news', 'public');
+
+    $isMain =
+        $index ==
+        $request->main_image_index;
+
+    $news->images()->create([
+
+        'path'    => $path,
+
+        'is_main' => $isMain,
+
+    ]);
+
 }
+        }
+
+        return redirect()->route('admin.news.index')
+            ->with('success', 'Noticia actualizada correctamente.');
+    }
 
     public function destroy(News $news)
-{
-    // 🔥 guardar antes de borrar
-    $title = $news->title;
+    {
+        $title = $news->title;
 
-    foreach ($news->images as $img) {
-        Storage::disk('public')->delete($img->path);
+        // Eliminar archivos físicos del storage
+        foreach ($news->images as $img) {
+            Storage::disk('public')->delete($img->path);
+        }
+
+        $news->delete();
+
+        if (function_exists('logActivity')) {
+            logActivity('delete', 'news', 'Eliminó noticia: ' . $title);
+        }
+
+        return redirect()->route('admin.news.index')
+            ->with('success', 'Noticia eliminada correctamente.');
     }
-
-    $news->delete();
-
-    // 🔥 log correcto
-    logActivity('delete', 'news', 'Eliminó noticia: ' . $title);
-
-    return redirect()->route('admin.news.index')
-        ->with('success', 'Noticia eliminada correctamente.');
 }
-}
-
-
-

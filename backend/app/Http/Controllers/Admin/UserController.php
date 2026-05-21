@@ -23,14 +23,41 @@ class UserController extends Controller
 }
 
 
-    public function index()
-    {
-        $this->authorizeSuperadmin();
+   public function index(Request $request)
+{
+    $this->authorizeSuperadmin();
 
-        $users = User::orderBy('role')->orderBy('name')->paginate(10);
+    $query = User::query();
 
-        return view('admin.users.index', compact('users'));
+    // 🔍 BUSCADOR
+
+    if ($request->search) {
+
+        $query->where(function ($q) use ($request) {
+
+            $q->where('name', 'like', '%' . $request->search . '%')
+              ->orWhere('email', 'like', '%' . $request->search . '%');
+
+        });
+
     }
+
+    // 🔍 FILTRO ROL
+
+    if ($request->role) {
+
+        $query->where('role', $request->role);
+
+    }
+
+    $users = $query
+        ->orderBy('role')
+        ->orderBy('name')
+        ->paginate(10)
+        ->withQueryString();
+
+    return view('admin.users.index', compact('users'));
+}
 
  public function create()
 {
@@ -51,11 +78,10 @@ class UserController extends Controller
         'password'  => 'required|string|min:8|confirmed',
         'role'      => 'required|in:superadmin,admin',
         'unit_id'   => 'required|exists:units,id',
-        'is_active' => 'nullable|boolean',
     ]);
 
     $data['password']  = Hash::make($data['password']);
-    $data['is_active'] = $request->boolean('is_active');
+    $data['is_active'] = true;
 
     $user = User::create($data);
 
@@ -66,13 +92,14 @@ class UserController extends Controller
         ->with('success', 'Usuario creado correctamente.');
 }
 
-    public function edit(User $user)
-    {
-        $this->authorizeSuperadmin();
+   public function edit(User $user)
+{
+    $this->authorizeSuperadmin();
 
-        // opcional: evitar que se edite a sí mismo desde aquí, eso se hará en "Perfil"
-        return view('admin.users.edit', compact('user'));
-    }
+    $units = Unit::all();
+
+    return view('admin.users.edit', compact('user', 'units'));
+}
 
     public function update(Request $request, User $user)
     {
@@ -84,7 +111,7 @@ class UserController extends Controller
             'password'  => 'nullable|string|min:8|confirmed',
             'role'      => 'required|in:superadmin,admin',
             'unit_id' => 'required|exists:units,id',
-            'is_active' => 'nullable|boolean',
+            'is_active' => 'nullable',
         ]);
 
         if (!empty($data['password'])) {
@@ -114,7 +141,7 @@ class UserController extends Controller
         // Evitar que se borre a sí mismo
       if ($user->id === Auth::id()) {
 
-            return back()->with('success', 'No puedes eliminar tu propio usuario.');
+            return back()->with('error', 'No puedes eliminar tu propio usuario.');
         }
 
         $user->delete();

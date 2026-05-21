@@ -3,70 +3,168 @@
 @section('content')
     <h2 class="mb-4">Resumen general</h2>
 
-    {{-- TARJETAS SUPERIORES --}}
-    <div class="row g-3 mb-4">
-        <div class="col-md-3">
-            <div class="card dashboard-card">
-                <div class="card-body">
-                    <h6 class="card-title mb-2">Usuarios en el panel</h6>
-                    <p class="card-value mb-0">{{ $totalUsers }}</p>
+ {{-- TARJETAS SUPERIORES --}}
+<div class="row g-4 mb-4">
+
+    {{-- USUARIOS --}}
+    <div class="col-md-6 col-xl-3">
+
+        <div class="card dashboard-card h-100">
+
+            <div class="card-body d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h6 class="card-title">
+                        Usuarios en el panel
+                    </h6>
+
+                    <p class="card-value mb-0">
+                        {{ $totalUsers }}
+                    </p>
                 </div>
+
+                <div class="dashboard-icon">
+                    <i class='bx bx-user'></i>
+                </div>
+
             </div>
+
         </div>
 
-        <div class="col-md-3">
-            <div class="card dashboard-card">
-                <div class="card-body">
-                    <h6 class="card-title mb-2">Noticias publicadas</h6>
-                    <p class="card-value mb-0">{{ $totalNews }}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card dashboard-card">
-                <div class="card-body">
-                    <h6 class="card-title mb-2">Mensajes recibidos</h6>
-                    <p class="card-value mb-0">{{ $totalMessages }}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card dashboard-card">
-                <div class="card-body">
-                    <h6 class="card-title mb-2">Visitas al sitio</h6>
-                    <p class="card-value mb-0">{{ $totalVisits }}</p>
-                </div>
-            </div>
-        </div>
     </div>
 
+    {{-- NOTICIAS --}}
+    <div class="col-md-6 col-xl-3">
 
-    {{-- GRAFICO DE VISITAS + CALENDARIO --}}
-    <div class="row g-4">
+        <div class="card dashboard-card h-100">
 
-        {{-- GRAFICO DE VISITAS --}}
-       <div class="col-lg-8">
-    <div class="card shadow-sm p-3">
-        <h5 class="mb-3">Estadísticas de Visitas</h5>
+            <div class="card-body d-flex justify-content-between align-items-center">
 
-        <div class="chart-container">
-            <canvas id="visitsChart"></canvas>
+                <div>
+                    <h6 class="card-title">
+                        Noticias publicadas
+                    </h6>
+
+                    <p class="card-value mb-0">
+                        {{ $totalNews }}
+                    </p>
+                </div>
+
+                <div class="dashboard-icon">
+                    <i class='bx bx-news'></i>
+                </div>
+
+            </div>
+
         </div>
+
     </div>
+
+    {{-- MENSAJES --}}
+    <div class="col-md-6 col-xl-3">
+
+        <div class="card dashboard-card h-100">
+
+            <div class="card-body d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h6 class="card-title">
+                        Mensajes recibidos
+                    </h6>
+
+                    <p class="card-value mb-0">
+                        {{ $totalMessages }}
+                    </p>
+                </div>
+
+                <div class="dashboard-icon">
+                    <i class='bx bx-envelope'></i>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {{-- VISITAS --}}
+    <div class="col-md-6 col-xl-3">
+
+        <div class="card dashboard-card h-100">
+
+            <div class="card-body d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h6 class="card-title">
+                        Visitas al sitio
+                    </h6>
+
+                    <p class="card-value mb-0">
+                        {{ $totalVisits }}
+                    </p>
+                </div>
+
+                <div class="dashboard-icon">
+                    <i class='bx bx-show'></i>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 
-        {{-- CALENDARIO --}}
-        <div class="col-lg-4">
-            <div class="card shadow-sm p-3">
-                <h5 class="mb-3">Calendario</h5>
-                <div id="dashboardCalendar"></div>
+    {{-- GRAFICO + CALENDARIO --}}
+<div class="row g-4 align-items-stretch">
+
+    {{-- GRAFICO --}}
+    <div class="col-lg-8">
+
+        <div class="chart-container">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <h5 class="mb-0">
+                    Estadísticas de Visitas
+                </h5>
+
+                <span class="text-muted small">
+                    Últimos 7 días
+                </span>
+
             </div>
+
+            <canvas id="visitsChart"></canvas>
+
         </div>
 
     </div>
+
+    {{-- CALENDARIO --}}
+    <div class="col-lg-4">
+
+        <div class="calendar-card">
+
+            <div class="calendar-header">
+
+                <h5>Calendario</h5>
+
+                <span class="text-muted">
+                    {{ now()->format('F Y') }}
+                </span>
+
+            </div>
+
+            <div id="dashboardCalendar"></div>
+
+        </div>
+
+    </div>
+
+</div>
 @endsection
 
 
@@ -136,7 +234,7 @@ new Chart(ctx, {
             </div>
 
             <div class="calendar-grid">
-                <div>Lun</div><div>Mar</div><div>Mié</div>
+                <div class="calendar-day-name">Lun</div><div>Mar</div><div>Mié</div>
                 <div>Jue</div><div>Vie</div><div>Sáb</div><div>Dom</div>
         `;
 
@@ -147,6 +245,8 @@ new Chart(ctx, {
 
         // días del mes
         for (let d = 1; d <= daysInMonth; d++) {
+            const today = now.getDate();
+const isToday = d === today;
             const dayStr = String(d).padStart(2, "0");
             const monthStr = String(month + 1).padStart(2, "0");
             const dateKey = `${year}-${monthStr}-${dayStr}`;
@@ -159,7 +259,7 @@ new Chart(ctx, {
                     .join("");
 
                 html += `
-                    <div class="day has-event">
+                    <div class="calendar-day active">
                         <div class="day-number">${d}</div>
                         <div class="events-list">
                             ${titlesHtml}
@@ -168,7 +268,7 @@ new Chart(ctx, {
                 `;
             } else {
                 html += `
-                    <div class="day">
+                    <div class="calendar-day ${isToday ? 'active' : ''}">
                         <div class="day-number">${d}</div>
                     </div>
                 `;

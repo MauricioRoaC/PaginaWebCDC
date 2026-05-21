@@ -45,34 +45,67 @@ async function loadNews(page = 1) {
             col.setAttribute('data-wow-duration', '1500ms');
 
             col.innerHTML = `
-                <div class="blog__item">
-                    <a href="new-details.html?slug=${encodeURIComponent(item.slug)}" class="blog__image d-block image">
-                        ${item.image_url
-                            ? `<img src="${item.image_url}" alt="${item.title}">`
-                            : `<img src="assets/images/blog/blog-image1.jpg" alt="${item.title}">`
-                        }
-                        <div class="blog-tag">
-                            <h3 class="text-white">${day || ''}</h3>
-                            <span class="text-white">${month || ''}</span>
-                        </div>
-                    </a>
-                    <div class="blog__content">
-                        <ul class="blog-info pb-20 bor-bottom mb-20">
-                            <li>
-                                <a href="#0">Publicado</a>
-                            </li>
-                        </ul>
-                        <h3>
-                            <a href="new-details.html?slug=${encodeURIComponent(item.slug)}" class="primary-hover">
-                                ${item.title}
-                            </a>
-                        </h3>
-                        <a class="mt-25 read-more-btn" href="new-details.html?slug=${encodeURIComponent(item.slug)}">
-                            Ver<i class="fa-regular fa-arrow-right-long"></i>
-                        </a>
-                    </div>
-                </div>
-            `;
+    <article class="news-card">
+
+        <a href="new-details.html?slug=${encodeURIComponent(item.slug)}"
+           class="news-card-image">
+
+            ${
+                item.image_url
+                ? `<img src="${item.image_url}" alt="${item.title}">`
+                : `<img src="assets/images/blog/blog-image1.jpg" alt="${item.title}">`
+            }
+
+            <div class="news-card-overlay"></div>
+
+            <div class="news-card-date">
+                <span class="news-day">${day || '--'}</span>
+                <span class="news-month">${month || '--'}</span>
+            </div>
+
+            <div class="news-card-badge">
+                NOTICIA
+            </div>
+
+        </a>
+
+        <div class="news-card-content">
+
+            <div class="news-card-meta">
+                <span>
+                    <i class="fa-regular fa-calendar"></i>
+                    Publicado recientemente
+                </span>
+            </div>
+
+            <h3 class="news-card-title">
+                <a href="new-details.html?slug=${encodeURIComponent(item.slug)}">
+                    ${item.title}
+                </a>
+            </h3>
+
+            <p class="news-card-description">
+                ${
+                    item.short_description
+                    ? item.short_description
+                    : 'Información oficial publicada por el Comando Departamental de Cochabamba.'
+                }
+            </p>
+
+            <a class="news-card-button"
+               href="new-details.html?slug=${encodeURIComponent(item.slug)}">
+
+                Leer noticia
+
+                <span>
+                    <i class="fa-regular fa-arrow-right-long"></i>
+                </span>
+            </a>
+
+        </div>
+
+    </article>
+`;
 
             newsContainer.appendChild(col);
         });

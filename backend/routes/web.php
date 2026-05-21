@@ -70,7 +70,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('contact-categories', ContactCategoryController::class)->except(['show']);
     Route::resource('contacts', ContactController::class)->except(['show']);
 
-    Route::patch('contacts/{contact}/toggle-visible',
+    Route::patch(
+        'contacts/{contact}/toggle-visible',
         [ContactController::class, 'toggleVisible']
     )->name('contacts.toggle-visible');
 
@@ -87,15 +88,15 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     // LIVES
     // =========================
     Route::get('lives', [LiveController::class, 'index'])
-    ->name('lives.index');
+        ->name('lives.index');
     // Formulario
     Route::get('lives/create', function () {
         return view('admin.lives.create');
     })->name('lives.create');
     Route::patch('lives/{live}/toggle', [LiveController::class, 'toggle'])
-    ->name('lives.toggle');
+        ->name('lives.toggle');
     Route::delete('lives/{live}', [LiveController::class, 'destroy'])
-    ->name('lives.destroy');
+        ->name('lives.destroy');
     // Guardar
     Route::post('lives', [LiveController::class, 'store'])
         ->name('lives.store');

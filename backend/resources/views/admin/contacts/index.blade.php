@@ -3,159 +3,374 @@
 @section('title', 'Contactos')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Contactos</h1>
+
+<div class="contacts-page">
+
+    <!-- ========================================
+        HEADER
+    ========================================= -->
+
+    <div class="contacts-header">
+
         <div>
-            <a href="{{ route('admin.contact-categories.index') }}" class="btn btn-outline-secondary btn-sm me-2">
-                Categorías
-            </a>
-            <a href="{{ route('admin.contacts.create') }}" class="btn btn-primary btn-sm">
-                + Nuevo contacto
-            </a>
+
+            <div class="contacts-badge">
+                Directorio institucional
+            </div>
+
+            <h1>
+                Contactos policiales
+            </h1>
+
+            <p>
+                Gestiona unidades, líneas institucionales,
+                oficinas y contactos públicos visibles
+                en la página oficial.
+            </p>
+
         </div>
+
+        <div class="contacts-header-actions">
+
+            <a href="{{ route('admin.contact-categories.index') }}"
+               class="contacts-outline-btn">
+
+                <i class='bx bx-category'></i>
+
+                Categorías
+
+            </a>
+
+            <a href="{{ route('admin.contacts.create') }}"
+               class="contacts-main-btn">
+
+                <i class='bx bx-plus'></i>
+
+                Nuevo contacto
+
+            </a>
+
+        </div>
+
     </div>
 
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    <!-- ========================================
+        STATS
+    ========================================= -->
+
+    <div class="contacts-stats">
+
+        <div class="contacts-stat-card">
+
+            <div class="contacts-stat-icon">
+                <i class='bx bx-buildings'></i>
+            </div>
+
+            <div>
+
+                <strong>
+                    {{ $contacts->total() }}
+                </strong>
+
+                <span>
+                    Contactos registrados
+                </span>
+
+            </div>
+
         </div>
+
+        <div class="contacts-stat-card">
+
+            <div class="contacts-stat-icon visible">
+                <i class='bx bx-show'></i>
+            </div>
+
+            <div>
+
+                <strong>
+                    {{ $contacts->where('is_visible', true)->count() }}
+                </strong>
+
+                <span>
+                    Visibles públicamente
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================
+        ALERT
+    ========================================= -->
+
+    @if(session('success'))
+
+        <div class="contacts-alert-success">
+
+            <i class='bx bx-check-circle'></i>
+
+            <span>
+                {{ session('success') }}
+            </span>
+
+        </div>
+
     @endif
+
+    <!-- ========================================
+        EMPTY
+    ========================================= -->
 
     @if($contacts->isEmpty())
-        <div class="alert alert-info">
-            No hay contactos registrados todavía. Crea uno nuevo para comenzar.
+
+        <div class="contacts-empty">
+
+            <div class="contacts-empty-icon">
+                <i class='bx bx-phone-off'></i>
+            </div>
+
+            <h3>
+                No hay contactos registrados
+            </h3>
+
+            <p>
+                Agrega el primer contacto institucional
+                para comenzar.
+            </p>
+
+            <a href="{{ route('admin.contacts.create') }}"
+               class="contacts-main-btn">
+
+                <i class='bx bx-plus'></i>
+
+                Crear contacto
+
+            </a>
+
         </div>
+
     @else
-        <div class="card">
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-striped mb-0 align-middle">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Logo</th>
-                                <th>Nombre</th>
-                                <th>Categoría</th>
-                                <th>Teléfono</th>
-                                <th>Ubicación</th>
-                                <th>Visible</th>
-                                <th class="text-end">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($contacts as $contact)
-                                <tr>
-                                    <td>{{ $loop->iteration + ($contacts->currentPage() - 1) * $contacts->perPage() }}</td>
 
-                                    <td>
-                                        @if($contact->logo_path)
-                                            <img src="{{ asset('storage/'.$contact->logo_path) }}"
-                                                 alt="Logo"
-                                                 style="height:40px;width:auto;border-radius:4px;">
-                                        @else
-                                            <span class="text-muted small">Sin logo</span>
-                                        @endif
-                                    </td>
+        <!-- ========================================
+            GRID
+        ========================================= -->
 
-                                    <td>
-                                        <strong>{{ $contact->name }}</strong>
-                                        @if($contact->description)
-                                            <div class="small text-muted">
-                                                {{ \Illuminate\Support\Str::limit($contact->description, 60) }}
-                                            </div>
-                                        @endif
-                                    </td>
+        <div class="contacts-grid">
 
-                                    <td>
-                                        @if($contact->category)
-                                            <span class="badge bg-secondary">
-                                                {{ $contact->category->name }}
-                                            </span>
-                                        @else
-                                            <span class="badge bg-light text-muted border">
-                                                Sin categoría
-                                            </span>
-                                        @endif
-                                    </td>
+            @foreach($contacts as $contact)
 
-                                    <td>
-                                        @if($contact->phone)
-                                            <a href="tel:{{ $contact->phone }}">
-                                                {{ $contact->phone }}
-                                            </a>
-                                        @else
-                                            <span class="text-muted small">No definido</span>
-                                        @endif
-                                    </td>
+                <div class="contact-card">
 
-                                    <td>
-                                        @if($contact->lat && $contact->lng)
-                                            <div class="small">
-                                                <span class="d-block">
-                                                    Lat: {{ $contact->lat }}
-                                                </span>
-                                                <span class="d-block">
-                                                    Lng: {{ $contact->lng }}
-                                                </span>
-                                            </div>
-                                            @if($contact->map_url)
-                                                <a href="{{ $contact->map_url }}" target="_blank" class="small">
-                                                    Ver en Google Maps
-                                                </a>
-                                            @endif
-                                        @else
-                                            <span class="text-muted small">Sin coordenadas</span>
-                                        @endif
-                                    </td>
+                    <!-- TOP -->
 
-                                    <td>
-                                        <form action="{{ route('admin.contacts.toggle-visible', $contact) }}"
-                                              method="POST">
-                                            @csrf
-                                            @method('PATCH')
+                    <div class="contact-card-top">
 
-                                            @if($contact->is_visible)
-                                                <button type="submit" class="btn btn-sm btn-success">
-                                                    Visible
-                                                </button>
-                                            @else
-                                                <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                                    Oculto
-                                                </button>
-                                            @endif
-                                        </form>
-                                    </td>
+                        <div class="contact-logo-wrapper">
 
-                                    <td class="text-end">
-                                        <a href="{{ route('admin.contacts.edit', $contact) }}"
-                                           class="btn btn-sm btn-outline-primary">
-                                            Editar
-                                        </a>
+                            @if($contact->logo_path)
 
-                                        <form action="{{ route('admin.contacts.destroy', $contact) }}"
-                                              method="POST"
-                                              class="d-inline-block"
-                                              onsubmit="return confirm('¿Seguro que deseas eliminar este contacto?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                Eliminar
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                <img src="{{ asset('storage/'.$contact->logo_path) }}"
+                                     alt="Logo"
+
+                                     class="contact-logo">
+
+                            @else
+
+                                <div class="contact-logo-placeholder">
+
+                                    <i class='bx bx-buildings'></i>
+
+                                </div>
+
+                            @endif
+
+                        </div>
+
+                        <form action="{{ route('admin.contacts.toggle-visible', $contact) }}"
+                              method="POST">
+
+                            @csrf
+                            @method('PATCH')
+
+                            @if($contact->is_visible)
+
+                                <button type="submit"
+                                        class="contact-visible-btn active">
+
+                                    <i class='bx bx-show'></i>
+
+                                    Visible
+
+                                </button>
+
+                            @else
+
+                                <button type="submit"
+                                        class="contact-visible-btn">
+
+                                    <i class='bx bx-hide'></i>
+
+                                    Oculto
+
+                                </button>
+
+                            @endif
+
+                        </form>
+
+                    </div>
+
+                    <!-- BODY -->
+
+                    <div class="contact-card-body">
+
+                        <!-- CATEGORY -->
+
+                        @if($contact->category)
+
+                            <div class="contact-category">
+
+                                {{ $contact->category->name }}
+
+                            </div>
+
+                        @else
+
+                            <div class="contact-category empty">
+
+                                Sin categoría
+
+                            </div>
+
+                        @endif
+
+                        <!-- TITLE -->
+
+                        <h3>
+                            {{ $contact->name }}
+                        </h3>
+
+                        <!-- DESCRIPTION -->
+
+                        <p>
+
+                            {{ $contact->description
+                                ? \Illuminate\Support\Str::limit($contact->description, 90)
+                                : 'Sin descripción disponible.' }}
+
+                        </p>
+
+                        <!-- INFO -->
+
+                        <div class="contact-info-list">
+
+                            <!-- PHONE -->
+
+                            <a href="tel:{{ $contact->phone }}"
+                               class="contact-info-item">
+
+                                <i class='bx bx-phone'></i>
+
+                                <span>
+
+                                    {{ $contact->phone ?: 'Sin teléfono' }}
+
+                                </span>
+
+                            </a>
+
+                            <!-- MAP -->
+
+                            @if($contact->map_url)
+
+                                <a href="{{ $contact->map_url }}"
+                                   target="_blank"
+
+                                   class="contact-info-item">
+
+                                    <i class='bx bx-map'></i>
+
+                                    <span>
+                                        Ver ubicación
+                                    </span>
+
+                                </a>
+
+                            @else
+
+                                <div class="contact-info-item disabled">
+
+                                    <i class='bx bx-map-pin'></i>
+
+                                    <span>
+                                        Sin ubicación
+                                    </span>
+
+                                </div>
+
+                            @endif
+
+                        </div>
+
+                    </div>
+
+                    <!-- ACTIONS -->
+
+                    <div class="contact-card-actions">
+
+                        <a href="{{ route('admin.contacts.edit', $contact) }}"
+                           class="contact-edit-btn">
+
+                            <i class='bx bx-edit-alt'></i>
+
+                            Editar
+
+                        </a>
+
+                        <form action="{{ route('admin.contacts.destroy', $contact) }}"
+                              method="POST"
+
+                              onsubmit="return confirm('¿Eliminar este contacto?')">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit"
+                                    class="contact-delete-btn">
+
+                                <i class='bx bx-trash'></i>
+
+                                Eliminar
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
                 </div>
 
-                @if($contacts instanceof \Illuminate\Pagination\AbstractPaginator)
-                    <div class="card-footer">
-                        {{ $contacts->links() }}
-                    </div>
-                @endif
-            </div>
+            @endforeach
+
         </div>
+
+        <!-- PAGINATION -->
+
+        @if($contacts instanceof \Illuminate\Pagination\AbstractPaginator)
+
+            <div class="contacts-pagination">
+
+                {{ $contacts->links() }}
+
+            </div>
+
+        @endif
+
     @endif
+
+</div>
+
 @endsection

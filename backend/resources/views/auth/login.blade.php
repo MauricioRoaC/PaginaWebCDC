@@ -1,143 +1,375 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Ingreso al Panel - Comando Cochabamba</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{-- Bootstrap --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>
+        Acceso Institucional | Comando Cochabamba
+    </title>
 
-    <style>
-        body {
-            min-height: 100vh;
-            background: #ffffffff;
-        }
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
 
-        .login-card {
-            border-radius: 1.25rem;
-            box-shadow: 0 20px 50px rgba(57, 107, 11, 0.12);
-            border: none;
-        }
+    <!-- BOOTSTRAP -->
 
-        .logo-institucional img {
-            max-width: 100px;
-            opacity: 0.95;
-            margin-bottom: 1rem;
-        }
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
-        .btn-login {
-            background:#637227;
-            border-color:#637227;
-        }
+    <!-- BOXICONS -->
 
-        .btn-login:hover {
-            background:#525f1f;
-            border-color:#525f1f;
-        }
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'
+          rel='stylesheet'>
 
-        .form-text-link {
-            color:#637227;
-            font-size:0.9rem;
-            text-decoration:none;
-        }
+    <!-- ADMIN CSS -->
 
-        .form-text-link:hover {
-            text-decoration:underline;
-            color:#4e5b1c;
-        }
+    <link rel="stylesheet"
+          href="{{ asset('css/admin.css') }}">
 
-        .input-group-text {
-            cursor:pointer;
-        }
-    </style>
 </head>
-<body class="d-flex align-items-center">
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-5 col-lg-4">
+<body class="login-body">
 
-            <div class="card login-card p-4">
+    <!-- ========================================
+        BACKGROUND EFFECTS
+    ========================================= -->
 
-                <div class="text-center logo-institucional">
-                    <img src="{{ asset('assets/images/logoadmin/logo.svg') }}" alt="Logo">
+    <div class="login-bg-overlay"></div>
+
+    <div class="login-glow login-glow-1"></div>
+
+    <div class="login-glow login-glow-2"></div>
+
+    <!-- ========================================
+        LOGIN WRAPPER
+    ========================================= -->
+
+    <div class="login-wrapper">
+
+        <!-- ========================================
+            LEFT PANEL
+        ========================================= -->
+
+        <div class="login-brand-panel">
+
+            <div class="login-brand-content">
+
+                <div class="login-brand-badge">
+
+                    <i class='bx bx-shield-quarter'></i>
+
+                    Sistema seguro institucional
+
                 </div>
 
-                <h5 class="text-center mb-1">Panel Administrativo</h5>
-                <p class="text-muted text-center small mb-4">
-                    Comando Departamental de Cochabamba
+                <div class="login-brand-logo">
+
+                    <img src="{{ asset('assets/images/logoadmin/logo.svg') }}"
+                         alt="Logo institucional">
+
+                </div>
+
+                <h1>
+                    Centro Administrativo
+                    Institucional
+                </h1>
+
+                <p>
+                    Plataforma centralizada para la gestión,
+                    monitoreo y administración del
+                    Comando Departamental de Cochabamba.
                 </p>
 
-                @if($errors->any())
-                    <div class="alert alert-danger text-start py-2">
-                        {{ $errors->first() }}
-                    </div>
-                @endif
+                <!-- STATS -->
 
-                @if(session('status'))
-                    <div class="alert alert-success text-start py-2">
-                        {{ session('status') }}
-                    </div>
-                @endif
+                <div class="login-brand-stats">
 
-                <form method="POST" action="{{ route('login.post') }}">
-                    @csrf
+                    <div class="login-stat-card">
 
-                    <div class="mb-3 text-start">
-                        <label for="email" class="form-label">Correo institucional</label>
-                        <input type="email" name="email" id="email" class="form-control"
-                               required autofocus value="{{ old('email') }}">
+                        <strong>
+                            24/7
+                        </strong>
+
+                        <span>
+                            Monitoreo activo
+                        </span>
+
                     </div>
 
-                    <div class="mb-3 text-start">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <div class="input-group">
-                            <input type="password" name="password" id="password"
-                                   class="form-control" required>
-                            <span class="input-group-text" id="togglePassword">
-                                👁
-                            </span>
-                        </div>
+                    <div class="login-stat-card">
+
+                        <strong>
+                            SSL
+                        </strong>
+
+                        <span>
+                            Conexión segura
+                        </span>
+
                     </div>
 
-                    <div class="mb-3 d-flex justify-content-between align-items-center">
-                        <div class="form-check text-start mb-0">
-                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                            <label class="form-check-label" for="remember">Recordar sesión</label>
-                        </div>
+                    <div class="login-stat-card">
 
-                        <a href="{{ route('admin.password.request') }}" class="form-text-link">
-                            ¿Olvidaste tu contraseña?
-                        </a>
+                        <strong>
+                            Admin
+                        </strong>
+
+                        <span>
+                            Acceso protegido
+                        </span>
+
                     </div>
 
-                    <button type="submit" class="btn btn-login w-100 text-white">
-                        Ingresar
-                    </button>
-                </form>
+                </div>
 
             </div>
 
-            <p class="text-center text-muted small mt-3">
-                Acceso exclusivo para personal autorizado.
-            </p>
         </div>
+
+        <!-- ========================================
+            RIGHT PANEL
+        ========================================= -->
+
+        <div class="login-form-panel">
+
+            <div class="login-card">
+
+                <!-- TOP -->
+
+                <div class="login-card-top">
+
+                    <div class="login-mobile-logo">
+
+                        <img src="{{ asset('assets/images/logoadmin/logo.svg') }}"
+                             alt="Logo">
+
+                    </div>
+
+                    <div class="login-form-badge">
+
+                        Acceso administrativo
+
+                    </div>
+
+                    <h2>
+                        Iniciar sesión
+                    </h2>
+
+                    <p>
+                        Ingresa con tu cuenta institucional.
+                    </p>
+
+                </div>
+
+                <!-- ALERTS -->
+
+                @if($errors->any())
+
+                    <div class="login-alert login-alert-danger">
+
+                        <i class='bx bx-error-circle'></i>
+
+                        <span>
+                            {{ $errors->first() }}
+                        </span>
+
+                    </div>
+
+                @endif
+
+                @if(session('status'))
+
+                    <div class="login-alert login-alert-success">
+
+                        <i class='bx bx-check-circle'></i>
+
+                        <span>
+                            {{ session('status') }}
+                        </span>
+
+                    </div>
+
+                @endif
+
+                <!-- FORM -->
+
+                <form method="POST"
+                      action="{{ route('login.post') }}"
+
+                      class="login-form">
+
+                    @csrf
+
+                    <!-- EMAIL -->
+
+                    <div class="login-input-group">
+
+                        <label for="email">
+
+                            Correo institucional
+
+                        </label>
+
+                        <div class="login-input-wrapper">
+
+                            <i class='bx bx-envelope'></i>
+
+                            <input type="email"
+                                   name="email"
+
+                                   id="email"
+
+                                   placeholder="usuario@institucion.gob"
+
+                                   value="{{ old('email') }}"
+
+                                   required
+
+                                   autofocus>
+
+                        </div>
+
+                    </div>
+
+                    <!-- PASSWORD -->
+
+                    <div class="login-input-group">
+
+                        <label for="password">
+
+                            Contraseña
+
+                        </label>
+
+                        <div class="login-input-wrapper">
+
+                            <i class='bx bx-lock-alt'></i>
+
+                            <input type="password"
+                                   name="password"
+
+                                   id="password"
+
+                                   placeholder="Ingresa tu contraseña"
+
+                                   required>
+
+                            <button type="button"
+                                    id="togglePassword"
+
+                                    class="login-password-toggle">
+
+                                <i class='bx bx-show'></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- OPTIONS -->
+
+                    <div class="login-options">
+
+                        <label class="login-remember">
+
+                            <input type="checkbox"
+                                   name="remember">
+
+                            <span>
+                                Recordar sesión
+                            </span>
+
+                        </label>
+
+                        <a href="{{ route('admin.password.request') }}"
+                           class="login-forgot-link">
+
+                            ¿Olvidaste tu contraseña?
+
+                        </a>
+
+                    </div>
+
+                    <!-- SUBMIT -->
+
+                    <button type="submit"
+                            class="login-submit-btn">
+
+                        <i class='bx bx-log-in-circle'></i>
+
+                        Ingresar al sistema
+
+                    </button>
+
+                </form>
+
+                <!-- FOOTER -->
+
+                <div class="login-footer">
+
+                    <div class="login-footer-status">
+
+                        <div class="login-footer-dot"></div>
+
+                        Sistema protegido y monitoreado
+
+                    </div>
+
+                    <p>
+                        Acceso exclusivo para personal autorizado.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- BOOTSTRAP -->
 
-<script>
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordField = document.getElementById('password');
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    togglePassword.addEventListener('click', () => {
-        passwordField.type =
-            passwordField.type === 'password'
-                ? 'text'
-                : 'password';
-    });
-</script>
+    <!-- LOGIN SCRIPT -->
+
+    <script>
+
+        const togglePassword =
+            document.getElementById('togglePassword');
+
+        const passwordField =
+            document.getElementById('password');
+
+        const toggleIcon =
+            togglePassword.querySelector('i');
+
+        togglePassword.addEventListener('click', () => {
+
+            if(passwordField.type === 'password'){
+
+                passwordField.type = 'text';
+
+                toggleIcon.classList.remove('bx-show');
+
+                toggleIcon.classList.add('bx-hide');
+
+            }else{
+
+                passwordField.type = 'password';
+
+                toggleIcon.classList.remove('bx-hide');
+
+                toggleIcon.classList.add('bx-show');
+
+            }
+
+        });
+
+    </script>
+
 </body>
+
 </html>

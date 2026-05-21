@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
-@section('title', 'Nueva categoría')
+@section('title', 'Editar categoría')
 
 @section('content')
 
-<div class="contact-category-form-page">
+<div class="contact-category-form-page edit-mode">
 
     <!-- ========================================
         HEADER
@@ -14,18 +14,18 @@
 
         <div>
 
-            <div class="contact-category-form-badge">
-                Organización institucional
+            <div class="contact-category-form-badge edit">
+                Editando categoría institucional
             </div>
 
             <h1>
-                Nueva categoría
+                Editar categoría
             </h1>
 
             <p>
-                Crea categorías para organizar
-                unidades, oficinas y contactos
-                institucionales públicos.
+                Actualiza el nombre y organización
+                de las categorías utilizadas en
+                el directorio institucional.
             </p>
 
         </div>
@@ -75,12 +75,13 @@
         FORM
     ========================================= -->
 
-    <form action="{{ route('admin.contact-categories.store') }}"
+    <form action="{{ route('admin.contact-categories.update', $contactCategory) }}"
           method="POST"
 
           class="contact-category-form-layout">
 
         @csrf
+        @method('PUT')
 
         <!-- ========================================
             LEFT
@@ -117,14 +118,38 @@
 
                            placeholder="Ej: Emergencias y atención inmediata"
 
-                           value="{{ old('name') }}"
+                           value="{{ old('name', $contactCategory->name) }}"
 
                            required>
 
                     <small class="contact-category-help-text">
 
-                        Usa nombres claros y organizados
-                        para el directorio institucional.
+                        Usa nombres organizados y claros
+                        para mantener el directorio limpio.
+
+                    </small>
+
+                </div>
+
+                <!-- SLUG -->
+
+                <div class="contact-category-group">
+
+                    <label>
+                        Slug generado
+                    </label>
+
+                    <input type="text"
+                           class="contact-category-input"
+
+                           value="{{ $contactCategory->slug }}"
+
+                           readonly>
+
+                    <small class="contact-category-help-text">
+
+                        El slug se actualiza automáticamente
+                        según el nombre de la categoría.
 
                     </small>
 
@@ -172,15 +197,15 @@
 
                         <h3 id="categoryPreviewName">
 
-                            Nueva categoría
+                            {{ $contactCategory->name }}
 
                         </h3>
 
                         <p>
 
-                            Esta categoría se utilizará
-                            para clasificar contactos
-                            institucionales en el sistema.
+                            Esta categoría se utiliza
+                            para organizar contactos
+                            y unidades institucionales.
 
                         </p>
 
@@ -190,37 +215,37 @@
 
             </div>
 
-            <!-- TIPS -->
+            <!-- INFO -->
 
             <div class="contact-category-side-card">
 
                 <h3>
-                    Recomendaciones
+                    Información
                 </h3>
 
                 <ul class="contact-category-tips">
 
                     <li>
 
-                        <i class='bx bx-check-shield'></i>
-
-                        Usa nombres institucionales claros.
-
-                    </li>
-
-                    <li>
-
                         <i class='bx bx-folder'></i>
 
-                        Mantén organizada la estructura.
+                        Categoría actualmente registrada.
 
                     </li>
 
                     <li>
 
-                        <i class='bx bx-buildings'></i>
+                        <i class='bx bx-edit'></i>
 
-                        Evita categorías duplicadas.
+                        Los cambios afectan el directorio.
+
+                    </li>
+
+                    <li>
+
+                        <i class='bx bx-check-shield'></i>
+
+                        Mantén una estructura organizada.
 
                     </li>
 
@@ -231,11 +256,11 @@
             <!-- ACTION -->
 
             <button type="submit"
-                    class="contact-category-save-btn">
+                    class="contact-category-save-btn edit-btn">
 
                 <i class='bx bx-save'></i>
 
-                Guardar categoría
+                Actualizar categoría
 
             </button>
 

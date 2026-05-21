@@ -1,83 +1,203 @@
-  const API_BASE = 'http://127.0.0.1:8000';
+const API_BASE = 'http://127.0.0.1:8000';
 
-    async function fetchContacts() {
-        const res = await fetch(`${API_BASE}/api/contacts`);
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        return await res.json();
+async function fetchContacts() {
+    const res = await fetch(`${API_BASE}/api/contacts`);
+
+    if (!res.ok) {
+        throw new Error('HTTP ' + res.status);
     }
 
-    async function initContactPage() {
-        const contactGrid = document.getElementById('contact-grid');
+    return await res.json();
+}
 
-        const map = L.map('contact-map').setView([-17.3895, -66.1568], 13);
+async function initContactPage() {
 
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; OpenStreetMap'
-        }).addTo(map);
+    const contactGrid = document.getElementById('contact-grid');
+    const totalContacts = document.getElementById('total-contacts');
 
-        const bounds = L.latLngBounds([]);
+    /* MAP */
 
-        try {
-            const contacts = await fetchContacts();
+    const map = L.map('contact-map', {
+        zoomControl: true,
+        scrollWheelZoom: true
+    }).setView([-17.3895, -66.1568], 13);
 
-            if (!Array.isArray(contacts) || contacts.length === 0) {
-                contactGrid.innerHTML = `<p>No hay contactos disponibles.</p>`;
-                return;
-            }
+    L.tileLayer(
+        'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+        {
+            attribution: '&copy; OpenStreetMap & CartoDB'
+        }
+    ).addTo(map);
 
-            contactGrid.innerHTML = '';
+    const bounds = L.latLngBounds([]);
 
-            contacts.forEach(contact => {
-                const col = document.createElement('div');
-                col.className = 'col-12 col-md-6';
+    try {
 
-                const categoryName = contact.category ? contact.category.name : 'Sin categoría';
+        const contacts = await fetchContacts();
 
-                col.innerHTML = `
-                    <div class="contact-card">
-                        <div class="d-flex align-items-center mb-2">
-                            ${contact.logo_path
-                                ? `<img src="${API_BASE}/storage/${contact.logo_path}" alt="${contact.name}"
-                                       style="width:32px;height:32px;object-fit:cover;border-radius:50%;margin-right:8px;">`
-                                : `<div style="width:32px;height:32px;border-radius:50%;background:#637227;margin-right:8px;"></div>`
+        totalContacts.textContent = contacts.length;
+
+        if (!Array.isArray(contacts) || contacts.length === 0) {
+
+            contactGrid.innerHTML = `
+                <div class="col-12">
+                    <div class="alert alert-light">
+                        No hay contactos disponibles.
+                    </div>
+                </div>
+            `;
+
+            return;
+        }
+
+        contactGrid.innerHTML = '';
+
+        contacts.forEach(contact => {
+
+            const col = document.createElement('div');
+
+            col.className = 'col-12 col-md-6';
+
+            const categoryName =
+                contact.category
+                    ? contact.category.name
+                    : 'Sin categoría';
+
+            const hasDescription =
+                contact.description &&
+                contact.description.trim() !== '';
+
+            col.innerHTML = `
+                <div class="contact-card ${!hasDescription ? 'no-description' : ''}">
+
+                    <div>
+
+                        <div class="contact-card__top">
+
+                            ${
+                                contact.logo_path
+                                ? `
+                                    <img
+                                        src="${API_BASE}/storage/${contact.logo_path}"
+                                        alt="${contact.name}"
+                                        class="contact-card__logo"
+                                    >
+                                `
+                                : `
+                                    <div class="contact-card__placeholder"></div>
+                                `
                             }
 
                             <div>
-                                <div class="contact-card__title">${contact.name}</div>
-                                <div class="contact-card__category">${categoryName}</div>
+                                <div class="contact-card__title">
+                                    ${contact.name}
+                                </div>
+
+                                <div class="contact-card__category">
+                                    ${categoryName}
+                                </div>
                             </div>
+
                         </div>
 
                         <div class="contact-card__description">
-                            ${contact.description ?? ''}
+
+                            ${
+                                hasDescription
+                                ? contact.description
+                                : 'Sin descripción disponible'
+                            }
+
                         </div>
 
-                        <div class="contact-card__meta">
-                            ${contact.phone ? `<div><strong>Tel:</strong> <a href="tel:${contact.phone}">${contact.phone}</a></div>` : ''}
-                            ${contact.map_url ? `<div><a href="${contact.map_url}" target="_blank">Ver en Google Maps</a></div>` : ''}
-                        </div>
                     </div>
-                `;
 
-                contactGrid.appendChild(col);
-            });
+                    <div class="contact-card__meta">
 
-            contacts.forEach(c => {
-                if (c.lat && c.lng) {
-                    const pos = [c.lat, c.lng];
-                    L.marker(pos).addTo(map).bindPopup(`<strong>${c.name}</strong>`);
-                    bounds.extend(pos);
-                }
-            });
+                        ${
+                            contact.phone
+                            ? `
+                                <a
+                                    href="tel:${contact.phone}"
+                                    class="contact-link"
+                                >
+                                    <i class="fa-solid fa-phone"></i>
+                                    ${contact.phone}
+                                </a>
+                            `
+                            : ''
+                        }
 
-            if (bounds.isValid()) map.fitBounds(bounds, { padding: [20, 20] });
+                        ${
+                            contact.map_url
+                            ? `
+                                <a
+                                    href="${contact.map_url}"
+                                    target="_blank"
+                                    class="contact-link"
+                                >
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    Ver ubicación
+                                </a>
+                            `
+                            : ''
+                        }
 
-        } catch (error) {
-            console.error('Error cargando contactos:', error);
-            contactGrid.innerHTML = `<p>Error al cargar los contactos.</p>`;
-        }
+                    </div>
+
+                </div>
+            `;
+
+            contactGrid.appendChild(col);
+        });
+
+        /* MARKERS */
+
+      contacts.forEach(contact => {
+
+    if (contact.lat && contact.lng) {
+
+        const categoryName =
+            contact.category
+                ? contact.category.name
+                : 'Sin categoría';
+
+        const pos = [contact.lat, contact.lng];
+
+        const marker = L.marker(pos).addTo(map);
+
+        marker.bindPopup(`
+            <div class="map-popup">
+                <h5>${contact.name}</h5>
+                <p>${categoryName}</p>
+            </div>
+        `);
+
+        bounds.extend(pos);
     }
 
-    document.addEventListener('DOMContentLoaded', initContactPage);
+});
 
+        if (bounds.isValid()) {
+
+            map.fitBounds(bounds, {
+                padding: [50, 50]
+            });
+
+        }
+
+    } catch (error) {
+
+        console.error('Error cargando contactos:', error);
+
+        contactGrid.innerHTML = `
+            <div class="col-12">
+                <div class="alert alert-danger">
+                    Error al cargar los contactos.
+                </div>
+            </div>
+        `;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initContactPage);

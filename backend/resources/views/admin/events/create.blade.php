@@ -1,66 +1,566 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h2 class="mb-4">Nuevo evento</h2>
+
+<div class="event-form-page">
+
+    <!-- HEADER -->
+
+    <div class="event-form-header">
+
+        <div>
+
+            <h1>
+                Nuevo evento operativo
+            </h1>
+
+            <p>
+                Registra actividades policiales, operativos
+                y eventos institucionales.
+            </p>
+
+        </div>
+
+        <a href="{{ route('admin.events.index') }}"
+           class="event-back-btn">
+
+            <i class='bx bx-arrow-back'></i>
+
+            Volver
+
+        </a>
+
+    </div>
+
+    <!-- ERRORS -->
 
     @if($errors->any())
-        <div class="alert alert-danger">
-            <strong>Revisa los campos:</strong>
-            <ul class="mb-0">
+
+        <div class="event-error-box">
+
+            <div class="event-error-title">
+
+                <i class='bx bx-error-circle'></i>
+
+                Revisa los siguientes campos
+
+            </div>
+
+            <ul>
+
                 @foreach($errors->all() as $e)
+
                     <li>{{ $e }}</li>
+
                 @endforeach
+
             </ul>
+
         </div>
+
     @endif
 
-    <form action="{{ route('admin.events.store') }}" method="POST">
+    <!-- LAYOUT -->
+
+    <form action="{{ route('admin.events.store') }}"
+          method="POST"
+
+          class="event-layout">
+
         @csrf
 
-        <div class="mb-3">
-            <label class="form-label">Asunto*</label>
-            <input type="text" name="title" class="form-control" value="{{ old('title') }}" required>
+        <!-- LEFT -->
+
+        <div class="event-main-column">
+
+            <!-- MAIN CARD -->
+
+            <div class="event-card">
+
+                <div class="event-section-title">
+
+                    <i class='bx bx-calendar-event'></i>
+
+                    <span>
+                        Información del evento
+                    </span>
+
+                </div>
+
+                <!-- TITLE -->
+
+                <div class="event-group">
+
+                    <label>
+                        Asunto del evento
+                    </label>
+
+                    <input type="text"
+                           name="title"
+
+                           id="eventTitle"
+
+                           class="event-input"
+
+                           placeholder="Ej: Operativo nocturno zona norte"
+
+                           value="{{ old('title') }}"
+
+                           required>
+
+                </div>
+
+                <!-- TYPE -->
+
+                <div class="event-group">
+
+                    <label>
+                        Tipo de evento
+                    </label>
+
+                    <select class="event-input">
+
+                        <option>
+                            Operativo policial
+                        </option>
+
+                        <option>
+                            Patrullaje
+                        </option>
+
+                        <option>
+                            Cierre vial
+                        </option>
+
+                        <option>
+                            Evento institucional
+                        </option>
+
+                        <option>
+                            Comunicado
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- DESCRIPTION -->
+
+                <div class="event-group">
+
+                    <label>
+                        Descripción
+                    </label>
+
+                    <textarea name="description"
+                              id="eventDescription"
+
+                              class="event-textarea"
+
+                              rows="6"
+
+                              placeholder="Describe el operativo o actividad institucional...">{{ old('description') }}</textarea>
+
+                </div>
+
+            </div>
+
+            <!-- DATE CARD -->
+
+            <div class="event-card">
+
+                <div class="event-section-title">
+
+                    <i class='bx bx-time-five'></i>
+
+                    <span>
+                        Fecha y horario
+                    </span>
+
+                </div>
+
+                <div class="event-date-grid">
+
+                    <!-- START -->
+
+                    <div class="event-group">
+
+                        <label>
+                            Inicio
+                        </label>
+
+                        <input type="datetime-local"
+                               name="start_at"
+
+                               id="eventStart"
+
+                               class="event-input"
+
+                               value="{{ old('start_at') }}"
+
+                               required>
+
+                    </div>
+
+                    <!-- END -->
+
+                    <div class="event-group"
+                         id="endDateGroup">
+
+                        <label>
+                            Finalización
+                        </label>
+
+                        <input type="datetime-local"
+                               name="end_at"
+
+                               id="eventEnd"
+
+                               class="event-input"
+
+                               value="{{ old('end_at') }}">
+
+                    </div>
+
+                </div>
+
+                <!-- ALL DAY -->
+
+                <div class="event-switch-group">
+
+                    <label class="event-switch">
+
+                        <input type="checkbox"
+                               name="all_day"
+
+                               id="all_day"
+
+                               value="1"
+
+                               {{ old('all_day') ? 'checked' : '' }}>
+
+                        <span class="event-slider"></span>
+
+                    </label>
+
+                    <div>
+
+                        <strong>
+                            Evento de todo el día
+                        </strong>
+
+                        <p>
+                            Oculta la hora de finalización.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- LOCATION -->
+
+            <div class="event-card">
+
+                <div class="event-section-title">
+
+                    <i class='bx bx-map'></i>
+
+                    <span>
+                        Ubicación
+                    </span>
+
+                </div>
+
+                <div class="event-group">
+
+                    <label>
+                        Lugar / referencia
+                    </label>
+
+                    <input type="text"
+                           name="location"
+
+                           id="eventLocation"
+
+                           class="event-input"
+
+                           placeholder="Ej: Av. Blanco Galindo"
+
+                           value="{{ old('location') }}">
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Descripción</label>
-            <textarea name="description" class="form-control" rows="3">{{ old('description') }}</textarea>
+        <!-- RIGHT -->
+
+        <div class="event-sidebar">
+
+            <!-- PREVIEW -->
+
+            <div class="event-preview-card">
+
+                <div class="event-preview-header">
+
+                    <span>
+                        Vista previa
+                    </span>
+
+                    <div class="event-live-dot"></div>
+
+                </div>
+
+                <div class="event-preview-body">
+
+                    <div class="event-preview-date">
+
+                        <span id="previewDay">
+                            15
+                        </span>
+
+                        <small id="previewMonth">
+                            DIC
+                        </small>
+
+                    </div>
+
+                    <div class="event-preview-content">
+
+                        <h3 id="previewTitle">
+
+                            Nuevo operativo policial
+
+                        </h3>
+
+                        <p id="previewLocation">
+
+                            Ubicación pendiente
+
+                        </p>
+
+                        <div class="event-preview-time">
+
+                            <i class='bx bx-time'></i>
+
+                            <span id="previewTime">
+
+                                Fecha pendiente
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- PUBLIC -->
+
+            <div class="event-side-card">
+
+                <h3>
+                    Publicación
+                </h3>
+
+                <div class="event-switch-group">
+
+                    <label class="event-switch">
+
+                        <input type="checkbox"
+                               name="is_public"
+
+                               value="1"
+
+                               {{ old('is_public', 1) ? 'checked' : '' }}>
+
+                        <span class="event-slider"></span>
+
+                    </label>
+
+                    <div>
+
+                        <strong>
+                            Visible públicamente
+                        </strong>
+
+                        <p>
+                            Se mostrará en la página principal.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TIPS -->
+
+            <div class="event-side-card">
+
+                <h3>
+                    Recomendaciones
+                </h3>
+
+                <ul class="event-tips">
+
+                    <li>
+
+                        <i class='bx bx-check-shield'></i>
+
+                        Usa títulos claros y operativos.
+
+                    </li>
+
+                    <li>
+
+                        <i class='bx bx-map-pin'></i>
+
+                        Añade referencias exactas.
+
+                    </li>
+
+                    <li>
+
+                        <i class='bx bx-time'></i>
+
+                        Verifica horarios antes de publicar.
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- ACTIONS -->
+
+            <div class="event-actions-box">
+
+                <button type="submit"
+                        class="event-save-btn">
+
+                    <i class='bx bx-save'></i>
+
+                    Guardar evento
+
+                </button>
+
+            </div>
+
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Inicio*</label>
-            <input type="datetime-local" name="start_at" class="form-control"
-                   value="{{ old('start_at') }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Fin</label>
-            <input type="datetime-local" name="end_at" class="form-control"
-                   value="{{ old('end_at') }}">
-            <small class="form-text text-muted">
-                Opcional. Si es un evento de todo el día, puedes dejarlo vacío.
-            </small>
-        </div>
-
-        <div class="mb-3 form-check">
-            <input type="checkbox" name="all_day" id="all_day" class="form-check-input"
-                   value="1" {{ old('all_day') ? 'checked' : '' }}>
-            <label for="all_day" class="form-check-label">Evento de todo el día</label>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Ubicación / Detalle</label>
-            <input type="text" name="location" class="form-control" value="{{ old('location') }}"
-                   placeholder="Ej: Cierre Av. XXX desde Av. YYY hasta Av. ZZZ">
-        </div>
-
-        <div class="mb-3 form-check">
-            <input type="checkbox" name="is_public" id="is_public" class="form-check-input"
-                   value="1" {{ old('is_public', 1) ? 'checked' : '' }}>
-            <label for="is_public" class="form-check-label">Visible en la página pública</label>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="{{ route('admin.events.index') }}" class="btn btn-secondary">Cancelar</a>
     </form>
+
+</div>
+
 @endsection
+
+@push('scripts')
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // ========================================
+    // PREVIEW
+    // ========================================
+
+    const title =
+        document.getElementById('eventTitle');
+
+    const location =
+        document.getElementById('eventLocation');
+
+    const start =
+        document.getElementById('eventStart');
+
+    const previewTitle =
+        document.getElementById('previewTitle');
+
+    const previewLocation =
+        document.getElementById('previewLocation');
+
+    const previewTime =
+        document.getElementById('previewTime');
+
+    const previewDay =
+        document.getElementById('previewDay');
+
+    const previewMonth =
+        document.getElementById('previewMonth');
+
+    title.addEventListener('input', () => {
+
+        previewTitle.textContent =
+            title.value || 'Nuevo operativo policial';
+
+    });
+
+    location.addEventListener('input', () => {
+
+        previewLocation.textContent =
+            location.value || 'Ubicación pendiente';
+
+    });
+
+    start.addEventListener('change', () => {
+
+        if(!start.value) return;
+
+        const date =
+            new Date(start.value);
+
+        previewDay.textContent =
+            String(date.getDate()).padStart(2, '0');
+
+        previewMonth.textContent =
+            date.toLocaleDateString('es-ES', {
+                month:'short'
+            }).toUpperCase();
+
+        previewTime.textContent =
+            date.toLocaleString('es-ES');
+
+    });
+
+    // ========================================
+    // ALL DAY
+    // ========================================
+
+    const allDay =
+        document.getElementById('all_day');
+
+    const endGroup =
+        document.getElementById('endDateGroup');
+
+    function toggleEndDate(){
+
+        if(allDay.checked){
+
+            endGroup.style.display = 'none';
+
+        }else{
+
+            endGroup.style.display = 'block';
+
+        }
+
+    }
+
+    allDay.addEventListener(
+        'change',
+        toggleEndDate
+    );
+
+    toggleEndDate();
+
+});
+
+</script>
+
+@endpush

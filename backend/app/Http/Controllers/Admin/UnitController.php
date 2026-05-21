@@ -18,14 +18,26 @@ class UnitController extends Controller
         }
     }
 
-    public function index()
-    {
-        $this->authorizeSuperadmin();
+  public function index(Request $request)
+{
+    $this->authorizeSuperadmin();
 
-        $units = Unit::all();
+    $query = Unit::query();
 
-        return view('admin.units.index', compact('units'));
+    // 🔍 BUSCADOR
+
+    if ($request->search) {
+
+        $query->where('name', 'like', '%' . $request->search . '%');
+
     }
+
+    $units = $query
+        ->orderBy('name')
+        ->get();
+
+    return view('admin.units.index', compact('units'));
+}
 
     public function create()
     {
