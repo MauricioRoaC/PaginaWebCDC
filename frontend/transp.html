@@ -245,194 +245,133 @@
 
     <main>
       <!-- HERO -->
-<section class="contacts-hero">
+      <section class="contacts-hero">
+        <div class="container">
+          <div class="contacts-hero__content">
+            <span class="contacts-badge"> Transparencia Institucional </span>
 
-  <div class="container">
+            <h1>Gestión Pública y Transparencia</h1>
 
-    <div class="contacts-hero__content">
-
-      <span class="contacts-badge">
-        Transparencia Institucional
-      </span>
-
-      <h1>Gestión Pública y Transparencia</h1>
-
-      <p>
-        Consulta documentos oficiales, rendiciones públicas,
-        planes institucionales y actividades programadas
-        del Comando Departamental de Cochabamba.
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
+            <p>
+              Consulta documentos oficiales, rendiciones públicas, planes
+              institucionales y actividades programadas del Comando
+              Departamental de Cochabamba.
+            </p>
+          </div>
+        </div>
+      </section>
       <!--Documentos transparencia-->
 
       <section class="transparency-section pt-120 pb-120">
+        <div class="container">
+          <div class="transparency-wrapper">
+            <!-- BLOQUE -->
+            <div class="transparency-block">
+              <div class="transparency-heading">
+                <span class="transparency-tag"> Gestión Pública </span>
 
-  <div class="container">
+                <h3>Rendición de Cuentas Públicas</h3>
 
-    <div class="transparency-wrapper">
+                <p>
+                  Información oficial sobre la gestión institucional, recursos y
+                  resultados alcanzados.
+                </p>
+              </div>
 
-      <!-- BLOQUE -->
-      <div class="transparency-block">
+              <div id="docs-rendicion" class="documents-grid"></div>
+            </div>
 
-        <div class="transparency-heading">
+            <!-- BLOQUE -->
+            <div class="transparency-block">
+              <div class="transparency-heading">
+                <span class="transparency-tag"> Planificación </span>
 
-          <span class="transparency-tag">
-            Gestión Pública
-          </span>
+                <h3>Plan Operativo Anual (POA)</h3>
 
-          <h3>
-            Rendición de Cuentas Públicas
-          </h3>
+                <p>
+                  Objetivos operativos y acciones institucionales desarrolladas
+                  durante la gestión.
+                </p>
+              </div>
 
-          <p>
-            Información oficial sobre la gestión institucional,
-            recursos y resultados alcanzados.
-          </p>
+              <div id="docs-poa" class="documents-grid"></div>
+            </div>
 
+            <!-- BLOQUE -->
+            <div class="transparency-block">
+              <div class="transparency-heading">
+                <span class="transparency-tag"> Estrategia Institucional </span>
+
+                <h3>Plan Estratégico Institucional</h3>
+
+                <p>
+                  Planificación de mediano plazo, misión, visión y objetivos
+                  institucionales.
+                </p>
+              </div>
+
+              <div id="docs-pei" class="documents-grid"></div>
+            </div>
+
+            <!-- CALENDARIO -->
+            <div class="transparency-calendar">
+              <div class="transparency-heading">
+                <span class="transparency-tag"> Agenda Institucional </span>
+
+                <h3>Calendario Oficial</h3>
+
+                <p>
+                  Actividades, operativos, comunicados y eventos programados
+                  institucionalmente.
+                </p>
+              </div>
+
+              <div id="calendar"></div>
+            </div>
+          </div>
         </div>
+      </section>
+      <!-- MODAL EVENTO -->
+      <div class="modal fade" id="eventModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="eventModalLabel">
+                Detalle del evento
+              </h5>
 
-        <div id="docs-rendicion" class="documents-grid"></div>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Cerrar"
+              ></button>
+            </div>
 
+            <div class="modal-body">
+              <div class="event-detail">
+                <strong>Asunto</strong>
+                <span id="eventTitle"></span>
+              </div>
+
+              <div class="event-detail">
+                <strong>Ubicación / Detalle</strong>
+                <span id="eventLocation"></span>
+              </div>
+
+              <div class="event-detail">
+                <strong>Descripción</strong>
+                <span id="eventDescription"></span>
+              </div>
+
+              <div class="event-detail">
+                <strong>Fecha y hora</strong>
+                <span id="eventDateTime"></span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <!-- BLOQUE -->
-      <div class="transparency-block">
-
-        <div class="transparency-heading">
-
-          <span class="transparency-tag">
-            Planificación
-          </span>
-
-          <h3>
-            Plan Operativo Anual (POA)
-          </h3>
-
-          <p>
-            Objetivos operativos y acciones institucionales
-            desarrolladas durante la gestión.
-          </p>
-
-        </div>
-
-        <div id="docs-poa" class="documents-grid"></div>
-
-      </div>
-
-      <!-- BLOQUE -->
-      <div class="transparency-block">
-
-        <div class="transparency-heading">
-
-          <span class="transparency-tag">
-            Estrategia Institucional
-          </span>
-
-          <h3>
-            Plan Estratégico Institucional
-          </h3>
-
-          <p>
-            Planificación de mediano plazo, misión,
-            visión y objetivos institucionales.
-          </p>
-
-        </div>
-
-        <div id="docs-pei" class="documents-grid"></div>
-
-      </div>
-
-      <!-- CALENDARIO -->
-      <div class="transparency-calendar">
-
-        <div class="transparency-heading">
-
-          <span class="transparency-tag">
-            Agenda Institucional
-          </span>
-
-          <h3>
-            Calendario Oficial
-          </h3>
-
-          <p>
-            Actividades, operativos, comunicados y
-            eventos programados institucionalmente.
-          </p>
-
-        </div>
-
-        <div id="calendar"></div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-<!-- MODAL EVENTO -->
-<div
-  class="modal fade"
-  id="eventModal"
-  tabindex="-1"
-  aria-hidden="true"
->
-
-  <div class="modal-dialog modal-dialog-centered">
-
-    <div class="modal-content">
-
-      <div class="modal-header">
-
-        <h5 class="modal-title" id="eventModalLabel">
-          Detalle del evento
-        </h5>
-
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Cerrar"
-        ></button>
-
-      </div>
-
-      <div class="modal-body">
-
-        <div class="event-detail">
-          <strong>Asunto</strong>
-          <span id="eventTitle"></span>
-        </div>
-
-        <div class="event-detail">
-          <strong>Ubicación / Detalle</strong>
-          <span id="eventLocation"></span>
-        </div>
-
-        <div class="event-detail">
-          <strong>Descripción</strong>
-          <span id="eventDescription"></span>
-        </div>
-
-        <div class="event-detail">
-          <strong>Fecha y hora</strong>
-          <span id="eventDateTime"></span>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
     </main>
 
     <!-- Footer area start here -->

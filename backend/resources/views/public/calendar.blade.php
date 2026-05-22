@@ -10,6 +10,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
+                timeZone: 'America/La_Paz',
                 initialView: 'dayGridMonth',
                 locale: 'es',
                 headerToolbar: {

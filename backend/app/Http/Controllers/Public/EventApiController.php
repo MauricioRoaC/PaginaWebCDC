@@ -27,8 +27,17 @@ class EventApiController extends Controller
             return [
                 'id'          => $e->id,
                 'title'       => $e->title,
-                'start'       => $e->start_at->toIso8601String(),
-                'end'         => $e->end_at ? $e->end_at->toIso8601String() : null,
+                'start' => $e->start_at
+    ? $e->start_at
+        ->timezone('America/La_Paz')
+        ->format('Y-m-d H:i:s')
+    : null,
+
+'end' => $e->end_at
+    ? $e->end_at
+        ->timezone('America/La_Paz')
+        ->format('Y-m-d H:i:s')
+    : null,
                 'allDay'      => $e->all_day,
                 'description' => $e->description,
                 'location'    => $e->location,

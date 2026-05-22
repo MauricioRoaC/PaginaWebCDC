@@ -4,6 +4,7 @@
             if (!calendarEl) return;
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
+              
                 initialView: 'dayGridMonth',
                 locale: 'es',
                 height: "auto",

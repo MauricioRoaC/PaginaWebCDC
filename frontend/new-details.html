@@ -22,7 +22,6 @@
     <!-- Nice select css -->
     <link rel="stylesheet" href="assets/css/nice-select.css" />
     <!-- Style css -->
-     
   </head>
 
   <body>
@@ -258,103 +257,95 @@
         NEWS DETAIL HERO
     ========================================= -->
 
-    <section class="news-detail-section pt-120 pb-120">
-
-        <div class="container">
-
-            <div class="row g-5">
-
+          <section class="news-detail-section pt-120 pb-120">
+            <div class="container">
+              <div class="row g-5">
                 <!-- ========================================
                     LEFT CONTENT
                 ========================================= -->
 
                 <div class="col-xl-8">
+                  <article class="news-detail-card">
+                    <!-- IMAGE -->
 
-                    <article class="news-detail-card">
+                    <div class="news-detail-image-wrapper">
+                      <div class="news-carousel-track" id="carousel-track">
+                        <img
+                          id="main-news-image"
+                          src=""
+                          alt="Imagen noticia"
+                          class="news-detail-image"
+                        />
+                      </div>
 
-                        <!-- IMAGE -->
+                      <button
+                        type="button"
+                        class="carousel-control prev"
+                        id="carousel-prev"
+                        aria-label="Anterior"
+                      >
+                        <i class="fa-solid fa-chevron-left"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="carousel-control next"
+                        id="carousel-next"
+                        aria-label="Siguiente"
+                      >
+                        <i class="fa-solid fa-chevron-right"></i>
+                      </button>
 
-                       <div class="news-detail-image-wrapper">
-    <div class="news-carousel-track" id="carousel-track">
-        <img id="main-news-image" src="" alt="Imagen noticia" class="news-detail-image">
-    </div>
+                      <div
+                        class="carousel-indicators"
+                        id="carousel-indicators"
+                      ></div>
 
-    <button type="button" class="carousel-control prev" id="carousel-prev" aria-label="Anterior">
-        <i class="fa-solid fa-chevron-left"></i>
-    </button>
-    <button type="button" class="carousel-control next" id="carousel-next" aria-label="Siguiente">
-        <i class="fa-solid fa-chevron-right"></i>
-    </button>
+                      <div class="news-detail-overlay"></div>
 
-    <div class="carousel-indicators" id="carousel-indicators"></div>
+                      <div class="news-detail-date">
+                        <span class="news-detail-day" id="news-day"></span>
+                        <span class="news-detail-month" id="news-month"></span>
+                      </div>
+                    </div>
 
-    <div class="news-detail-overlay"></div>
+                    <!-- CONTENT -->
 
-    <div class="news-detail-date">
-        <span class="news-detail-day" id="news-day"></span>
-        <span class="news-detail-month" id="news-month"></span>
-    </div>
-</div>
+                    <div class="news-detail-content">
+                      <!-- META -->
 
-                        <!-- CONTENT -->
+                      <div class="news-detail-meta">
+                        <div class="news-detail-meta-item">
+                          <i class="fa-regular fa-calendar"></i>
 
-                        <div class="news-detail-content">
-
-                            <!-- META -->
-
-                            <div class="news-detail-meta">
-
-                                <div class="news-detail-meta-item">
-
-                                    <i class="fa-regular fa-calendar"></i>
-
-                                    <span id="news-date"></span>
-
-                                </div>
-
-                                <div class="news-detail-meta-item">
-
-                                    <i class="fa-solid fa-shield"></i>
-
-                                    <span>
-                                        Publicación oficial
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                            <!-- TITLE -->
-
-                            <h1 class="news-detail-title"
-                                id="news-title"></h1>
-
-                            <!-- LABEL -->
-
-                            <div class="news-detail-label">
-
-                                <span id="news-label">
-                                    NOTICIA INSTITUCIONAL
-                                </span>
-
-                            </div>
-
-                            <!-- BODY -->
-
-                            <div id="news-body"
-                                 class="news-detail-body"></div>
-
-                            <!-- GALLERY -->
-
-                            <div
-    class="news-detail-gallery"
-    id="news-gallery">
-</div>
-
+                          <span id="news-date"></span>
                         </div>
 
-                    </article>
+                        <div class="news-detail-meta-item">
+                          <i class="fa-solid fa-shield"></i>
 
+                          <span> Publicación oficial </span>
+                        </div>
+                      </div>
+
+                      <!-- TITLE -->
+
+                      <h1 class="news-detail-title" id="news-title"></h1>
+
+                      <!-- LABEL -->
+
+                      <div class="news-detail-label">
+                        <span id="news-label"> NOTICIA INSTITUCIONAL </span>
+                      </div>
+
+                      <!-- BODY -->
+
+                      <div id="news-body" class="news-detail-body"></div>
+
+                      <!-- GALLERY -->
+
+                      <div class="news-detail-gallery" id="news-gallery"></div>
+                    </div>
+                  </article>
                 </div>
 
                 <!-- ========================================
@@ -362,344 +353,327 @@
                 ========================================= -->
 
                 <div class="col-xl-4">
+                  <aside class="news-sidebar">
+                    <!-- RECENT POSTS -->
 
-                    <aside class="news-sidebar">
+                    <div class="news-sidebar-widget">
+                      <div class="news-sidebar-header">
+                        <span> Actualidad </span>
 
-                        <!-- RECENT POSTS -->
+                        <h3>Noticias recientes</h3>
+                      </div>
 
-                        <div class="news-sidebar-widget">
+                      <div id="recent-posts" class="news-recent-posts"></div>
+                    </div>
 
-                            <div class="news-sidebar-header">
+                    <!-- TIKTOK -->
 
-                                <span>
-                                    Actualidad
-                                </span>
+                    <div class="news-sidebar-widget">
+                      <div class="news-sidebar-header">
+                        <span> Redes oficiales </span>
 
-                                <h3>
-                                    Noticias recientes
-                                </h3>
+                        <h3>TikTok institucional</h3>
+                      </div>
 
-                            </div>
+                      <div class="news-social-embed">
+                        <blockquote
+                          class="tiktok-embed"
+                          cite="https://www.tiktok.com/@cmdo.dptal.cochabamba"
+                          data-unique-id="cmdo.dptal.cochabamba"
+                          data-embed-type="creator"
+                        >
+                          <section>
+                            <a
+                              target="_blank"
+                              href="https://www.tiktok.com/@cmdo.dptal.cochabamba?refer=creator_embed"
+                            >
+                              @cmdo.dptal.cochabamba
+                            </a>
+                          </section>
+                        </blockquote>
 
-                            <div id="recent-posts"
-                                 class="news-recent-posts"></div>
+                        <script
+                          async
+                          src="https://www.tiktok.com/embed.js"
+                        ></script>
+                      </div>
+                    </div>
 
-                        </div>
+                    <!-- FACEBOOK -->
 
-                        <!-- TIKTOK -->
+                    <div class="news-sidebar-widget">
+                      <div class="news-sidebar-header">
+                        <span> Comunidad </span>
 
-                        <div class="news-sidebar-widget">
+                        <h3>Facebook oficial</h3>
+                      </div>
 
-                            <div class="news-sidebar-header">
-
-                                <span>
-                                    Redes oficiales
-                                </span>
-
-                                <h3>
-                                    TikTok institucional
-                                </h3>
-
-                            </div>
-
-                            <div class="news-social-embed">
-
-                                <blockquote
-                                    class="tiktok-embed"
-
-                                    cite="https://www.tiktok.com/@cmdo.dptal.cochabamba"
-
-                                    data-unique-id="cmdo.dptal.cochabamba"
-
-                                    data-embed-type="creator">
-
-                                    <section>
-
-                                        <a target="_blank"
-                                           href="https://www.tiktok.com/@cmdo.dptal.cochabamba?refer=creator_embed">
-
-                                            @cmdo.dptal.cochabamba
-
-                                        </a>
-
-                                    </section>
-
-                                </blockquote>
-
-                                <script async
-                                        src="https://www.tiktok.com/embed.js"></script>
-
-                            </div>
-
-                        </div>
-
-                        <!-- FACEBOOK -->
-
-                        <div class="news-sidebar-widget">
-
-                            <div class="news-sidebar-header">
-
-                                <span>
-                                    Comunidad
-                                </span>
-
-                                <h3>
-                                    Facebook oficial
-                                </h3>
-
-                            </div>
-
-                            <div class="news-social-embed facebook-embed">
-
-                                <iframe
-                                    src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FPoliciaBolivianaCochabamba%2Fposts%2Fpfbid0b2fozvZ1jcRwp5AXTHjn4bjHYLVit8qpQyD24XxLVmHkJwoBnv3frNaoctq5pUXyl&show_text=true&width=500"
-
-                                    width="100%"
-
-                                    height="650"
-
-                                    style="border:none;overflow:hidden"
-
-                                    scrolling="no"
-
-                                    frameborder="0"
-
-                                    allowfullscreen="true"
-
-                                    allow="
-                                        autoplay;
-                                        clipboard-write;
-                                        encrypted-media;
-                                        picture-in-picture;
-                                        web-share;
-                                    ">
-
-                                </iframe>
-
-                            </div>
-
-                        </div>
-
-                    </aside>
-
+                      <div class="news-social-embed facebook-embed">
+                        <iframe
+                          src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FPoliciaBolivianaCochabamba&tabs=timeline&width=500&height=650&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                          width="100%"
+                          height="650"
+                          style="border: none; overflow: hidden"
+                          scrolling="no"
+                          frameborder="0"
+                          allowfullscreen="true"
+                          allow="
+                            autoplay;
+                            clipboard-write;
+                            encrypted-media;
+                            picture-in-picture;
+                            web-share;
+                          "
+                        >
+                        </iframe>
+                      </div>
+                    </div>
+                  </aside>
                 </div>
-
+              </div>
             </div>
-
-        </div>
-
-    </section>
-
+          </section>
 
           <script>
-  // --- Configuración API ---
-  const API_NEWS_BASE_URL = "http://127.0.0.1:8000/api/news";
+            // --- Configuración API ---
+            const API_NEWS_BASE_URL = "http://127.0.0.1:8000/api/news";
 
-  // Leer slug de la URL
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get("slug");
+            // Leer slug de la URL
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get("slug");
 
-  const titleEl = document.getElementById("news-title");
-  const dateEl = document.getElementById("news-date");
-  const bodyEl = document.getElementById("news-body");
-  const recentPostsEl = document.getElementById("recent-posts");
+            const titleEl = document.getElementById("news-title");
+            const dateEl = document.getElementById("news-date");
+            const bodyEl = document.getElementById("news-body");
+            const recentPostsEl = document.getElementById("recent-posts");
 
-  const monthNames = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-  ];
+            const monthNames = [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec",
+            ];
 
-  // --- Helpers ---
-  function escapeHtml(unsafe) {
-    return String(unsafe)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
+            // --- Helpers ---
+            function escapeHtml(unsafe) {
+              return String(unsafe)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+            }
 
-  function textToHtmlWithParagraphs(text) {
-    if (text == null) return "";
+            function textToHtmlWithParagraphs(text) {
+              if (text == null) return "";
 
-    // Si el texto ya viene con etiquetas HTML del editor administrativo, lo devolvemos limpio
-    if (/[<>].+?[<>]/.test(text)) {
-      return String(text);
-    }
+              // Si el texto ya viene con etiquetas HTML del editor administrativo, lo devolvemos limpio
+              if (/[<>].+?[<>]/.test(text)) {
+                return String(text);
+              }
 
-    // En caso de que sea texto plano antiguo, mantiene el formateador de párrafos estándar
-    const paragraphs = String(text)
-      .replace(/\r\n/g, "\n")
-      .replace(/\r/g, "\n")
-      .split(/\n{2,}/)
-      .map((p) => {
-        const escaped = escapeHtml(p).replace(/\n/g, "<br>");
-        return `<p>${escaped}</p>`;
-      });
+              // En caso de que sea texto plano antiguo, mantiene el formateador de párrafos estándar
+              const paragraphs = String(text)
+                .replace(/\r\n/g, "\n")
+                .replace(/\r/g, "\n")
+                .split(/\n{2,}/)
+                .map((p) => {
+                  const escaped = escapeHtml(p).replace(/\n/g, "<br>");
+                  return `<p>${escaped}</p>`;
+                });
 
-    return paragraphs.join("");
-  }
+              return paragraphs.join("");
+            }
 
-  // --- Carga detalle de noticia ---
-  async function loadNewsDetail() {
-    if (!slug) {
-      bodyEl.innerHTML =
-        "<p>No se encontró la noticia (falta el parámetro <code>slug</code>).</p>";
-      return;
-    }
+            // --- Carga detalle de noticia ---
+            async function loadNewsDetail() {
+              if (!slug) {
+                bodyEl.innerHTML =
+                  "<p>No se encontró la noticia (falta el parámetro <code>slug</code>).</p>";
+                return;
+              }
 
-    try {
-      const response = await fetch(
-        `${API_NEWS_BASE_URL}/${encodeURIComponent(slug)}`,
-      );
-      if (!response.ok)
-        throw new Error("No se pudo cargar la noticia");
+              try {
+                const response = await fetch(
+                  `${API_NEWS_BASE_URL}/${encodeURIComponent(slug)}`,
+                );
+                if (!response.ok)
+                  throw new Error("No se pudo cargar la noticia");
 
-      const data = await response.json();
+                const data = await response.json();
 
-      // Título
-      titleEl.textContent = data.title || "";
+                // Título
+                titleEl.textContent = data.title || "";
 
-      // Fecha del Hero / Badges
-      if (data.published_at) {
-        const date = new Date(data.published_at);
-        const day = String(date.getDate()).padStart(2, "0");
-        const month = monthNames[date.getMonth()];
-        const year = date.getFullYear();
-        dateEl.textContent = `${day}, ${month} ${year}`;
-        
-        // Si tienes los elementos flotantes internos de la fecha en tu HTML:
-        const newsDayEl = document.getElementById("news-day");
-        const newsMonthEl = document.getElementById("news-month");
-        if (newsDayEl) newsDayEl.textContent = day;
-        if (newsMonthEl) newsMonthEl.textContent = month;
-      } else {
-        dateEl.textContent = "";
-      }
+                // Fecha del Hero / Badges
+                if (data.published_at) {
+                  const date = new Date(data.published_at);
+                  const day = String(date.getDate()).padStart(2, "0");
+                  const month = monthNames[date.getMonth()];
+                  const year = date.getFullYear();
+                  dateEl.textContent = `${day}, ${month} ${year}`;
 
-      /* ========================================
+                  // Si tienes los elementos flotantes internos de la fecha en tu HTML:
+                  const newsDayEl = document.getElementById("news-day");
+                  const newsMonthEl = document.getElementById("news-month");
+                  if (newsDayEl) newsDayEl.textContent = day;
+                  if (newsMonthEl) newsMonthEl.textContent = month;
+                } else {
+                  dateEl.textContent = "";
+                }
+
+                /* ========================================
          LÓGICA DEL CARRUSEL EN EL HERO
       ======================================== */
-      const trackEl = document.getElementById("carousel-track");
-      const prevBtn = document.getElementById("carousel-prev");
-      const nextBtn = document.getElementById("carousel-next");
-      const indicatorsEl = document.getElementById("carousel-indicators");
+                const trackEl = document.getElementById("carousel-track");
+                const prevBtn = document.getElementById("carousel-prev");
+                const nextBtn = document.getElementById("carousel-next");
+                const indicatorsEl = document.getElementById(
+                  "carousel-indicators",
+                );
 
-      // Limpiamos los contenedores antes de inyectar
-      if (trackEl) trackEl.innerHTML = "";
-      if (indicatorsEl) indicatorsEl.innerHTML = "";
+                // Limpiamos los contenedores antes de inyectar
+                if (trackEl) trackEl.innerHTML = "";
+                if (indicatorsEl) indicatorsEl.innerHTML = "";
 
-      if (trackEl && data.images && data.images.length > 0) {
-        // Inyectar todas las imágenes al riel deslizante superior
-        data.images.forEach((img, index) => {
-          const imageNode = document.createElement("img");
-          imageNode.src = img.url;
-          imageNode.alt = `Imagen noticia ${index + 1}`;
-          imageNode.className = "news-detail-image";
-          trackEl.appendChild(imageNode);
+                if (trackEl && data.images && data.images.length > 0) {
+                  // Inyectar todas las imágenes al riel deslizante superior
+                  data.images.forEach((img, index) => {
+                    const imageNode = document.createElement("img");
+                    imageNode.src = img.url;
+                    imageNode.alt = `Imagen noticia ${index + 1}`;
+                    imageNode.className = "news-detail-image";
+                    trackEl.appendChild(imageNode);
 
-          // Crear los puntitos (dots) interactivos si existe el contenedor
-          if (indicatorsEl) {
-            const dot = document.createElement("button");
-            dot.className = `carousel-dot ${index === 0 ? "active" : ""}`;
-            dot.setAttribute("aria-label", `Ir a imagen ${index + 1}`);
-            dot.addEventListener("click", () => {
-              trackEl.scrollTo({
-                left: trackEl.clientWidth * index,
-                behavior: "smooth"
-              });
-            });
-            indicatorsEl.appendChild(dot);
-          }
-        });
+                    // Crear los puntitos (dots) interactivos si existe el contenedor
+                    if (indicatorsEl) {
+                      const dot = document.createElement("button");
+                      dot.className = `carousel-dot ${index === 0 ? "active" : ""}`;
+                      dot.setAttribute(
+                        "aria-label",
+                        `Ir a imagen ${index + 1}`,
+                      );
+                      dot.addEventListener("click", () => {
+                        trackEl.scrollTo({
+                          left: trackEl.clientWidth * index,
+                          behavior: "smooth",
+                        });
+                      });
+                      indicatorsEl.appendChild(dot);
+                    }
+                  });
 
-        // Si solo viene una imagen, escondemos las flechas y puntitos
-        if (data.images.length === 1) {
-          if (prevBtn) prevBtn.classList.add("is-hidden");
-          if (nextBtn) nextBtn.classList.add("is-hidden");
-        } else {
-          if (prevBtn) prevBtn.classList.remove("is-hidden");
-          if (nextBtn) nextBtn.classList.remove("is-hidden");
+                  // Si solo viene una imagen, escondemos las flechas y puntitos
+                  if (data.images.length === 1) {
+                    if (prevBtn) prevBtn.classList.add("is-hidden");
+                    if (nextBtn) nextBtn.classList.add("is-hidden");
+                  } else {
+                    if (prevBtn) prevBtn.classList.remove("is-hidden");
+                    if (nextBtn) nextBtn.classList.remove("is-hidden");
 
-          // Eventos para las flechas de navegación
-          if (prevBtn) {
-            prevBtn.onclick = () => {
-              trackEl.scrollBy({ left: -trackEl.clientWidth, behavior: "smooth" });
-            };
-          }
-          if (nextBtn) {
-            nextBtn.onclick = () => {
-              trackEl.scrollBy({ left: trackEl.clientWidth, behavior: "smooth" });
-            };
-          }
+                    // Eventos para las flechas de navegación
+                    if (prevBtn) {
+                      prevBtn.onclick = () => {
+                        trackEl.scrollBy({
+                          left: -trackEl.clientWidth,
+                          behavior: "smooth",
+                        });
+                      };
+                    }
+                    if (nextBtn) {
+                      nextBtn.onclick = () => {
+                        trackEl.scrollBy({
+                          left: trackEl.clientWidth,
+                          behavior: "smooth",
+                        });
+                      };
+                    }
 
-          // Cambiar el estado dinámico del puntito al deslizar (móviles/flechas)
-          trackEl.addEventListener("scroll", () => {
-            const activeIndex = Math.round(trackEl.scrollLeft / trackEl.clientWidth);
-            document.querySelectorAll(".carousel-dot").forEach((dot, idx) => {
-              if (idx === activeIndex) {
-                dot.classList.add("active");
-              } else {
-                dot.classList.remove("active");
+                    // Cambiar el estado dinámico del puntito al deslizar (móviles/flechas)
+                    trackEl.addEventListener("scroll", () => {
+                      const activeIndex = Math.round(
+                        trackEl.scrollLeft / trackEl.clientWidth,
+                      );
+                      document
+                        .querySelectorAll(".carousel-dot")
+                        .forEach((dot, idx) => {
+                          if (idx === activeIndex) {
+                            dot.classList.add("active");
+                          } else {
+                            dot.classList.remove("active");
+                          }
+                        });
+                    });
+                  }
+                } else if (trackEl) {
+                  // Respaldos por si la API no devuelve array estructurado de imágenes
+                  const fallbackSrc =
+                    data.image_url ||
+                    "assets/images/blog/blog-single-image1.jpg";
+                  trackEl.innerHTML = `<img src="${fallbackSrc}" alt="Imagen noticia" class="news-detail-image">`;
+                  if (prevBtn) prevBtn.classList.add("is-hidden");
+                  if (nextBtn) nextBtn.classList.add("is-hidden");
+                }
+
+                // Contenido del cuerpo de la noticia
+                if (data.body) {
+                  bodyEl.innerHTML = textToHtmlWithParagraphs(data.body);
+                } else {
+                  bodyEl.innerHTML = `<p>${escapeHtml(data.description ?? "")}</p>`;
+                }
+
+                // Cargar recientes
+                loadRecentPosts(slug);
+              } catch (error) {
+                console.error(error);
+                bodyEl.innerHTML = "<p>Error al cargar la noticia.</p>";
               }
-            });
-          });
-        }
-      } else if (trackEl) {
-        // Respaldos por si la API no devuelve array estructurado de imágenes
-        const fallbackSrc = data.image_url || "assets/images/blog/blog-single-image1.jpg";
-        trackEl.innerHTML = `<img src="${fallbackSrc}" alt="Imagen noticia" class="news-detail-image">`;
-        if (prevBtn) prevBtn.classList.add("is-hidden");
-        if (nextBtn) nextBtn.classList.add("is-hidden");
-      }
+            }
 
-      // Contenido del cuerpo de la noticia
-      if (data.body) {
-        bodyEl.innerHTML = textToHtmlWithParagraphs(data.body);
-      } else {
-        bodyEl.innerHTML = `<p>${escapeHtml(data.description ?? "")}</p>`;
-      }
+            // --- Carga recientes ---
+            async function loadRecentPosts(excludeSlug) {
+              if (!recentPostsEl) return;
 
-      // Cargar recientes
-      loadRecentPosts(slug);
-    } catch (error) {
-      console.error(error);
-      bodyEl.innerHTML = "<p>Error al cargar la noticia.</p>";
-    }
-  }
+              recentPostsEl.innerHTML = "<p>Cargando...</p>";
 
-  // --- Carga recientes ---
-  async function loadRecentPosts(excludeSlug) {
-    if (!recentPostsEl) return;
+              try {
+                const response = await fetch(
+                  `${API_NEWS_BASE_URL}/recent?exclude_slug=${encodeURIComponent(excludeSlug)}`,
+                );
+                if (!response.ok)
+                  throw new Error("No se pudieron cargar los post recientes");
 
-    recentPostsEl.innerHTML = "<p>Cargando...</p>";
+                const data = await response.json();
 
-    try {
-      const response = await fetch(
-        `${API_NEWS_BASE_URL}/recent?exclude_slug=${encodeURIComponent(excludeSlug)}`,
-      );
-      if (!response.ok)
-        throw new Error("No se pudieron cargar los post recientes");
+                if (!data.length) {
+                  recentPostsEl.innerHTML = "<p>No hay post recientes.</p>";
+                  return;
+                }
 
-      const data = await response.json();
+                recentPostsEl.innerHTML = "";
 
-      if (!data.length) {
-        recentPostsEl.innerHTML = "<p>No hay post recientes.</p>";
-        return;
-      }
+                data.forEach((item) => {
+                  const date = item.published_at
+                    ? new Date(item.published_at)
+                    : null;
+                  const day = date
+                    ? String(date.getDate()).padStart(2, "0")
+                    : "";
+                  const month = date ? monthNames[date.getMonth()] : "";
+                  const year = date ? date.getFullYear() : "";
 
-      recentPostsEl.innerHTML = "";
+                  const wrapper = document.createElement("div");
+                  wrapper.className = "d-flex gap-3 align-items-center";
 
-      data.forEach((item) => {
-        const date = item.published_at ? new Date(item.published_at) : null;
-        const day = date ? String(date.getDate()).padStart(2, "0") : "";
-        const month = date ? monthNames[date.getMonth()] : "";
-        const year = date ? date.getFullYear() : "";
-
-        const wrapper = document.createElement("div");
-        wrapper.className = "d-flex gap-3 align-items-center";
-
-        wrapper.innerHTML = `
+                  wrapper.innerHTML = `
           <div class="recent-post__thumb" style="width: 80px; flex-shrink: 0;">
             <a href="new-details.html?slug=${encodeURIComponent(item.slug)}">
               ${
@@ -719,16 +693,17 @@
           </div>
         `;
 
-        recentPostsEl.appendChild(wrapper);
-      });
-    } catch (error) {
-      console.error(error);
-      recentPostsEl.innerHTML = "<p>Error al cargar los post recientes.</p>";
-    }
-  }
+                  recentPostsEl.appendChild(wrapper);
+                });
+              } catch (error) {
+                console.error(error);
+                recentPostsEl.innerHTML =
+                  "<p>Error al cargar los post recientes.</p>";
+              }
+            }
 
-  document.addEventListener("DOMContentLoaded", loadNewsDetail);
-</script>
+            document.addEventListener("DOMContentLoaded", loadNewsDetail);
+          </script>
         </body>
       </html>
     </main>

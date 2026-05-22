@@ -12,10 +12,10 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <!-- Mean menu css -->
     <link rel="stylesheet" href="assets/css/meanmenu.css" />
-    
+
     <!-- All min css -->
     <link rel="stylesheet" href="assets/css/all.min.css" />
- 
+
     <!-- Swiper bundle min css -->
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
     <!-- Magnigic popup css -->
@@ -27,7 +27,6 @@
     <!-- Style css -->
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    
   </head>
 
   <body>
@@ -164,104 +163,76 @@
     <!-- Sidebar area end here -->
 
     <!-- MAIN -->
-<main class="contacts-page">
+    <main class="contacts-page">
+      <!-- HERO -->
+      <section class="contacts-hero">
+        <div class="container">
+          <div class="contacts-hero__content">
+            <span class="contacts-badge"> Directorio Institucional </span>
 
-  <!-- HERO -->
-  <section class="contacts-hero">
-    <div class="container">
-      <div class="contacts-hero__content">
+            <h1 class="">Contactos oficiales</h1>
 
-        <span class="contacts-badge">
-          Directorio Institucional
-        </span>
-
-        <h1 class="">Contactos oficiales</h1>
-
-        <p>
-          Encuentra unidades policiales, números de emergencia y
-          dependencias oficiales de manera rápida y organizada.
-        </p>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACTS -->
-<section class="contacts-section">
-
-  <div class="container">
-
-    <div class="contacts-layout">
-
-      <!-- SIDEBAR -->
-      <aside class="contacts-sidebar">
-
-        <div class="contacts-sidebar__icon">
-          <i class="fa-solid fa-phone"></i>
-        </div>
-
-        <h3>Directorio policial</h3>
-
-        <p>
-          Consulta teléfonos oficiales, ubicaciones y accesos rápidos
-          a distintas unidades y servicios policiales.
-        </p>
-
-        <div class="contacts-sidebar__stats">
-
-          <div class="stat-box">
-            <span id="total-contacts">0</span>
-            <small>Contactos disponibles</small>
+            <p>
+              Encuentra unidades policiales, números de emergencia y
+              dependencias oficiales de manera rápida y organizada.
+            </p>
           </div>
-
-          <div class="stat-box">
-            <span>24/7</span>
-            <small>Atención en algunos contactos</small>
-          </div>
-
         </div>
+      </section>
 
-      </aside>
+      <!-- CONTACTS -->
+      <section class="contacts-section">
+        <div class="container">
+          <div class="contacts-layout">
+            <!-- SIDEBAR -->
+            <aside class="contacts-sidebar">
+              <div class="contacts-sidebar__icon">
+                <i class="fa-solid fa-phone"></i>
+              </div>
 
-      <!-- GRID -->
-      <div class="contacts-grid-wrapper">
+              <h3>Directorio policial</h3>
 
-        <div class="row g-4" id="contact-grid"></div>
+              <p>
+                Consulta teléfonos oficiales, ubicaciones y accesos rápidos a
+                distintas unidades y servicios policiales.
+              </p>
 
-      </div>
+              <div class="contacts-sidebar__stats">
+                <div class="stat-box">
+                  <span id="total-contacts">0</span>
+                  <small>Contactos disponibles</small>
+                </div>
 
-    </div>
+                <div class="stat-box">
+                  <span>24/7</span>
+                  <small>Atención en algunos contactos</small>
+                </div>
+              </div>
+            </aside>
 
-  </div>
-
-</section>
-  </section>
-
-  <!-- MAP -->
-  <section class="map-section">
-
-    <div class="container">
-
-      <div class="map-wrapper">
-
-        <div class="map-header">
-
-          <div>
-            <span class="contacts-badge">Ubicaciones</span>
-            <h3>Mapa de contactos</h3>
+            <!-- GRID -->
+            <div class="contacts-grid-wrapper">
+              <div class="row g-4" id="contact-grid"></div>
+            </div>
           </div>
-
         </div>
+      </section>
+      <!-- MAP -->
+      <section class="map-section">
+        <div class="container">
+          <div class="map-wrapper">
+            <div class="map-header">
+              <div>
+                <span class="contacts-badge">Ubicaciones</span>
+                <h3>Mapa de contactos</h3>
+              </div>
+            </div>
 
-        <div id="contact-map"></div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-</main>
+            <div id="contact-map"></div>
+          </div>
+        </div>
+      </section>
+    </main>
     <!-- Footer area start here -->
     <footer class="footer-area secondary-bg">
       <div
