@@ -17,7 +17,7 @@ class User extends Authenticatable
         'role',
         'avatar',
         'unit_id',
-        'is_active', 
+        'is_active',
     ];
 
     protected $hidden = [
@@ -30,10 +30,11 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
     }
 
-    // RELACIÓN
+    // Relación con unidad
     public function unit()
     {
         return $this->belongsTo(Unit::class);

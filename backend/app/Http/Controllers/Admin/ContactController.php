@@ -38,9 +38,17 @@ class ContactController extends Controller
 
         $data['is_visible'] = $request->boolean('is_visible');
 
-        Contact::create($data);
+        $contact = Contact::create($data);
 
-        return redirect()->route('admin.contacts.index')
+        // LOG
+        logActivity(
+            'create',
+            'contacts',
+            'Creó contacto: ' . $contact->name
+        );
+
+        return redirect()
+            ->route('admin.contacts.index')
             ->with('success', 'Contacto creado correctamente.');
     }
 
@@ -63,24 +71,56 @@ class ContactController extends Controller
 
         $contact->update($data);
 
-        return redirect()->route('admin.contacts.index')
+        // LOG
+        logActivity(
+            'update',
+            'contacts',
+            'Actualizó contacto: ' . $contact->name
+        );
+
+        return redirect()
+            ->route('admin.contacts.index')
             ->with('success', 'Contacto actualizado correctamente.');
     }
 
     public function destroy(Contact $contact)
     {
+        $name = $contact->name;
+
         $contact->delete();
 
-        return redirect()->route('admin.contacts.index')
+        // LOG
+        logActivity(
+            'delete',
+            'contacts',
+            'Eliminó contacto: ' . $name
+        );
+
+        return redirect()
+            ->route('admin.contacts.index')
             ->with('success', 'Contacto eliminado.');
     }
 
     public function toggleVisible(Contact $contact)
     {
-        $contact->is_visible = ! $contact->is_visible;
+        $contact->is_visible = !$contact->is_visible;
+
         $contact->save();
 
-        return back()->with('success', 'Visibilidad actualizada.');
+        // LOG
+        logActivity(
+            'update',
+            'contacts',
+            ($contact->is_visible
+                ? 'Mostró contacto: '
+                : 'Ocultó contacto: ')
+            . $contact->name
+        );
+
+        return back()->with(
+            'success',
+            'Visibilidad actualizada.'
+        );
     }
 
     protected function validateData(Request $request): array
