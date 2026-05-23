@@ -169,113 +169,213 @@
 
 
 @push('scripts')
-{{-- Chart.js para las estadísticas --}}
+{{-- Chart.js para estadísticas --}}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    // ======================
-    // GRAFICO DE VISITAS
-    // ======================
 
-   const ctx = document.getElementById('visitsChart').getContext('2d');
+    // =====================================
+    // CHART VISITAS
+    // =====================================
 
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: {!! json_encode($visitsLabels) !!},
-        datasets: [{
-            label: 'Visitas',
-            data: {!! json_encode($visitsData) !!},
-            borderWidth: 3,
-            tension: 0.3
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-    }
-});
+    const ctx = document
+        .getElementById('visitsChart')
+        .getContext('2d');
 
+    new Chart(ctx, {
+        type: 'line',
 
-// ======================
+        data: {
+            labels: {!! json_encode($visitsLabels) !!},
+
+            datasets: [{
+                label: 'Visitas',
+
+                data: {!! json_encode($visitsData) !!},
+
+                borderWidth: 3,
+
+                tension: 0.35,
+
+                fill: false,
+
+                pointRadius: 4,
+
+                pointHoverRadius: 6
+            }]
+        },
+
+        options: {
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+
+                    grid: {
+                        color: 'rgba(148,163,184,0.12)'
+                    },
+
+                    ticks: {
+                        color: '#64748b'
+                    }
+                },
+
+                x: {
+                    grid: {
+                        display: false
+                    },
+
+                    ticks: {
+                        color: '#64748b'
+                    }
+                }
+            }
+        }
+    });
+
+    // =====================================
     // EVENTOS DESDE BACKEND
-    // ======================
+    // =====================================
+
     const calendarEvents = @json($calendarEvents);
 
     const eventsByDate = calendarEvents.reduce((acc, e) => {
-        const date = e.date; // "YYYY-MM-DD"
-        if (!acc[date]) acc[date] = [];
-        acc[date].push(e.title);
+
+        const date = e.date;
+
+        if (!acc[date]) {
+            acc[date] = [];
+        }
+
+        acc[date].push(e);
+
         return acc;
+
     }, {});
 
-    // ======================
-    // CALENDARIO CON EVENTOS
-    // ======================
+    // =====================================
+    // CALENDARIO DASHBOARD
+    // =====================================
+
     function renderCalendar() {
-        const container = document.getElementById("dashboardCalendar");
+
+        const container =
+            document.getElementById("dashboardCalendar");
+
+        if (!container) return;
+
         const now = new Date();
+
         const year = now.getFullYear();
-        const month = now.getMonth(); // mes actual
+
+        const month = now.getMonth();
+
+        const today = now.getDate();
 
         const monthNames = [
             "Enero","Febrero","Marzo","Abril","Mayo","Junio",
             "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
         ];
 
-        let firstDay = new Date(year, month, 1).getDay();
-        if (firstDay === 0) firstDay = 7; // ajustar para que lunes sea el inicio
+        const dayNames = [
+            "Lun","Mar","Mié","Jue","Vie","Sáb","Dom"
+        ];
 
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        let firstDay =
+            new Date(year, month, 1).getDay();
+
+        if (firstDay === 0) {
+            firstDay = 7;
+        }
+
+        const daysInMonth =
+            new Date(year, month + 1, 0).getDate();
 
         let html = `
-            <div class="text-center mb-2 fw-bold">
-                ${monthNames[month]} ${year}
+
+            <div class="calendar-header">
+
+                <h5>Calendario</h5>
+
+                <div class="calendar-month">
+                    ${monthNames[month]} ${year}
+                </div>
+
             </div>
 
             <div class="calendar-grid">
-                <div class="calendar-day-name">Lun</div><div>Mar</div><div>Mié</div>
-                <div>Jue</div><div>Vie</div><div>Sáb</div><div>Dom</div>
         `;
 
-        // huecos antes del primer día
+        // NOMBRES DE DÍAS
+
+        dayNames.forEach(day => {
+
+            html += `
+                <div class="calendar-day-name">
+                    ${day}
+                </div>
+            `;
+
+        });
+
+        // ESPACIOS VACÍOS
+
         for (let i = 1; i < firstDay; i++) {
+
             html += `<div></div>`;
+
         }
 
-        // días del mes
+        // DÍAS DEL MES
+
         for (let d = 1; d <= daysInMonth; d++) {
-            const today = now.getDate();
-const isToday = d === today;
-            const dayStr = String(d).padStart(2, "0");
-            const monthStr = String(month + 1).padStart(2, "0");
-            const dateKey = `${year}-${monthStr}-${dayStr}`;
 
-            const events = eventsByDate[dateKey] || [];
+            const isToday = d === today;
 
-            if (events.length) {
-                const titlesHtml = events
-                    .map(t => `<div class="event-title">• ${t}</div>`)
-                    .join("");
+            const dayStr =
+                String(d).padStart(2, "0");
 
-                html += `
-                    <div class="calendar-day active">
-                        <div class="day-number">${d}</div>
-                        <div class="events-list">
-                            ${titlesHtml}
-                        </div>
+            const monthStr =
+                String(month + 1).padStart(2, "0");
+
+            const dateKey =
+                `${year}-${monthStr}-${dayStr}`;
+
+            const hasEvents =
+                !!eventsByDate[dateKey];
+
+            html += `
+                <div class="
+                    calendar-day
+                    ${isToday ? 'today' : ''}
+                    ${hasEvents ? 'has-event' : ''}
+                ">
+
+                    <div class="day-number">
+                        ${d}
                     </div>
-                `;
-            } else {
-                html += `
-                    <div class="calendar-day ${isToday ? 'active' : ''}">
-                        <div class="day-number">${d}</div>
-                    </div>
-                `;
-            }
+
+                    ${
+                        hasEvents
+                        ? `<div class="calendar-event-dot"></div>`
+                        : ''
+                    }
+
+                </div>
+            `;
         }
 
         html += `</div>`;
+
         container.innerHTML = html;
     }
 
