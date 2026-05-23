@@ -149,13 +149,6 @@
         <div class="calendar-card">
 
             <div class="calendar-header">
-
-                <h5>Calendario</h5>
-
-                <span class="text-muted">
-                    {{ now()->format('F Y') }}
-                </span>
-
             </div>
 
             <div id="dashboardCalendar"></div>
