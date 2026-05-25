@@ -8,6 +8,9 @@ use App\Models\News;
 use App\Models\Message;
 use App\Models\Visit;
 use App\Models\Event;
+use App\Models\Document;
+use App\Models\Contact;
+use App\Models\ActivityLog;
 use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
@@ -23,10 +26,63 @@ class DashboardController extends Controller
         $totalVisits   = Visit::count();
 
         // =====================
-        // VISITAS (Ejemplo base)
+        // CONTENIDO PUBLICADO
         // =====================
-        $visitsLabels = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
-        $visitsData   = [12, 35, 22, 18, 40, 50, 44];  // Luego lo puedes reemplazar por datos reales
+
+        $totalEvents    = Event::count();
+        $totalDocuments = Document::count();
+        $totalContacts  = Contact::count();
+
+        // =====================
+        // VISITAS ÚLTIMOS 7 DÍAS
+        // =====================
+
+        $visitsLabels = [];
+        $visitsData   = [];
+
+        for ($i = 6; $i >= 0; $i--) {
+
+            $date = now()->subDays($i);
+
+            $visitsLabels[] = $date->translatedFormat('D');
+
+            $visitsData[] = Visit::whereDate(
+                'created_at',
+                $date->toDateString()
+            )->count();
+        }
+        // =====================
+        // ACTIVIDAD RECIENTE
+        // =====================
+
+        $recentActivities = ActivityLog::with('user')
+            ->latest()
+            ->take(8)
+            ->get();
+        // =====================
+        // PRÓXIMOS EVENTOS
+        // =====================
+
+        $upcomingEvents = Event::where(
+            'start_at',
+            '>=',
+            now()
+        )
+            ->orderBy('start_at')
+            ->take(5)
+            ->get();
+        // =====================
+        // NOTICIAS MÁS VISTAS
+        // =====================
+
+        $topNews = News::orderByDesc('views')
+            ->take(5)
+            ->get([
+                'id',
+                'title',
+                'views',
+                'slug'
+            ]);
 
         // =====================
         // EVENTOS DEL CALENDARIO
@@ -49,9 +105,19 @@ class DashboardController extends Controller
             'totalNews',
             'totalMessages',
             'totalVisits',
+
+            'totalEvents',
+            'totalDocuments',
+            'totalContacts',
+
             'visitsLabels',
             'visitsData',
-            'calendarEvents'  // ← importante
+
+            'recentActivities',
+            'upcomingEvents',
+            'topNews',
+            'calendarEvents'
+
         ));
     }
 }

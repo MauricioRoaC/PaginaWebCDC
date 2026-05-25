@@ -38,27 +38,31 @@ class NewsController extends Controller
 
 
     public function show($slug)
-    {
-        $news = News::with('images')
-            ->where('slug', $slug)
-            ->where('is_published', true)
-            ->firstOrFail();
+{
+    $news = News::with('images')
+        ->where('slug', $slug)
+        ->where('is_published', true)
+        ->firstOrFail();
 
-        return response()->json([
-            'id'          => $news->id,
-            'title'       => $news->title,
-            'slug'        => $news->slug,
-            'description' => $news->description,
-            'body'        => $news->body,
-            'published_at'=> optional($news->published_at)->toDateTimeString(),
-            'images'      => $news->images->map(function ($img) {
-                return [
-                    'url'     => asset('storage/'.$img->path),
-                    'is_main' => $img->is_main,
-                ];
-            }),
-        ]);
-    }
+    $news->increment('views');
+    $news->refresh();
+
+    return response()->json([
+        'id'           => $news->id,
+        'title'        => $news->title,
+        'slug'         => $news->slug,
+        'description'  => $news->description,
+        'body'         => $news->body,
+        'views'        => $news->views,
+        'published_at' => optional($news->published_at)->toDateTimeString(),
+        'images'       => $news->images->map(function ($img) {
+            return [
+                'url'     => asset('storage/' . $img->path),
+                'is_main' => $img->is_main,
+            ];
+        }),
+    ]);
+}
     public function recent(Request $request)
 {
     $excludeSlug = $request->query('exclude_slug');
