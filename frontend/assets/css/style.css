@@ -1,4 +1,16 @@
+/**
+ * ==============================================================================
+ * REPOSITORIO DE ESTILOS GLOBALES Y SISTEMA DE DISEÑO
+ * ==============================================================================
+ * Fuente Principal: Kumbh Sans (100 a 900)
+ * Paleta de colores: Orientada a tonos institucionales verdes y oscuros.
+ */
 @import url("https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap");
+/* ==============================================================================
+   1. VARIABLES DE ENTORNO (DESIGN TOKENS)
+   ==============================================================================
+   Definición de tipografías, colores de marca, fondos, bordes y animaciones.
+*/
 :root {
   --kumbh: "Kumbh Sans", sans-serif;
   --primary-color: #637227;
@@ -19,6 +31,8 @@
   --shadow: 0px 4px 25px 0px #0000000f;
 }
 
+/*
+MODO OSCURO AUN NO IMPLEMENTADO PERO SE IMPLEMENTARA EN UNA FUTURA ACTUALIZACION PARA LA WEB POLICIAL
 :root[data-theme="dark"] {
   --primary-color: #637227;
   --primary10: rgba(60, 114, 252, 0.1);
@@ -33,7 +47,8 @@
   --white: #ffffff;
   --black: #000000;
 }
-
+*/
+/*
 :root[data-theme="dark"] .light-area {
   --primary-color: #637227;
   --primary10: rgba(60, 114, 252, 0.1);
@@ -48,7 +63,13 @@
   --white: #ffffff;
   --black: #000000;
 }
+*/
 
+/* ==============================================================================
+   2. RESETEO DE ESTILOS DE NAVEGADOR (CSS RESET)
+   ==============================================================================
+   Normalización del comportamiento por defecto de los elementos HTML.
+*/
 * {
   margin: 0;
   padding: 0;
@@ -66,7 +87,11 @@ body {
   line-height: 28px;
   font-weight: 400;
 }
-
+/* ==============================================================================
+   3. TIPOGRAFÍA Y ESCALA VISUAL
+   ==============================================================================
+   Definición estricta de jerarquías para encabezados, textos y enlaces.
+*/
 h1,
 h2,
 h3,
@@ -131,7 +156,13 @@ span {
   display: inline-block;
   color: var(--span);
 }
+/* ==============================================================================
+   4. ELEMENTOS INTERACTIVOS Y COMPONENTES NATIVOS
+   ==============================================================================
+   Reseteo y comportamiento de enlaces, listas y botones de acción.
+*/
 
+/* Enlaces / Hipervínculos */
 a {
   text-decoration: none;
   display: inline-block;
@@ -157,13 +188,21 @@ button {
   border: none;
   background-color: transparent;
 }
+/* ==============================================================================
+   5. AJUSTES RESPONSIVE GLOBALES (MEDIA QUERIES)
+   ==============================================================================
+*/
 
+/* Desactiva los saltos de línea manuales (<br>) en Tablets y Dispositivos Móviles 
+   para evitar rupturas de diseño extrañas en pantallas reducidas. */
 @media (max-width: 991px) {
   br {
     display: none;
   }
 }
-
+/* ==============================================================================
+   ESTILOS DE ELEMENTOS NATIVOS Y SELECCIÓN
+   ============================================================================== */
 ::placeholder {
   color: var(--span);
 }
@@ -172,7 +211,7 @@ button {
   color: var(--white);
   background-color: var(--primary-color);
 }
-
+/* --- MARGIN TOP (De 5px a 200px) --- */
 .mt-5 {
   margin-top: 5px;
 }
@@ -333,7 +372,7 @@ button {
   margin-top: 200px;
 }
 
-/*-- Margin Bottom --*/
+/* --- MARGIN BOTTOM (De 5px a 200px) --- */
 .mb-5 {
   margin-bottom: 5px;
 }
@@ -493,7 +532,7 @@ button {
 .mb-200 {
   margin-bottom: 200px;
 }
-
+/* --- MARGIN LEFT (De 5px a 200px) --- */
 .ml-5 {
   margin-left: 5px;
 }
@@ -653,7 +692,7 @@ button {
 .ml-200 {
   margin-left: 200px;
 }
-
+/* --- MARGIN RIGHT (De 5px a 200px) --- */
 .mr-5 {
   margin-right: 5px;
 }
@@ -813,7 +852,7 @@ button {
 .mr-200 {
   margin-right: 200px;
 }
-
+/* --- PADDING TOP (De 5px a 200px) --- */
 .pt-5 {
   padding-top: 5px;
 }
@@ -973,7 +1012,7 @@ button {
 .pt-200 {
   padding-top: 200px;
 }
-
+/* --- PADDING BOTTOM (De 5px a 200px) --- */
 .pb-5 {
   padding-bottom: 5px;
 }
@@ -1133,7 +1172,7 @@ button {
 .pb-200 {
   padding-bottom: 200px;
 }
-
+/* --- PADDING LEFT (De 5px a 200px) --- */
 .pl-5 {
   padding-left: 5px;
 }
@@ -1293,7 +1332,7 @@ button {
 .pl-200 {
   padding-left: 200px;
 }
-
+/* --- PADDING RIGHT (De 5px a 200px) --- */
 .pr-5 {
   padding-right: 5px;
 }
@@ -1453,7 +1492,12 @@ button {
 .pr-200 {
   padding-right: 200px;
 }
-
+/* ==============================================================================
+   6. RESPONSIVE UTILITIES (MEDIA QUERIES - MÓVIL)
+   ==============================================================================
+   Reducción proporcional (al 50%) de los espaciados más grandes en pantallas chicas
+   (Viewports menores a 768px) para evitar desbordamientos y espacios muertos.
+*/
 @media (max-width: 767px) {
   .pt-120 {
     padding-top: 60px;
@@ -1492,6 +1536,11 @@ button {
     margin-bottom: 30px;
   }
 }
+/* ==============================================================================
+   7. CLASES UTILITARIAS DE BORDES (BORDER UTILITIES)
+   ==============================================================================
+   Helpers para aplicar o remover bordes rápidamente usando la variable de color.
+*/
 .bor {
   border: 1px solid var(--border);
 }
@@ -1515,7 +1564,11 @@ button {
 .border-none {
   border: none !important;
 }
-
+/* ==============================================================================
+   8. COMPORTAMIENTO DE TEXTOS, COLORES Y IMÁGENES
+   ==============================================================================
+*/
+/* Alineación e Imágenes */
 .text-justify {
   text-align: justify;
 }
@@ -1523,7 +1576,7 @@ button {
 .image img {
   width: 100%;
 }
-
+/* Utilidades del Color de Identidad (Clase e Interacción) */
 .primary-color {
   color: var(--primary-color) !important;
 }
@@ -1539,7 +1592,7 @@ button {
 .gradient-bg {
   background: var(--gradient-bg) !important;
 }
-
+/* Utilidades de Colores Secundarios y Alternos */
 .secondary-color {
   color: var(--secondary-color);
 }
@@ -1551,17 +1604,17 @@ button {
 .sub-bg {
   background-color: var(--sub-bg);
 }
-
+/* Modificadores de Fuente (Tamaño y Peso) */
 .sm-font {
   font-size: 14px !important;
 }
-
+/* Propiedades para Imágenes de Fondo */
 .bg-image {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
-
+/* Transición Fluida */
 .transition {
   transition: var(--transition);
 }
@@ -1573,7 +1626,12 @@ button {
 .fw-700 {
   font-weight: 700 !important;
 }
-
+/* ==============================================================================
+   9. CAPAS DE SUPERPOSICIÓN (OVERLAYS / PSEUDO-ELEMENTOS)
+   ==============================================================================
+   Manejo de contextos de posición relativa y capas pseudo-elementales (::before)
+   para banners, videos, componentes de marca y el menú principal.
+*/
 .overlay,
 .banner-video__wrp,
 .brand-three-area,
@@ -1595,7 +1653,11 @@ button {
   right: 0;
   bottom: 0;
 }
-
+/* ==============================================================================
+   10. ESTILOS DE COMPONENTES INTERNOS (PLUGIN NICE-SELECT)
+   ==============================================================================
+   Personalización global del plugin de diseño para selectores nativos de HTML.
+*/
 .nice-select {
   width: 100%;
   border-radius: 10px;
@@ -1608,7 +1670,11 @@ button {
 .nice-select .list {
   width: 100%;
 }
-
+/* ==============================================================================
+   11. COMPONENTE: SISTEMA DE CALIFICACIÓN (STARS RATING)
+   ==============================================================================
+   Control de estados de íconos (usualmente FontAwesome) para reseñas o votaciones.
+*/
 .star i {
   color: var(--primary-color);
 }
@@ -1616,7 +1682,11 @@ button {
   color: var(--span);
   opacity: 40%;
 }
-
+/* ==============================================================================
+   12. COMPONENTE: PAGINACIÓN (PEGI)
+   ==============================================================================
+   Estructura flex para botones de navegación de páginas con estados hover y activo.
+*/
 .pegi {
   display: flex;
   align-items: center;
@@ -1646,7 +1716,12 @@ button {
   background-color: var(--primary-color);
   color: var(--white);
 }
-
+/* ==============================================================================
+   13. COMPONENTE: ACORDEONES (ACCORDIONS)
+   ==============================================================================
+   Personalización del componente colapsable nativo de Bootstrap o JS personalizado,
+   utilizando FontAwesome o caracteres nativos para los indicadores de estado (+/-).
+*/
 .accordion .accordion-item {
   border: var(--border-1px);
   border-radius: 0px;
@@ -1677,6 +1752,7 @@ button {
 .accordion .accordion-button::after {
   display: none;
 }
+/* Indicador personalizado de estado abierto: Icono FontAwesome de resta (-) */
 .accordion .accordion-button::before {
   position: absolute;
   content: "\f068";
@@ -1703,7 +1779,13 @@ button {
   background-color: var(--sub-bg);
   color: var(--primary-color);
 }
-
+/* ==============================================================================
+   14. COMPONENTE: PANTALLA DE CARGA (PRELOADER & ANIMATION)
+   ==============================================================================
+   Estructura de carga inicial a pantalla completa. Utiliza los pseudo-elementos 
+   ::before y ::after como dos paneles negros que cubren el 50% superior e inferior,
+   creando un efecto de cortina dividida al terminar la carga.
+*/
 #preloader {
   width: 100%;
   height: 100vh;
@@ -1760,7 +1842,12 @@ button {
   -o-transition-delay: 1s;
   transition-delay: 1s;
 }
-
+/* ==============================================================================
+   15. TEXTO E INDICADOR DE CARGA (.LOADING)
+   ==============================================================================
+   Contenedor del texto de carga centrado en pantalla. Maneja una animación de 
+   parpadeo infinitamente alternada letra por letra mediante spans.
+*/
 .loading {
   position: fixed;
   width: 100%;
@@ -1820,7 +1907,7 @@ button {
   transition-delay: 0.5s;
   visibility: hidden;
 }
-
+/* --- KEYFRAMES (Lógica de Opacidad de la Animación) --- */
 @-webkit-keyframes loading {
   0% {
     opacity: 1;
@@ -1837,7 +1924,13 @@ button {
     opacity: 0;
   }
 }
-
+/* ==============================================================================
+   16. COMPONENTE: BOTÓN VOLVER ARRIBA (SCROLL TO TOP WITH PROGRESS)
+   ==============================================================================
+   Botón flotante fijado en la esquina inferior derecha. Usa un pseudo-elemento 
+   para la flecha (FontAwesome) y un SVG dinámico (`.scroll-circle`) que suele 
+   animarse con JavaScript para reflejar el porcentaje de lectura de la página.
+*/
 .scroll-up {
   cursor: pointer;
   display: block;
@@ -1854,6 +1947,7 @@ button {
   width: 50px;
   transition: var(--transition);
 }
+/* Flecha central del botón (Icono FontAwesome) */
 .scroll-up::after {
   position: absolute;
   font-family: "Font Awesome 6 Pro";
@@ -1872,6 +1966,7 @@ button {
   z-index: 1;
   transition: var(--transition);
 }
+/* Configuración del SVG circular para el trazo de progreso */
 .scroll-up svg path {
   fill: none;
 }
@@ -1886,7 +1981,12 @@ button {
   visibility: visible;
   transform: translateY(0);
 }
-
+/* ==============================================================================
+   17. COMPONENTE: BOTÓN PRINCIPAL DE ACCIÓN (.BTN-ONE)
+   ==============================================================================
+   Estilo base para los botones principales del sitio, utilizando el degradado 
+   institucional de la marca y controlando de manera fluida el espaciado de los iconos.
+*/
 .btn-one {
   padding: 15px 25px;
   background: var(--gradient-bg);
@@ -1914,6 +2014,9 @@ button {
     font-size: 14px;
   }
 }
+/* --- EFECTOS HOVER PARA EL BOTÓN PRINCIPAL (.BTN-ONE) --- */
+/* Animación de relleno tipo cortina: Dos paneles (top-right y bottom-left) 
+   que inician con altura 0 y se expanden al 100% en hover cubriendo el fondo. */
 .btn-one::after {
   position: absolute;
   top: 0;
@@ -1948,7 +2051,12 @@ button {
 .btn-one:hover i {
   transform: translate(5px);
 }
-
+/* ==============================================================================
+   18. COMPONENTE: BOTÓN LEER MÁS (.READ-MORE-BTN)
+   ==============================================================================
+   Enlace interactivo simple. Al hacer hover, cambia al color de marca y desplaza 
+   el ícono (flecha) hacia la derecha para incentivar el clic.
+*/
 .read-more-btn {
   text-transform: capitalize;
   font-weight: 600;
@@ -1965,7 +2073,11 @@ button {
   color: var(--primary-color);
   margin-left: 10px;
 }
-
+/* ==============================================================================
+   19. COMPONENTE: CONTROLADORES DE SLIDER - FLECHAS (SWIPER CAROUSEL)
+   ==============================================================================
+   Botones circulares de "Anterior" y "Siguiente" para la navegación de carruseles.
+*/
 .arry-prev,
 .arry-next {
   width: 50px;
@@ -1989,7 +2101,12 @@ button {
   background-color: var(--primary-color);
   color: var(--white);
 }
-
+/* ==============================================================================
+   20. COMPONENTE: CONTROLADORES DE SLIDER - INDICADORES (.DOT & .DOT-LIGHT)
+   ==============================================================================
+   Paginación por puntos (bullets) de Swiper. Crea un efecto de anillo expansivo:
+   el punto activo muestra un borde exterior sutil alrededor del punto central.
+*/
 .dot .swiper-pagination-bullet,
 .dot-light .swiper-pagination-bullet {
   width: 20px;
@@ -2035,7 +2152,13 @@ button {
 .dot-light .swiper-pagination-bullet.swiper-pagination-bullet-active {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
-
+/* ==============================================================================
+   21. COMPONENTE: BOTÓN DE VIDEO CON ANIMACIÓN DE PULSO (.VIDEO-BTN)
+   ==============================================================================
+   Botón circular flotante (Play) que utiliza los pseudo-elementos ::before y ::after 
+   con un retraso de 1 segundo entre ellos para generar un efecto de ondas concéntricas
+   infinitas (efecto de pulso radial).
+*/
 .video-btn {
   position: relative;
   text-align: center;
@@ -2078,7 +2201,12 @@ button {
   -webkit-animation-delay: 1s;
   animation-delay: 1s;
 }
-
+/* ==============================================================================
+   22. COMPONENTE: BARRAS DE PROGRESO (.PROGRESS-AREA)
+   ==============================================================================
+   Contenedores para barras de carga de habilidades, estadísticas o metas. 
+   Incluye una fila de títulos con distribución flex space-between.
+*/
 .progress-area .progress {
   background-color: var(--border);
   height: 12px;
@@ -2100,7 +2228,11 @@ button {
   font-size: 14px;
   font-weight: 600;
 }
-
+/* ==============================================================================
+   23. COMPONENTE: LOGOTIPO (.LOGO)
+   ==============================================================================
+   Dimensionamiento controlado de la marca institucional para evitar desbordes.
+*/
 .logo {
   display: block;
   width: 196px;
@@ -2108,7 +2240,12 @@ button {
 .logo img {
   width: 100%;
 }
-
+/* ==============================================================================
+   24. ESTRUCTURA: BARRA SUPERIOR DEL ENCABEZADO (.HEADER-TOP)
+   ==============================================================================
+   Faja informativa superior (normalmente para teléfonos, correos y redes sociales).
+   Utiliza flexbox para la separación lateral de los bloques informativos.
+*/
 .header-top {
   padding: 16px 0;
   overflow: hidden;
@@ -2157,7 +2294,13 @@ button {
 .header-top .header-top-wrp .link-info li a:hover {
   color: var(--primary-color);
 }
-
+/* ==============================================================================
+   25. ESTRUCTURA: AREA GENERAL DEL ENCABEZADO (.HEADER-AREA)
+   ==============================================================================
+   Maquetación del bloque de navegación principal. Integra una figura geométrica 
+   de fondo cortada (`clip-path`) en el costado izquierdo que se estira y adapta 
+   proporcionalmente mediante Media Queries según el tamaño de la pantalla.
+*/
 .header-area {
   position: relative;
 }
@@ -2172,6 +2315,7 @@ button {
   z-index: -1;
   clip-path: polygon(0 0, 100% 0%, 90% 100%, 0% 100%);
 }
+/* --- Adaptaciones Responsive del Ancho de la Figura Geometrica --- */
 @media (max-width: 1199px) {
   .header-area::after {
     width: 25%;
@@ -2208,6 +2352,11 @@ button {
 .header-area.menu-fixed .mega-menu {
   top: 105px !important;
 }
+/* ==============================================================================
+   26. ESTRUCTURA Y CONTENEDORES DEL MENÚ PRINCIPAL
+   =============================================================================
+   Alineación horizontal de los elementos de navegación utilizando Flexbox.
+*/
 .header__container {
   max-width: 1350px;
   padding: 0 15px;
@@ -2226,6 +2375,12 @@ button {
 .header__main .main-menu ul li {
   position: relative;
 }
+/* ==============================================================================
+   27. MENÚ GIGANTE (MEGA MENU)
+   =============================================================================
+   Variante de menú extendido a lo ancho de la pantalla para albergar múltiples 
+   columnas de enlaces, bloques con imágenes de fondo o botones institucionales.
+*/
 .header__main .main-menu ul li.has-megamenu {
   position: static;
 }
@@ -2242,6 +2397,12 @@ button {
   font-size: 12px;
   transition: var(--transition);
 }
+/* ==============================================================================
+   28. SUBMENÚS DESPLEGABLES ESTÁNDAR (DROPDOWNS)
+   =============================================================================
+   Menús secundarios ocultos por defecto (opacity: 0, visibility: hidden) que aparecen 
+   con un ligero efecto de desplazamiento hacia arriba (translateY) al hacer hover.
+*/
 .header__main .main-menu ul li .sub-menu {
   position: absolute;
   left: 0;
@@ -2272,6 +2433,12 @@ button {
   gap: 20px;
   justify-content: space-around;
 }
+/* ==============================================================================
+   29. COMPONENTE CON IMAGEN DENTRO DEL MENÚ (.MENU-IMAGE)
+   =============================================================================
+   Estructuras multimedia integradas en el menú desplegable. Muestran textos y un 
+   grupo de botones (.btn__group) centrado que aparece con una transición limpia en hover.
+*/
 .header__main .main-menu ul li .sub-menu.menu-image .image {
   position: relative;
 }
@@ -2341,11 +2508,21 @@ button {
   transform: rotate(-180deg);
   color: var(--primary-color);
 }
+/* ==============================================================================
+   30. RESPONSIVE DESIGN (MEDIA QUERIES)
+   =============================================================================
+*/
 @media (max-width: 991px) {
   .header__main {
     padding: 15px 0;
   }
 }
+/* ==============================================================================
+   31. COMPONENTE: BOTÓN DE MENÚ MÓVIL (.BARS)
+   ==============================================================================
+   Estilo base para el icono de hamburguesa (usualmente un elemento de FontAwesome)
+   utilizado para abrir los menús laterales o desplegables en dispositivos móviles.
+*/
 .header__main .bars i {
   font-size: 18px;
   cursor: pointer;
@@ -2358,6 +2535,12 @@ button {
 .header-two-area:after {
   display: none;
 }
+/* ==============================================================================
+   32. VARIANTE: ENCABEZADO TIPO DOS (.HEADER-TWO-AREA)
+   ==============================================================================
+   Estructura alternativa con comportamiento de posicionamiento fijo transparente.
+   Remueve el pseudo-elemento decorativo (`::after`) de la cabecera por defecto.
+*/
 .header-two-area {
   position: fixed;
   width: 100%;
@@ -2375,6 +2558,12 @@ button {
 .header-two-area .header__main .bars i {
   color: var(--white);
 }
+/* ==============================================================================
+   33. VARIANTE: ENCABEZADO TIPO TRES (.HEADER-THREE-AREA)
+   ==============================================================================
+   Estructura alternativa que incluye microinteracciones avanzadas de fondo (glow)
+   para los enlaces principales del menú superior durante el estado hover.
+*/
 .header-three-area:after {
   display: none;
 }
@@ -2427,7 +2616,12 @@ button {
 .header-three-area .header__main .bars i {
   color: var(--white);
 }
-
+/* ==============================================================================
+   34. INTEGRACIÓN: MENÚ MÓVIL RESPONSIVE (.MEAN-NAV)
+   ==============================================================================
+   Adaptación de las tarjetas multimedia, imágenes del mega-menu y el grupo de 
+   botones de acción cuando se renderizan dentro del plugin móvil (como MeanMenu).
+*/
 .mean-nav .mega-menu .image {
   padding: 20px;
   border: var(--border-1px);
@@ -2448,7 +2642,12 @@ button {
   text-align: center !important;
   width: 100% !important;
 }
-
+/* ==============================================================================
+   35. COMPONENTE: PANEL LATERAL DESPLEGABLE (.SIDEBAR-AREA)
+   ==============================================================================
+   Estructura fija (Offcanvas/Sidebar) oculta o visible en el lateral derecho de 
+   la pantalla. Suele contener widgets, formularios de búsqueda o datos de contacto.
+*/
 .sidebar-area {
   position: fixed;
   top: 0;
@@ -2468,6 +2667,13 @@ button {
     width: 350px;
   }
 }
+/* ==============================================================================
+   36. COMPONENTE: CONTENIDOS E INTERACCIONES DEL PANEL LATERAL (.SIDEBAR-AREA)
+   ==============================================================================
+   Hijos y modificadores del panel colapsable (Sidebar). Incluye la tipografía, 
+   el botón de cierre con animación de rotación, iconos de redes sociales, el motor 
+   de búsqueda interno y la capa de oscurecimiento de fondo (.sidebar__overlay).
+*/
 .sidebar-area p {
   color: var(--white);
 }
@@ -2529,22 +2735,13 @@ button {
   opacity: 0;
   right: -30px;
 }
-.sidebar-area .sidebar__search {
-  position: relative;
-}
-.sidebar-area .sidebar__search input {
-  width: 100%;
-  padding: 8px 20px;
-  padding-right: 40px;
-}
-.sidebar-area .sidebar__search i {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  cursor: pointer;
-  color: var(--heading-color);
-}
 
+/* ==============================================================================
+   37. AJUSTES INTEGRADOS DE NAVEGACIÓN MÓVIL (.MOBILE-MENU)
+   ==============================================================================
+   Overrides específicos sobre el plugin MeanMenu para forzar la visibilidad por 
+   bloques y limpiar la visualización de sub-iconos en pantallas pequeñas.
+*/
 .mobile-menu .meanmenu-reveal {
   display: none !important;
 }
@@ -2555,7 +2752,12 @@ button {
 .mobile-menu ul li a i {
   display: none;
 }
-
+/* ==============================================================================
+   38. SECCIÓN: BANNER PRINCIPAL / HERO CAROUSEL (.BANNER-AREA)
+   ==============================================================================
+   Control estructural del área introductoria del sitio (Hero sections). Maneja 
+   los contenedores flotantes de la paginación y las formas vectoriales decorativas.
+*/
 .banner-area,
 .banner-two-area {
   overflow: hidden;
@@ -3005,7 +3207,12 @@ button {
 .banner__inner-page a:hover {
   color: var(--primary-color);
 }
-
+/* ==============================================================================
+   39. ESTRUCTURA: ENCABEZADOS DE SECCIÓN (.SECTION-HEADER)
+   ==============================================================================
+   Estilos estandarizados para los títulos de los bloques o módulos de contenido. 
+   Incluye un subtítulo superior (h5), el título principal (h2) y un párrafo descriptivo.
+*/
 .section-header h5 {
   color: var(--primary-color);
   padding-bottom: 20px;
@@ -3027,7 +3234,12 @@ button {
 .section-header p {
   margin-top: 30px;
 }
-
+/* ==============================================================================
+   40. SECCIÓN: MÓDULO O CUADRÍCULA DE SERVICIOS (.SERVICE-AREA)
+   ==============================================================================
+   Bloque destinado a listar prestaciones, funciones o dependencias del portal. 
+   Controla el posicionamiento de formas decorativas de fondo y las cajas de iconos.
+*/
 .service-area {
   position: relative;
   overflow: hidden;
@@ -3317,6 +3529,67 @@ button {
 .service-single__right-item .service-category li.active i {
   color: var(--white) !important;
 }
+/* ==============================================================================
+   41. COMPONENTE: MODAL PARA MAPA INTERACTIVO DE TRAFICO(.MODAL-MAP)
+   ==============================================================================
+   Ventana emergente a pantalla completa que actúa como contenedor superpuesto.
+   Utiliza un fondo oscuro traslúcido y un desenfoque de fondo dinámico (backdrop-filter)
+   para centrar por completo la atención del usuario en el mapa.
+*/
+.modal-map {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(3px);
+}
+
+.modal-content-map {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  height: 80%;
+  margin: 5% auto;
+  background: #0f0f0f;
+  border-radius: 12px;
+  border: 3px solid #637227;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+}
+
+#mapTraffic {
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
+.close-map {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: #fff;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  transition: 0.3s ease;
+}
+
+.close-map:hover {
+  color: #637227;
+  transform: scale(1.15);
+}
+/* ==============================================================================
+   42. SECCIÓN: NOTICIAS / NOVEDADES
+   ==============================================================================
+   Bloque estructural principal para la presentación institucional de la entidad.
+   Maneja un gran espacio inferior (padding-bottom: 240px) reservado habitualmente
+   para la superposición de elementos decorativos o formas de transición de página.
+*/
 .about-area,
 .about-two-area {
   overflow: hidden;
@@ -3372,35 +3645,6 @@ button {
   top: 30px;
   right: 80px;
 }
-.about__right-item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.about__right-item .icon {
-  width: 80px;
-  height: 80px;
-  line-height: 80px;
-  text-align: center;
-  border-radius: 50%;
-  transition: var(--transition);
-  width: 100%;
-  max-width: 80px;
-  border-radius: 0;
-  background-color: var(--primary10);
-}
-.about__info {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
-@media (max-width: 575px) {
-  .about__info {
-    gap: 5px;
-  }
-}
 .about-two-area {
   padding-bottom: 120px;
 }
@@ -3408,143 +3652,6 @@ button {
   .about-two-area {
     padding-bottom: 60px;
   }
-}
-.about-two__shape {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-}
-.about-two__left-item .circle-shape {
-  right: unset;
-  left: -32%;
-  top: 12%;
-  animation: rotate 5s linear infinite;
-}
-.about-two__left-item .dots {
-  position: absolute;
-  right: 15%;
-  top: 0;
-}
-.about-two__left-item .shape-halper {
-  position: absolute;
-  top: 28%;
-  right: 26%;
-}
-.about-two__left-item .sm-image {
-  bottom: 20px;
-}
-.about-two__right-item {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  max-width: 500px;
-}
-.about-two__right-item ul li:not(:last-child) {
-  margin-bottom: 20px;
-}
-.about-two__right-item ul li i {
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  text-align: center;
-  border-radius: 50%;
-  transition: var(--transition);
-  background: var(--gradient-bg);
-  color: var(--white);
-  font-size: 10px;
-  margin-right: 10px;
-}
-.about-two__right-item ul li {
-  color: var(--heading-color);
-  font-weight: 600;
-}
-.about-three-area {
-  z-index: 1;
-}
-.about-three__box-up {
-  position: absolute;
-  top: 15px;
-  right: 0;
-  z-index: -1;
-}
-.about-three__box-down {
-  position: absolute;
-  top: 60px;
-  right: 0;
-  z-index: -1;
-}
-.about-three__info {
-  max-width: 430px;
-}
-.about-three__info .icon {
-  width: 64px;
-  height: 64px;
-  line-height: 64px;
-  text-align: center;
-  border-radius: 50%;
-  transition: var(--transition);
-  border-radius: 0px;
-  width: 100%;
-  max-width: 64px;
-}
-.about-three__left-item {
-  max-width: 450px;
-}
-.about-three__left-item .about-call-icon {
-  width: 56px;
-  height: 56px;
-  line-height: 56px;
-  text-align: center;
-  border-radius: 50%;
-  transition: var(--transition);
-  border: 1px solid var(--primary-color);
-}
-.about-three__left-item .about-call-icon span {
-  width: 48px;
-  height: 48px;
-  line-height: 50px;
-  text-align: center;
-  border-radius: 50%;
-  transition: var(--transition);
-  background: var(--gradient-bg);
-}
-.about-three__image {
-  max-width: 634px;
-  float: right;
-  z-index: 1;
-}
-.about-three__image .faq__line {
-  left: 20% !important;
-  z-index: -1;
-  top: 10px;
-}
-.about-three__image .about-three-dot {
-  position: absolute;
-  left: 8%;
-  bottom: 15%;
-  z-index: -1;
-}
-.about-three__image .about-three-count {
-  box-shadow: var(--shadow);
-  width: 208px;
-  position: absolute;
-  top: 23%;
-  left: 10px;
-  background-color: var(--white);
-  border-radius: 8px;
-}
-.about-three__image .about-three-count h3 {
-  font-size: 28px;
-  line-height: 40px;
-}
-.about-three__image .about-three-count h3 span {
-  color: var(--secondary-color);
-}
-.about-three__image .about-three-count .icon {
-  width: 40px;
 }
 
 .counter-area {
@@ -3555,92 +3662,14 @@ button {
   right: 0;
   bottom: 0;
 }
-.counter__wrp,
-.quote__wrp {
-  overflow: hidden;
-  padding: 80px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  position: relative;
-  margin-top: -120px;
-  z-index: 2;
-}
-@media (max-width: 767px) {
-  .counter__wrp,
-  .quote__wrp {
-    justify-content: center;
-  }
-}
-.counter__item {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  position: relative;
-}
-.counter__item h3 {
-  font-size: 36px;
-  color: var(--white);
-  font-weight: 700;
-  line-height: 50px;
-}
-.counter__item h3 span {
-  color: var(--white);
-}
 
-.modal-map {
-  display: none;
-  position: fixed;
-  z-index: 99999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(3px);
-}
 
-.modal-content-map {
-  position: relative;
-  width: 90%;
-  max-width: 900px;
-  height: 80%;
-  margin: 5% auto;
-  background: #0f0f0f;
-  border-radius: 12px;
-  border: 3px solid #637227;
-  overflow: hidden;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
-}
-
-#mapTraffic {
-  width: 100%;
-  height: 100%;
-  background: #000;
-}
-
-.close-map {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  color: #fff;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  z-index: 10;
-  transition: 0.3s ease;
-}
-
-.close-map:hover {
-  color: #637227;
-  transform: scale(1.15);
-}
-
-/* =========================================================
-   BRAND / INFOPOL PREMIUM
-========================================================= */
+/* ==============================================================================
+   43. COMPONENTE: INFOPOL LOGOS .brand-area .brand_wrp
+   ==============================================================================
+   Bloque diseñado para brand que muestra los logos de la infopol de manera ordenada
+   y elegante
+*/
 
 .brand-area {
   position: relative;
@@ -3930,7 +3959,11 @@ button {
     font-size: 15px;
   }
 }
-
+/* ==============================================================================
+   44. COMPONENTE: QUIENES SOMOS (.PROCESS-AREA)
+   ==============================================================================
+   Bloque diseñado para guiar al usuario los valores principales de la institucíon
+*/
 .process-area {
   overflow: hidden;
 }
@@ -4000,7 +4033,13 @@ button {
     transform: rotate(90deg);
   }
 }
-
+/* ==============================================================================
+   45. COMPONENTE: FORMULARIO DE CONTACTO / ATENCIÓN (.TALK-US__ITEM)
+   ==============================================================================
+   Módulo dedicado a buzones de sugerencias, consultas o solicitudes directas.
+   Utiliza el fondo degradado corporativo de la identidad y unifica los campos 
+   de entrada (inputs, textarea y botón) para mantener una coherencia limpia y sólida.
+*/
 .talk-us__item .section-header h5 {
   padding-bottom: 5px;
 }
@@ -4047,10 +4086,37 @@ button {
 .talk-us__item form button:hover {
   opacity: 0.9;
 }
-/* ===========================================================
-   NEWS CARDS PREMIUM
-=========================================================== */
-
+/* ==============================================================================
+   46. COMPONENTE: PREGUNTAS FRECUENTES (FAQ / ACCORDION MODULE)
+   ==============================================================================
+   Módulo interactivo estructurado para resolver dudas comunes de los usuarios.
+   Optimiza la experiencia de navegación mediante paneles colapsables (tipo acordeón),
+   garantizando una lectura limpia, ordenada y de rápido acceso a la información.
+*/
+.faq-area {
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+.faq__shape {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+.faq__image {
+  position: relative;
+}
+.faq__line {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+/* ==============================================================================
+   47. COMPONENTE: TARJETAS DE NOTICIAS 
+   ==============================================================================
+   Módulo avanzado para la visualización de notas de prensa, novedades o artículos.
+   Estructura el contenedor de las tarjetas informativas*/
 .news-card {
   position: relative;
 
@@ -4076,7 +4142,7 @@ button {
 }
 
 /* ========================================
-   HOVER
+  EFECTO HOVER
 ======================================== */
 
 .news-card:hover {
@@ -4088,7 +4154,7 @@ button {
 }
 
 /* ========================================
-   IMAGE
+   IMAGEN
 ======================================== */
 
 .news-card-image {
@@ -4123,7 +4189,7 @@ button {
 }
 
 /* ========================================
-   IMAGE OVERLAY
+   IMAGEN OVERLAY
 ======================================== */
 
 .news-card-overlay {
@@ -4148,7 +4214,7 @@ button {
 }
 
 /* ========================================
-   DATE
+   FECHA
 ======================================== */
 
 .news-card-date {
@@ -4233,7 +4299,7 @@ button {
 }
 
 /* ========================================
-   CONTENT
+   CONTENTIDO
 ======================================== */
 
 .news-card-content {
@@ -4269,7 +4335,7 @@ button {
 }
 
 /* ========================================
-   TITLE
+   TITULO
 ======================================== */
 
 .news-card-title {
@@ -4301,7 +4367,7 @@ button {
 }
 
 /* ========================================
-   DESCRIPTION
+   DESCRIPCIÓN
 ======================================== */
 
 .news-card-description {
@@ -4322,7 +4388,7 @@ button {
 }
 
 /* ========================================
-   BUTTON
+   BOTON
 ======================================== */
 
 .news-card-button {
@@ -4377,7 +4443,7 @@ button {
 }
 
 /* ========================================
-   PAGINATION
+   PAGINACION
 ======================================== */
 
 #news-pagination {
@@ -4490,9 +4556,14 @@ button {
     border-radius: 14px;
   }
 }
-/* ===========================================================
-   NEWS DETAIL PREMIUM
-=========================================================== */
+
+/* ==============================================================================
+   48. COMPONENTE: DETALLE DE NOTICIA  (NEWS DETAIL)
+   ==============================================================================
+   Estructura principal para la vista interna o artículo completo de una noticia.
+   Maneja el lienzo de fondo con un degradado suave y limpio para garantizar una 
+   experiencia de lectura óptima y descansada.
+*/
 
 .news-detail-section {
   position: relative;
@@ -4501,7 +4572,7 @@ button {
 }
 
 /* ========================================
-   ARTICLE CARD
+   TARJETA DEL ARTÍCULO
 ======================================== */
 
 .news-detail-card {
@@ -4517,7 +4588,7 @@ button {
 }
 
 /* ========================================
-   HERO IMAGE
+   HERO IMAGEN
 ======================================== */
 
 .news-detail-image-wrapper {
@@ -4565,7 +4636,7 @@ button {
 }
 
 /* ========================================
-   DATE FLOAT
+   FECHA FLOTANTE
 ======================================== */
 
 .news-detail-day {
@@ -4591,7 +4662,7 @@ button {
 }
 
 /* ========================================
-   CONTENT
+   CONTENIDO
 ======================================== */
 
 .news-detail-content {
@@ -4635,7 +4706,7 @@ button {
 }
 
 /* ========================================
-   TITLE
+   TITULO
 ======================================== */
 
 .news-detail-title {
@@ -4679,7 +4750,7 @@ button {
 }
 
 /* ========================================
-   BODY
+   CUERPO
 ======================================== */
 
 .news-detail-body {
@@ -4724,7 +4795,7 @@ button {
 }
 
 /* ========================================
-   NEW SMOOTH IMAGE CAROUSEL
+   CARRUSEL DE IMAGEN
 =========================================== */
 
 .news-detail-image-wrapper {
@@ -4941,7 +5012,7 @@ button {
 }
 
 /* ========================================
-   RECENT POSTS
+   NOTICIAS RECIENTES
 ======================================== */
 
 .news-recent-posts {
@@ -4952,7 +5023,7 @@ button {
 }
 
 /* ========================================
-   SOCIAL EMBEDS
+   REDES SOCIALES
 ======================================== */
 
 .news-social-embed {
@@ -5045,200 +5116,15 @@ button {
     border-radius: 18px;
   }
 }
-/* ========================================
-    PREGUNTAS FRECUENTES
-======================================== */
-.faq-area {
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-}
-.faq__shape {
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: -1;
-}
-.faq__image {
-  position: relative;
-}
-.faq__line {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-}
 
-.quote__wrp {
-  display: block;
-  padding: 60px;
-  z-index: 1;
-  margin-top: 0;
-  margin-bottom: -120px;
-}
-.quote__shape {
-  position: absolute;
-  left: 0;
-  border-top: 0;
-  z-index: -1;
-}
 
-.pricing-area {
-  position: relative;
-  z-index: 1;
-}
-.pricing__shape-up {
-  position: absolute;
-  top: -120px;
-  left: 0;
-  z-index: -1;
-}
-.pricing__shape-down {
-  position: absolute;
-  top: -80px;
-  left: 0;
-  z-index: -1;
-}
-.pricing__shape {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: -1;
-}
-.pricing__item {
-  overflow: hidden;
-}
-.pricing__item .item-shape {
-  position: absolute;
-  bottom: 40px;
-  right: 0;
-  z-index: -1;
-}
-.pricing__item {
-  position: relative;
-  z-index: 1;
-}
-.pricing__item ul {
-  padding: 40px 0;
-}
-.pricing__item ul li {
-  color: var(--white);
-}
-.pricing__item ul li:not(:last-child) {
-  margin-bottom: 20px;
-}
-.pricing__item {
-  background: linear-gradient(180deg, #3c72fc -1.09%, #00060c 175.27%);
-  padding: 50px 40px;
-}
-.pricing__item .pricing-head {
-  padding-bottom: 30px;
-  border-bottom: 1px solid rgba(227, 227, 227, 0.4);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-}
-.pricing__item .pricing-head h2 {
-  color: var(--white);
-}
-.pricing__item .pricing-head h2 span {
-  color: var(--white);
-  font-size: 18px;
-  font-weight: 400;
-}
-.pricing__item .pricing-icon {
-  width: 94px;
-  height: 90px;
-  text-align: center;
-  line-height: 90px;
-}
-.pricing__item .pricing-icon img {
-  transition: 1s;
-}
-.pricing__item:hover .item-shape {
-  animation: bobble 2s ease-in-out infinite alternate;
-}
-.pricing__item:hover .pricing-icon img {
-  transform: rotateY(-360deg);
-}
-
-.project-three-area {
-  padding-bottom: 240px;
-  padding-top: 240px;
-  margin-top: -120px;
-}
-.project-three__item .case__content {
-  text-align: center;
-}
-.project-three__item .case__btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  bottom: unset;
-  right: unset;
-}
-
-.banner-video-area {
-  position: relative;
-}
-
-.contact__form form .nice-select {
-  width: 100%;
-  font-size: 16px;
-  font-weight: 400;
-  border: none;
-  background-color: var(--sub-bg);
-  margin-bottom: 30px;
-  padding: 18px 20px;
-  height: 70px;
-  border-radius: 5px;
-}
-.contact__form form .nice-select .list {
-  width: 100%;
-}
-.contact__form form label {
-  font-family: var(--quicksand);
-  color: var(--heading-color);
-  margin-bottom: 15px;
-  font-weight: 700;
-}
-.contact__form form input,
-.contact__form form textarea {
-  width: 100%;
-  padding: 18px 20px;
-  background-color: var(--sub-bg);
-  border-radius: 4px;
-  margin-bottom: 30px;
-}
-.contact__form form textarea {
-  height: 200px;
-}
-
-.error__item {
-  max-width: 860px;
-  margin: 0 auto;
-  text-align: center;
-}
-.error__item h2 {
-  font-size: 64px;
-  line-height: 72px;
-}
-@media (max-width: 991px) {
-  .error__item h2 {
-    font-size: 40px;
-    line-height: 50px;
-  }
-}
-@media (max-width: 575px) {
-  .error__item h2 {
-    font-size: 30px;
-    line-height: 40px;
-  }
-}
-/* =========================================================
-   ORGANIGRAMA PREMIUM
-========================================================= */
+/* ==============================================================================
+   49. COMPONENTE: ORGANIGRAMA PREMIUM (ORGANIZATION CHART PREMIUM)
+   ==============================================================================
+   Estructura general y lienzo de la página del esquema jerárquico institucional.
+   Maneja un fondo limpio con un degradado sutil de gris claro a blanco puro para 
+   resaltar la estructura de nodos y dependencias de la organización.
+*/
 
 .organization-page {
   background: linear-gradient(to bottom, #f4f6f8 0%, #ffffff 100%);
@@ -5529,9 +5415,13 @@ button {
     height: 46px;
   }
 }
-/* =========================================================
-   VALUES PAGE
-========================================================= */
+/* ==============================================================================
+   50. COMPONENTE: PÁGINA DE VALORES INSTITUCIONALES 
+   ==============================================================================
+   Estructura general y lienzo para la presentación de los valores de la entidad.
+   Maneja un degradado limpio y suave de fondo para mantener la sobriedad visual 
+   y potenciar la legibilidad del marco ético institucional.
+*/
 
 .values-page {
   background: linear-gradient(to bottom, #f4f6f8 0%, #ffffff 100%);
@@ -5831,9 +5721,13 @@ button {
     font-size: 28px;
   }
 }
-/* =========================================================
-   HISTORY PREMIUM
-========================================================= */
+/* ==============================================================================
+   51. COMPONENTE: PÁGINA DE RESEÑA HISTÓRICA 
+   ==============================================================================
+   Estructura base, lienzo y contenedores para el módulo cronológico e histórico.
+   Establece un fondo adaptado para la lectura narrativa de hitos institucionales,
+   asegurando que los elementos multimedia y las líneas de tiempo resalten con solidez.
+*/
 
 .history-page {
   background: linear-gradient(to bottom, #f4f6f8 0%, #ffffff 100%);
@@ -6147,10 +6041,14 @@ button {
     font-size: 22px !important;
   }
 }
-/* =========================================================
-   TRÁMITES PREMIUM
-========================================================= */
-
+/* ==============================================================================
+   52. COMPONENTE: PORTAL DE TRÁMITES Y SERVICIOS
+   ==============================================================================
+   Estructura modular premium para la gestión y consulta de trámites ciudadanos.
+   Controla el ecosistema visual que permite a los usuarios previsualizar opciones 
+   mediante tarjetas informativas (Cards) e inspeccionar requisitos detallados a 
+   través de ventanas emergentes dinámicas (Modals).
+*/
 .tramits-section {
   background: linear-gradient(to bottom, #f4f6f8 0%, #ffffff 100%);
 
@@ -6403,7 +6301,7 @@ button {
   }
 }
 /* =========================================================
-   MODALES PREMIUM
+   MODALES 
 ========================================================= */
 
 .tramite-modal .modal-dialog {
@@ -6677,7 +6575,7 @@ button {
   text-decoration: underline;
 }
 
-/* FOOTER */
+/* FOOTER MODAL */
 
 .tramite-modal .modal-footer {
   border: none;
@@ -6749,29 +6647,13 @@ button {
   }
 }
 
-.footer-area,
-.footer-two-area {
-  overflow: hidden;
-  position: relative;
-}
-.footer__wrp {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-}
-@media (max-width: 575px) {
-  .footer__wrp {
-    flex-direction: column;
-    justify-content: left;
-    align-items: unset;
-  }
-}
-/* =========================================================
-   CONTACTOS PREMIUM UI
-========================================================= */
+/* ==============================================================================
+   53. COMPONENTE: PÁGINA DE CONTACTOS INSTITUCIONALES (CONTACTS PAGE)
+   ==============================================================================
+   Estructura general y lienzo para el módulo de atención ciudadana y correspondencia.
+   Maneja un fondo gris claro limpio (#f4f6f8) que reduce la fatiga visual y establece 
+   un contraste óptimo con las tarjetas de dependencias, formularios y mapas.
+*/
 
 .contacts-page {
   background: #f4f6f8;
@@ -7065,7 +6947,7 @@ button {
 }
 
 /* =========================================================
-   CONTACT CARD
+   CARTAS DE CONTACTOS
 ========================================================= */
 
 .contact-card {
@@ -7272,7 +7154,7 @@ button {
 }
 
 /* =========================================================
-   MAP
+   MAPA DE CONTACTOS
 ========================================================= */
 
 .map-section {
@@ -7392,10 +7274,14 @@ button {
     height: 420px;
   }
 }
-/* =========================================================
-   TRANSPARENCY
-========================================================= */
-
+/* ==============================================================================
+   54. COMPONENTE: PORTAL DE TRANSPARENCIA Y ACCESO A LA INFORMACIÓN (.TRANSPARENCY)
+   ==============================================================================
+   Módulo dedicado al cumplimiento de las normativas de fiscalización y acceso público.
+   Controla el ecosistema visual para documentos institucionales oficiales 
+   (rendiciones de cuentas, resoluciones) y la visualización del 
+   calendario de eventos.
+*/
 .transparency-section {
   position: relative;
 
@@ -7607,7 +7493,7 @@ button {
 }
 
 /* =========================================================
-   FULLCALENDAR PREMIUM
+   CALENDARIO PUBLICO
 ========================================================= */
 
 #calendar {
@@ -7859,7 +7745,7 @@ button {
   }
 }
 /* =========================================================
-   EVENT MODAL PREMIUM
+  MODAL DE EVENTO
 ========================================================= */
 
 #eventModal .modal-content {
@@ -7947,143 +7833,16 @@ button {
 
   line-height: 1.8;
 }
-/*Footer*/
-.footer__shape-solid-left {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.footer__shape-regular-left {
-  position: absolute;
-  top: 30px;
-  left: 0;
-}
-@media (max-width: 767px) {
-  .footer__shape-regular-left {
-    display: none;
-  }
-}
-.footer__shape-solid-right {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-@media (max-width: 767px) {
-  .footer__shape-solid-right {
-    display: none;
-  }
-}
-.footer__shape-regular-right {
-  position: absolute;
-  top: 30px;
-  right: 0;
-}
-@media (max-width: 767px) {
-  .footer__shape-regular-right {
-    display: none;
-  }
-}
-.footer__shadow-shape {
-  position: absolute;
-  left: -100%;
-  bottom: 0;
-  transform: translate(-100%);
-  animation: footer__shadow 10s linear infinite alternate;
-}
-.footer__item .logo {
-  margin-top: -30px;
-}
-@media (max-width: 575px) {
-  .footer__item .logo {
-    margin-top: 0;
-  }
-}
-.footer__item .footer-title {
-  margin-bottom: 30px;
-  color: var(--white);
-}
-.footer__item ul li:not(:last-child) {
-  margin-bottom: 15px;
-}
-.footer__item ul li a {
-  color: var(--white);
-  opacity: 0.8;
-}
-.footer__item ul li a:hover {
-  color: var(--primary-color);
-  padding-left: 5px;
-}
-.footer__item .footer-contact li {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  color: var(--white);
-}
-.footer__item .footer-contact li i {
-  font-size: 24px;
-}
-.footer__item .footer-contact li h5 {
-  color: var(--white);
-}
-.footer__item p {
-  color: var(--white);
-  opacity: 0.8;
-}
-.footer__item.item-big {
-  max-width: 270px;
-  width: 100%;
-}
-.footer__item.item-sm {
-  max-width: 170px;
-  width: 100%;
-}
-.footer__item .social-icon {
-  margin-top: 30px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-.footer__item .social-icon a {
-  width: 36px;
-  height: 36px;
-  line-height: 36px;
-  text-align: center;
-  border-radius: 50%;
-  transition: var(--transition);
-  border-radius: 0;
-  border: 1px solid rgba(227, 227, 227, 0.2);
-  color: var(--white);
-}
-.footer__item .social-icon a:hover {
-  background-color: var(--primary-color);
-}
-.footer__item .social-icon a.active {
-  background-color: var(--primary-color);
-}
-.footer__copyright {
-  position: relative;
-  padding: 20px;
-  border-top: 1px solid rgba(255, 255, 225, 0.2);
-}
-.footer__copyright p {
-  color: var(--white);
-  opacity: 0.8;
-}
-.footer__copyright a {
-  color: var(--white);
-  opacity: 0.8;
-}
-.footer__copyright a:hover {
-  color: var(--primary-color);
-}
-.footer-two-area {
-  padding-top: 120px;
-}
 
-/* ========================================
-   LIVE SECTION
-======================================== */
-
+/* ==============================================================================
+   55. COMPONENTE: ALERTA DE TRANSMISIÓN EN VIVO (.LIVE-SECTION)
+   ==============================================================================
+   Módulo dinámico de alta prioridad visual que se renderiza exclusivamente cuando 
+   existe una transmisión oficial en curso. Su única función es actuar como aviso 
+   e indicar las plataformas externas (ej. Facebook Live, YouTube, Tiktok) donde 
+   se emite el evento, omitiendo previsualizaciones o reproductores incrustados 
+   para optimizar la velocidad de carga.
+*/
 .live-section {
   display: none;
 
@@ -8461,85 +8220,164 @@ button {
     font-size: 2rem;
   }
 }
-/* =========================
-   MAIN IMAGE
-========================= */
-
-#news-main-image {
-  width: 100%;
-  height: 520px;
-
-  object-fit: cover;
-
-  border-radius: 24px;
-
-  display: block;
+/* ==============================================================================
+   56. COMPONENTE: PIE DE PÁGINA GLOBAL (FOOTER AREA)
+   ==============================================================================
+   Bloque de cierre estructural del portal web. Diseñado para centralizarenlaces institucionales secundarios, datos de contacto oficiales, 
+   redes sociales y las declaraciones de derechos de autor (Copyright).
+*/
+.footer__shape-solid-left {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
-
-/* =========================
-   GALLERY
-========================= */
-
-.news-gallery {
+.footer__shape-regular-left {
+  position: absolute;
+  top: 30px;
+  left: 0;
+}
+@media (max-width: 767px) {
+  .footer__shape-regular-left {
+    display: none;
+  }
+}
+.footer__shape-solid-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+@media (max-width: 767px) {
+  .footer__shape-solid-right {
+    display: none;
+  }
+}
+.footer__shape-regular-right {
+  position: absolute;
+  top: 30px;
+  right: 0;
+}
+@media (max-width: 767px) {
+  .footer__shape-regular-right {
+    display: none;
+  }
+}
+.footer__shadow-shape {
+  position: absolute;
+  left: -100%;
+  bottom: 0;
+  transform: translate(-100%);
+  animation: footer__shadow 10s linear infinite alternate;
+}
+.footer__item .logo {
+  margin-top: -30px;
+}
+@media (max-width: 575px) {
+  .footer__item .logo {
+    margin-top: 0;
+  }
+}
+.footer__item .footer-title {
+  margin-bottom: 30px;
+  color: var(--white);
+}
+.footer__item ul li:not(:last-child) {
+  margin-bottom: 15px;
+}
+.footer__item ul li a {
+  color: var(--white);
+  opacity: 0.8;
+}
+.footer__item ul li a:hover {
+  color: var(--primary-color);
+  padding-left: 5px;
+}
+.footer__item .footer-contact li {
   display: flex;
-  gap: 14px;
-
-  margin-top: 20px;
-
-  overflow-x: auto;
-
-  padding-bottom: 6px;
+  align-items: center;
+  gap: 15px;
+  color: var(--white);
 }
-
-/* SCROLL */
-
-.news-gallery::-webkit-scrollbar {
-  height: 8px;
+.footer__item .footer-contact li i {
+  font-size: 24px;
 }
-
-.news-gallery::-webkit-scrollbar-thumb {
-  background: #637227;
-  border-radius: 999px;
+.footer__item .footer-contact li h5 {
+  color: var(--white);
 }
-
-/* THUMB */
-
-.news-gallery .gallery-thumb {
-  width: 120px !important;
-  min-width: 120px !important;
-
-  height: 90px !important;
-
-  object-fit: cover !important;
-
-  border-radius: 16px;
-
-  cursor: pointer;
-
-  border: 3px solid transparent;
-
-  transition: 0.25s ease;
-
-  opacity: 0.75;
-
-  display: block;
+.footer__item p {
+  color: var(--white);
+  opacity: 0.8;
 }
-
-/* HOVER */
-
-.news-gallery .gallery-thumb:hover {
-  transform: translateY(-3px);
-  opacity: 1;
+.footer__item.item-big {
+  max-width: 270px;
+  width: 100%;
 }
-
-/* ACTIVE */
-
-.news-gallery .gallery-thumb.active {
-  border-color: #637227;
-  opacity: 1;
-
-  box-shadow: 0 10px 20px rgba(99, 114, 39, 0.25);
+.footer__item.item-sm {
+  max-width: 170px;
+  width: 100%;
 }
+.footer__item .social-icon {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.footer__item .social-icon a {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  border-radius: 50%;
+  transition: var(--transition);
+  border-radius: 0;
+  border: 1px solid rgba(227, 227, 227, 0.2);
+  color: var(--white);
+}
+.footer__item .social-icon a:hover {
+  background-color: var(--primary-color);
+}
+.footer__item .social-icon a.active {
+  background-color: var(--primary-color);
+}
+.footer__copyright {
+  position: relative;
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 225, 0.2);
+}
+.footer__copyright p {
+  color: var(--white);
+  opacity: 0.8;
+}
+.footer__copyright a {
+  color: var(--white);
+  opacity: 0.8;
+}
+.footer__copyright a:hover {
+  color: var(--primary-color);
+}
+.footer-two-area {
+  padding-top: 120px;
+}
+.footer-area,
+.footer-two-area {
+  overflow: hidden;
+  position: relative;
+}
+.footer__wrp {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+@media (max-width: 575px) {
+  .footer__wrp {
+    flex-direction: column;
+    justify-content: left;
+    align-items: unset;
+  }
+
+ } 
 @keyframes sway {
   0% {
     transform: translateX(-20px);
