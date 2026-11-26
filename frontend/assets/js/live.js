@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetch(window.APP_CONFIG.backendUrl + "/api/live")
 
-        .then(response => response.json())
+        .then(response => { if (!response.ok) throw new Error('HTTP ' + response.status); return response.json(); })
 
         .then(data => {
 
@@ -33,7 +33,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (content.startsWith("<iframe")) {
 
-                container.innerHTML = content;
+                const template = document.createElement("template");
+                template.innerHTML = content;
+                const source = template.content.querySelector("iframe");
+                const src = SafeContent.url(source?.getAttribute("src"));
+                if (!src) throw new Error("Enlace de transmisión inválido");
+                const url = new URL(src);
+                const allowed = ["www.facebook.com", "facebook.com", "www.youtube.com", "www.youtube-nocookie.com", "www.tiktok.com"];
+                if (url.protocol !== "https:" || !allowed.includes(url.hostname) ||
+                    !(/^\/plugins\/video\.php$/.test(url.pathname) && url.hostname.endsWith("facebook.com") ||
+                      /^\/embed\//.test(url.pathname) && url.hostname.includes("youtube") ||
+                      /^\/embed\//.test(url.pathname) && url.hostname === "www.tiktok.com")) {
+                    throw new Error("Origen de transmisión no permitido");
+                }
+                const frame = document.createElement("iframe");
+                frame.src = src;
+                frame.title = "Transmisión en vivo";
+                frame.width = source.getAttribute("width") || "100%";
+                frame.height = source.getAttribute("height") || "400";
+                frame.style.border = "0";
+                frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+                frame.allowFullscreen = true;
+                frame.referrerPolicy = "strict-origin-when-cross-origin";
+                container.replaceChildren(frame);
 
                 liveButton.style.display = "none";
 
@@ -66,7 +88,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 `;
 
-                liveButton.href = content;
+                const safeLink = SafeContent.url(content);
+                if (!safeLink) throw new Error("Enlace de transmisión inválido");
+                liveButton.href = safeLink;
+                liveButton.rel = "noopener noreferrer";
 
             }
 
@@ -97,7 +122,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 `;
 
-                liveButton.href = content;
+                const safeLink = SafeContent.url(content);
+                if (!safeLink) throw new Error("Enlace de transmisión inválido");
+                liveButton.href = safeLink;
+                liveButton.rel = "noopener noreferrer";
 
             }
 
@@ -128,7 +156,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 `;
 
-                liveButton.href = content;
+                const safeLink = SafeContent.url(content);
+                if (!safeLink) throw new Error("Enlace de transmisión inválido");
+                liveButton.href = safeLink;
+                liveButton.rel = "noopener noreferrer";
 
             }
 
