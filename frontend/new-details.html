@@ -1,11 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="es-BO">
   <head>
     <script src="assets/js/config.js"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Policía Departamental de Cochabamba</title>
+    <title>Detalle de noticia | Policía Departamental de Cochabamba</title>
+    <meta name="description" content="Consulta las publicaciones y fotografías de las noticias institucionales." />
+    <meta property="og:title" content="Detalle de noticia | Policía Departamental de Cochabamba" />
+    <meta property="og:description" content="Consulta las publicaciones y fotografías de las noticias institucionales." />
+    <meta property="og:locale" content="es_BO" />
+    <meta property="og:type" content="article" />
     <!-- Favicon img -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
     <!-- Bootstarp min css -->
@@ -26,6 +31,7 @@
   </head>
 
   <body>
+    <a class="visually-hidden-focusable position-absolute bg-white text-dark p-3" style="z-index: 100000; top: 0; left: 0;" href="#main-content">Saltar al contenido principal</a>
     <!-- Preloader area start -->
     <div class="loading">
       <span class="text-capitalize">C</span>
@@ -238,7 +244,7 @@
     </div>
     <!-- Sidebar area end here -->
 
-    <main>
+    <main id="main-content" tabindex="-1">
       <!doctype html>
       <html lang="es">
         <head>
@@ -513,6 +519,8 @@
 
                 // Título
                 titleEl.textContent = data.title || "";
+                if (data.title) document.title = data.title + " | Policía Departamental de Cochabamba";
+                if (data.description) document.querySelector('meta[name="description"]').content = String(data.description).slice(0, 160);
 
                 // Fecha del Hero / Badges
                 if (data.published_at) {
