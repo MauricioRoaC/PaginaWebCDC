@@ -47,8 +47,10 @@ public function index(Request $request)
             'title'       => 'required|string|max:255',
             'description' => 'required|string|max:500',
             'body'        => 'nullable|string',
-            'images.*'    => 'nullable|image|max:1500', // Limitado a 1.5MB para proteger el almacenamiento
+            'images.*'    => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1500', // Limitado a 1.5MB para proteger el almacenamiento
             'status'      => 'required|in:draft,published,scheduled',
+            'scheduled_at' => 'exclude_unless:status,scheduled|required|date_format:Y-m-d\TH:i|after:now',
+            'images' => 'nullable|array|max:10',
 
             'main_image_index' => 'nullable|integer',
         ]);
@@ -75,7 +77,7 @@ public function index(Request $request)
             'body'         => $data['body'] ?? null,
             'status'       => $data['status'],
             'is_published' => $data['status'] === 'published',
-            'published_at' => $data['status'] === 'published' ? now() : null,
+            'published_at' => match ($data['status']) { 'published' => now(), 'scheduled' => \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $data['scheduled_at'], config('app.timezone'))->startOfMinute(), default => null },
             'user_id'      => Auth::id(),
         ]);
 
@@ -91,7 +93,7 @@ public function index(Request $request)
 
     $isMain =
         $index ==
-        $request->main_image_index;
+        ($request->main_image_index ?? 0);
 
     $news->images()->create([
 
@@ -120,8 +122,10 @@ public function index(Request $request)
             'title'       => 'required|string|max:255',
             'description' => 'required|string|max:500',
             'body'        => 'nullable|string',
-            'images.*'    => 'nullable|image|max:1500',
+            'images.*'    => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1500',
             'status'      => 'required|in:draft,published,scheduled',
+            'scheduled_at' => 'exclude_unless:status,scheduled|required|date_format:Y-m-d\TH:i|after:now',
+            'images' => 'nullable|array|max:10',
 
             'main_image_index' => 'nullable|integer',
         ]);
@@ -136,7 +140,7 @@ public function index(Request $request)
             'body'         => $data['body'] ?? null,
             'status'       => $data['status'],
             'is_published' => $data['status'] === 'published',
-            'published_at' => $data['status'] === 'published' ? ($news->published_at ?? now()) : null,
+            'published_at' => match ($data['status']) { 'published' => $news->is_published ? ($news->published_at ?? now()) : now(), 'scheduled' => \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $data['scheduled_at'], config('app.timezone'))->startOfMinute(), default => null },
         ]);
 
         if (function_exists('logActivity')) {
@@ -157,7 +161,7 @@ public function index(Request $request)
 
     $isMain =
         $index ==
-        $request->main_image_index;
+        ($request->main_image_index ?? 0);
 
     $news->images()->create([
 
