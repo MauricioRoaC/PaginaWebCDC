@@ -28,7 +28,7 @@ Route::get('/', function () {
 Route::middleware('guest')->group(function () {
 
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1')->name('login.post');
 
     // Recuperar contraseña
     Route::prefix('admin')->name('admin.')->group(function () {
@@ -37,13 +37,13 @@ Route::middleware('guest')->group(function () {
             ->name('password.request');
 
         Route::post('/password/forgot', [PasswordResetController::class, 'sendResetLink'])
-            ->name('password.email');
+            ->middleware('throttle:5,1')->name('password.email');
 
         Route::get('/password/reset/{token}', [PasswordResetController::class, 'showResetForm'])
             ->name('password.reset');
 
         Route::post('/password/reset', [PasswordResetController::class, 'resetPassword'])
-            ->name('password.update');
+            ->middleware('throttle:5,1')->name('password.update');
     });
 });
 
@@ -55,14 +55,14 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // =========================
 // PANEL ADMIN (logueados)
 // =========================
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\EnsureAdminAccess::class])->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('activity-logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])
         ->name('activity_logs.index');
 
-    Route::resource('units', \App\Http\Controllers\Admin\UnitController::class);
+    Route::resource('units', \App\Http\Controllers\Admin\UnitController::class)->except(['show'])->middleware(\App\Http\Middleware\EnsureAdminAccess::class . ':superadmin');
 
     Route::resource('events', EventController::class)->except(['show']);
     Route::resource('news', NewsController::class);
@@ -79,7 +79,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('messages/{message}', [MessageController::class, 'show'])->name('messages.show');
     Route::delete('messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
 
-    Route::resource('users', UserController::class)->except(['show']);
+    Route::resource('users', UserController::class)->except(['show'])->middleware(\App\Http\Middleware\EnsureAdminAccess::class . ':superadmin');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
