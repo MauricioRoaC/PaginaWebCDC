@@ -140,9 +140,9 @@
                             <i class='bx bx-calendar'></i> Fecha programada
                         </label>
                         <input type="datetime-local"
-                               name="scheduled_at"
+                               aria-label="Fecha y hora de publicación en Bolivia" name="scheduled_at"
                                class="modern-input"
-                               value="{{ old('scheduled_at', $news->scheduled_at ? \Carbon\Carbon::parse($news->scheduled_at)->format('Y-m-d\TH:i') : '') }}">
+                               value="{{ old('scheduled_at', $news->status === 'scheduled' && $news->published_at ? $news->published_at->format('Y-m-d\TH:i') : '') }}">
                     </div>
                 </div>
 
