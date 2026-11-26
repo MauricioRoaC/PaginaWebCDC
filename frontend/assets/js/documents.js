@@ -6,7 +6,7 @@ function renderDocuments(containerId, type) {
 
     fetch(window.APP_CONFIG.backendUrl + '/api/documents?type=' + type)
 
-        .then(response => response.json())
+        .then(response => { if (!response.ok) throw new Error('HTTP ' + response.status); return response.json(); })
 
         .then(data => {
 
@@ -35,15 +35,15 @@ function renderDocuments(containerId, type) {
                     </div>
 
                     <div class="document-title">
-                        ${(doc.number ? doc.number + ' - ' : '') + doc.title}
+                        ${SafeContent.escape((doc.number ? doc.number + ' - ' : '') + doc.title)}
                     </div>
 
                     <div class="document-description">
-                        ${doc.description || 'Documento institucional oficial.'}
+                        ${SafeContent.escape(doc.description || 'Documento institucional oficial.')}
                     </div>
 
                     <a
-                        href="${doc.url || doc.file_url}"
+                        href="${SafeContent.htmlUrl(doc.url || doc.file_url, "#")}"
                         target="_blank"
                         rel="noopener"
                         class="document-btn"
