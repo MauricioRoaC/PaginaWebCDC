@@ -31,6 +31,9 @@ async function initContactPage() {
     ).addTo(map);
 
     const markers = L.layerGroup().addTo(map);
+    const search = PublicSearch.attach(contactGrid, "Buscar contactos…", (term, status) => {
+        PublicSearch.filter(contactGrid.querySelectorAll(".contact-result"), term, status);
+    });
     async function loadContacts() {
     markers.clearLayers();
     const bounds = L.latLngBounds([]);
@@ -58,7 +61,7 @@ async function initContactPage() {
 
             const col = document.createElement('div');
 
-            col.className = 'col-12 col-md-6';
+            col.className = 'col-12 col-md-6 contact-result';
 
             const categoryName =
                 contact.category
@@ -164,6 +167,7 @@ async function initContactPage() {
             contactGrid.appendChild(col);
         });
 
+        PublicSearch.filter(contactGrid.querySelectorAll('.contact-result'), search.input.value, search.status);
         /* MARKERS */
 
       contacts.forEach(contact => {
