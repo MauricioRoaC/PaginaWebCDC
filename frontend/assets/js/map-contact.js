@@ -29,27 +29,28 @@ async function initContactPage() {
         }
     ).addTo(map);
 
+    const markers = L.layerGroup().addTo(map);
+    async function loadContacts() {
+    markers.clearLayers();
     const bounds = L.latLngBounds([]);
+    PublicUX.loading(contactGrid, 4, 'col-12 col-md-6');
+    totalContacts.textContent = '—';
 
     try {
 
         const contacts = await fetchContacts();
 
+        if (!Array.isArray(contacts)) throw new Error('Respuesta inválida');
         totalContacts.textContent = contacts.length;
 
         if (!Array.isArray(contacts) || contacts.length === 0) {
 
-            contactGrid.innerHTML = `
-                <div class="col-12">
-                    <div class="alert alert-light">
-                        No hay contactos disponibles.
-                    </div>
-                </div>
-            `;
+            PublicUX.state(contactGrid, 'No hay contactos disponibles.');
 
             return;
         }
 
+        contactGrid.removeAttribute('aria-busy');
         contactGrid.innerHTML = '';
 
         contacts.forEach(contact => {
@@ -148,6 +149,17 @@ async function initContactPage() {
                 </div>
             `;
 
+            const logo = col.querySelector('img');
+            if (logo) {
+                const placeholder = () => {
+                    const node = document.createElement('div');
+                    node.className = 'contact-card__placeholder';
+                    logo.replaceWith(node);
+                };
+                logo.loading = 'lazy';
+                logo.addEventListener('error', placeholder, {once:true});
+                if (logo.complete && !logo.naturalWidth) placeholder();
+            }
             contactGrid.appendChild(col);
         });
 
@@ -164,7 +176,7 @@ async function initContactPage() {
 
         const pos = [contact.lat, contact.lng];
 
-        const marker = L.marker(pos).addTo(map);
+        const marker = L.marker(pos).addTo(markers);
 
         marker.bindPopup(`
             <div class="map-popup">
@@ -190,14 +202,11 @@ async function initContactPage() {
 
         console.error('Error cargando contactos:', error);
 
-        contactGrid.innerHTML = `
-            <div class="col-12">
-                <div class="alert alert-danger">
-                    Error al cargar los contactos.
-                </div>
-            </div>
-        `;
+        markers.clearLayers();
+        PublicUX.state(contactGrid, 'No se pudieron cargar los contactos.', loadContacts);
     }
+    }
+    await loadContacts();
 }
 
 document.addEventListener('DOMContentLoaded', initContactPage);
