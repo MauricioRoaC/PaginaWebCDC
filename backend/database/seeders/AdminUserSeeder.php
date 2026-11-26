@@ -9,21 +9,16 @@ use RuntimeException;
 
 class AdminUserSeeder extends Seeder
 {
-    /**
-     * Create the first SuperAdmin from deployment environment variables.
-     *
-     * This seeder is safe to run repeatedly: it never resets an existing
-     * account's password or overwrites its profile.
-     */
+    /** Create the first SuperAdmin from configuration without resetting existing accounts. */
     public function run(): void
     {
-        $name = trim((string) env('SUPERADMIN_NAME'));
-        $email = trim((string) env('SUPERADMIN_EMAIL'));
-        $password = (string) env('SUPERADMIN_PASSWORD');
+        $name = trim((string) config('admin.superadmin.name'));
+        $email = trim((string) config('admin.superadmin.email'));
+        $password = (string) config('admin.superadmin.password');
 
         if ($name === '' || ! filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($password) < 12) {
             throw new RuntimeException(
-                'Configure SUPERADMIN_NAME, a valid SUPERADMIN_EMAIL and SUPERADMIN_PASSWORD (at least 12 characters) in the environment before running db:seed.'
+                'Configure SUPERADMIN_NAME, a valid SUPERADMIN_EMAIL and SUPERADMIN_PASSWORD (at least 12 characters) before running db:seed.'
             );
         }
 
