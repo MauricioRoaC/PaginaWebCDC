@@ -1,5 +1,5 @@
 // URL del API. Ajusta según tu entorno
-const API_NEWS_URL = 'http://127.0.0.1:8000/api/news';
+const API_NEWS_URL = window.APP_CONFIG.backendUrl + '/api/news';
 
 const newsContainer = document.getElementById('news-container');
 const paginationContainer = document.getElementById('news-pagination');
