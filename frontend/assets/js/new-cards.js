@@ -5,11 +5,11 @@ const newsContainer = document.getElementById('news-container');
 const paginationContainer = document.getElementById('news-pagination');
 
 // Para traducir mes a abreviatura tipo "Dec", "Ene", etc.
-const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const monthNames = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
 async function loadNews(page = 1) {
     // mensaje mientras carga
-    newsContainer.innerHTML = '<p>Cargando noticias...</p>';
+    PublicUX.loading(newsContainer, 3, 'col-xl-4 col-lg-6 col-md-6');
     paginationContainer.innerHTML = '';
 
     try {
@@ -23,10 +23,11 @@ async function loadNews(page = 1) {
         const meta = json.meta;
 
         if (!items.length) {
-            newsContainer.innerHTML = '<p>No hay noticias publicadas aún.</p>';
+            PublicUX.state(newsContainer, 'No hay noticias publicadas aún.');
             return;
         }
 
+        newsContainer.removeAttribute('aria-busy');
         newsContainer.innerHTML = '';
 
         items.forEach(item => {
@@ -107,6 +108,7 @@ async function loadNews(page = 1) {
     </article>
 `;
 
+            PublicUX.image(col.querySelector('img'), 'assets/images/blog/blog-image1.jpg');
             newsContainer.appendChild(col);
         });
 
@@ -114,7 +116,7 @@ async function loadNews(page = 1) {
         buildPagination(meta);
     } catch (error) {
         console.error(error);
-        newsContainer.innerHTML = '<p>Error al cargar las noticias.</p>';
+        PublicUX.state(newsContainer, 'No se pudieron cargar las noticias. Comprueba tu conexión.', () => loadNews(page));
     }
 }
 
