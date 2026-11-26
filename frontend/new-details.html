@@ -633,12 +633,106 @@
                   bodyEl.innerHTML = `<p>${escapeHtml(data.description ?? "")}</p>`;
                 }
 
+                setupNewsExtras(trackEl, data.title);
                 // Cargar recientes
                 loadRecentPosts(slug);
               } catch (error) {
                 console.error(error);
                 PublicUX.state(bodyEl, "No se pudo cargar la noticia.", loadNewsDetail);
               }
+            }
+
+
+            // Galería accesible y opciones para compartir.
+            function setupNewsExtras(track, title) {
+              document.getElementById("news-share")?.remove();
+              document.getElementById("news-lightbox")?.remove();
+              const share = document.createElement("div");
+              share.id = "news-share";
+              share.className = "d-flex flex-wrap gap-2 my-4 align-items-center";
+              const label = document.createElement("strong");
+              label.textContent = "Compartir noticia:";
+              share.append(label);
+              const url = new URL(location.href);
+              url.hash = "";
+              url.search = new URLSearchParams({slug}).toString();
+              for (const [name, href] of [
+                ["WhatsApp", "https://wa.me/?text=" + encodeURIComponent((title || "") + " " + url.href)],
+                ["Facebook", "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url.href)]
+              ]) {
+                const link = document.createElement("a");
+                link.className = "btn btn-outline-secondary btn-sm";
+                link.textContent = name;
+                link.href = href;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                share.append(link);
+              }
+              const copy = document.createElement("button");
+              copy.type = "button";
+              copy.className = "btn btn-outline-secondary btn-sm";
+              copy.textContent = "Copiar enlace";
+              const status = document.createElement("span");
+              status.setAttribute("role", "status");
+              status.className = "small";
+              copy.addEventListener("click", async () => {
+                try {
+                  await navigator.clipboard.writeText(url.href);
+                  status.textContent = "Enlace copiado.";
+                } catch {
+                  status.textContent = "Copia el enlace desde la barra de direcciones.";
+                }
+              });
+              share.append(copy, status);
+              bodyEl.after(share);
+              const images = Array.from(track?.querySelectorAll("img") || []);
+              if (!images.length) return;
+              const dialog = document.createElement("dialog");
+              dialog.id = "news-lightbox";
+              dialog.setAttribute("aria-label", "Galería de fotografías");
+              dialog.style.cssText = "position:fixed;inset:0;margin:auto;width:100%;height:100%;max-width:100%;max-height:100%;border:0;background:#111;color:white;padding:16px;";
+              dialog.innerHTML = '<div style="display:flex;flex-direction:column;height:100%;gap:12px"><div class="d-flex justify-content-between align-items-center"><span data-count aria-live="polite"></span><button type="button" class="btn btn-light" data-close>Cerrar ×</button></div><div style="display:flex;align-items:center;justify-content:center;flex:1;min-height:0"><img data-photo alt="" style="max-width:100%;max-height:100%;object-fit:contain"></div><div class="d-flex justify-content-center gap-3"><button type="button" class="btn btn-light" data-prev>← Anterior</button><button type="button" class="btn btn-light" data-next>Siguiente →</button></div></div>';
+              document.body.append(dialog);
+              let index = 0;
+              let opener;
+              const photo = dialog.querySelector("[data-photo]");
+              const prev = dialog.querySelector("[data-prev]");
+              const next = dialog.querySelector("[data-next]");
+              const close = dialog.querySelector("[data-close]");
+              prev.hidden = next.hidden = images.length < 2;
+              function show(i) {
+                index = (i + images.length) % images.length;
+                photo.src = images[index].currentSrc || images[index].src;
+                photo.alt = images[index].alt || "Fotografía de noticia";
+                dialog.querySelector("[data-count]").textContent = (index + 1) + " / " + images.length;
+              }
+              function open(i, img) {
+                opener = img;
+                show(i);
+                dialog.showModal();
+                close.focus();
+              }
+              images.forEach((img, i) => {
+                img.tabIndex = 0;
+                img.setAttribute("role", "button");
+                img.setAttribute("aria-label", "Ampliar fotografía " + (i + 1));
+                img.style.cursor = "zoom-in";
+                img.addEventListener("click", () => open(i, img));
+                img.addEventListener("keydown", event => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    open(i, img);
+                  }
+                });
+              });
+              prev.addEventListener("click", () => show(index - 1));
+              next.addEventListener("click", () => show(index + 1));
+              close.addEventListener("click", () => dialog.close());
+              dialog.addEventListener("keydown", event => {
+                if (event.key === "ArrowLeft") { event.preventDefault(); show(index - 1); }
+                if (event.key === "ArrowRight") { event.preventDefault(); show(index + 1); }
+              });
+              dialog.addEventListener("close", () => opener?.focus());
             }
 
             // --- Carga recientes ---
