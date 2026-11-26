@@ -1,6 +1,18 @@
 
-document.getElementById("contactForm").addEventListener("submit", async function(e) {
+const contactForm = document.getElementById("contactForm");
+const contactMessage = document.getElementById("message");
+const contactCount = document.getElementById("contactCount");
+const contactSubmit = contactForm.querySelector('button[type="submit"]');
+const updateContactCount = () => {
+    if (contactCount) contactCount.textContent = contactMessage.value.length + " / 5000 caracteres";
+};
+contactMessage.addEventListener("input", updateContactCount);
+updateContactCount();
+let contactSending = false;
+
+contactForm.addEventListener("submit", async function(e) {
     e.preventDefault();
+    if (contactSending) return;
 
     // Elementos de feedback (asegúrate de que haya un solo #contactSuccess y un solo #contactError)
     const successEl = document.getElementById("contactSuccess");
@@ -13,6 +25,12 @@ document.getElementById("contactForm").addEventListener("submit", async function
         email: document.getElementById("email").value.trim(),
         message: document.getElementById("message").value.trim()
     };
+
+    if (!formData.name || !formData.message || !formData.email) {
+        errorEl.textContent = "Completa todos los campos obligatorios.";
+        errorEl.style.display = "block";
+        return;
+    }
 
     const normalize = value => value.toLowerCase().normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
@@ -27,6 +45,11 @@ document.getElementById("contactForm").addEventListener("submit", async function
     // <-- Aquí la ruta correcta según tu routes/api.php -->
     const apiUrl = window.APP_CONFIG.backendUrl + "/api/contact/messages";
 
+    contactSending = true;
+    contactSubmit.disabled = true;
+    contactForm.setAttribute("aria-busy", "true");
+    const originalLabel = contactSubmit.textContent;
+    contactSubmit.textContent = "Enviando mensaje…";
     try {
         const response = await fetch(apiUrl, {
             method: "POST",
@@ -43,17 +66,23 @@ document.getElementById("contactForm").addEventListener("submit", async function
         if (response.ok) {
             successEl.style.display = "block";
             errorEl.style.display = "none";
-            document.getElementById("contactForm").reset();
+            contactForm.reset();
+            updateContactCount();
         } else {
-            errorEl.textContent = (result && (result.errors?.message?.[0] || result.errors?.name?.[0] || result.message || JSON.stringify(result))) || "Ocurrió un error al enviar el mensaje.";
+            errorEl.textContent = response.status === 429 ? "Has realizado demasiados intentos. Espera un minuto antes de volver a enviar." : (result && (result.errors?.message?.[0] || result.errors?.name?.[0] || result.errors?.email?.[0] || (response.status === 422 ? result.message : null))) || "Ocurrió un error al enviar el mensaje.";
             errorEl.style.display = "block";
             successEl.style.display = "none";
         }
     } catch (err) {
-        errorEl.textContent = "Error de red: verifica que el backend esté corriendo y que la URL sea correcta.";
+        errorEl.textContent = "No se pudo confirmar el envío. Comprueba tu conexión antes de volver a intentarlo.";
         errorEl.style.display = "block";
         successEl.style.display = "none";
         console.error("Fetch error:", err);
+    } finally {
+        contactSending = false;
+        contactSubmit.disabled = false;
+        contactSubmit.textContent = originalLabel;
+        contactForm.removeAttribute("aria-busy");
     }
 });
 
