@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!container || !section) return;
 
-    fetch("http://127.0.0.1:8000/api/live")
+    fetch(window.APP_CONFIG.backendUrl + "/api/live")
 
         .then(response => response.json())
 
