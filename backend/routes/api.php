@@ -17,7 +17,7 @@ Route::get('/news/{slug}', [NewsController::class, 'show']);
 Route::post('/visits', [VisitController::class, 'store']);
 
 // Contacto - formulario de mensajes
-Route::post('/contact/messages', [ContactController::class, 'store']);
+Route::post('/contact/messages', [ContactController::class, 'store'])->middleware('throttle:5,1');
 
 Route::get('/events', [EventApiController::class, 'index']);
 
