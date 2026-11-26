@@ -7,23 +7,30 @@ const paginationContainer = document.getElementById('news-pagination');
 // Para traducir mes a abreviatura tipo "Dec", "Ene", etc.
 const monthNames = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
+let newsTerm = "";
+let newsRequest = 0;
+let newsTimer;
+let newsSearch;
 async function loadNews(page = 1) {
+    const request = ++newsRequest;
     // mensaje mientras carga
     PublicUX.loading(newsContainer, 3, 'col-xl-4 col-lg-6 col-md-6');
     paginationContainer.innerHTML = '';
 
     try {
-        const response = await fetch(`${API_NEWS_URL}?page=${page}`);
+        const response = await fetch(`${API_NEWS_URL}?${new URLSearchParams({page, q: newsTerm})}`);
         if (!response.ok) {
             throw new Error('Error al cargar noticias');
         }
 
         const json = await response.json();
+        if (request !== newsRequest) return;
         const items = json.data;
         const meta = json.meta;
+        newsSearch.status.textContent = newsTerm ? meta.total + ' resultados' : '';
 
         if (!items.length) {
-            PublicUX.state(newsContainer, 'No hay noticias publicadas aún.');
+            PublicUX.state(newsContainer, newsTerm ? 'No se encontraron noticias con esa búsqueda.' : 'No hay noticias publicadas aún.');
             return;
         }
 
@@ -87,7 +94,7 @@ async function loadNews(page = 1) {
 
             <p class="news-card-description">
                 ${
-                    item.short_description
+                    item.description
                     ? SafeContent.escape(item.short_description)
                     : 'Información oficial publicada por el Comando Departamental de Cochabamba.'
                 }
@@ -115,6 +122,7 @@ async function loadNews(page = 1) {
         // construir la paginación
         buildPagination(meta);
     } catch (error) {
+        if (request !== newsRequest) return;
         console.error(error);
         PublicUX.state(newsContainer, 'No se pudieron cargar las noticias. Comprueba tu conexión.', () => loadNews(page));
     }
@@ -161,5 +169,11 @@ function buildPagination(meta) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    newsSearch = PublicSearch.attach(newsContainer, "Buscar noticias…", term => {
+        newsTerm = term;
+        newsRequest++;
+        clearTimeout(newsTimer);
+        newsTimer = setTimeout(() => loadNews(1), 350);
+    });
     loadNews(1);
 });
