@@ -30,13 +30,13 @@ class EventApiController extends Controller
                 'start' => $e->start_at
     ? $e->start_at
         ->timezone('America/La_Paz')
-        ->format('Y-m-d H:i:s')
+        ->format($e->all_day ? 'Y-m-d' : 'Y-m-d\\TH:i:sP')
     : null,
 
 'end' => $e->end_at
     ? $e->end_at
         ->timezone('America/La_Paz')
-        ->format('Y-m-d H:i:s')
+        ->format($e->all_day ? 'Y-m-d' : 'Y-m-d\\TH:i:sP')
     : null,
                 'allDay'      => $e->all_day,
                 'description' => $e->description,
