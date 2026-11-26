@@ -54,3 +54,53 @@ window.SafeContent = Object.freeze({
         return output.innerHTML;
     }
 });
+
+window.PublicUX = Object.freeze({
+    loading(container, count = 3, columns = "col-12") {
+        container.setAttribute("aria-busy", "true");
+        container.replaceChildren();
+        const status = document.createElement("span");
+        status.className = "visually-hidden";
+        status.setAttribute("role", "status");
+        status.textContent = "Cargando información…";
+        container.appendChild(status);
+        for (let i = 0; i < count; i++) {
+            const card = document.createElement("div");
+            card.className = columns;
+            card.setAttribute("aria-hidden", "true");
+            card.innerHTML = '<div class="public-skeleton"><div></div><span></span><span></span></div>';
+            container.appendChild(card);
+        }
+    },
+    state(container, message, retry) {
+        container.removeAttribute("aria-busy");
+        const box = document.createElement("div");
+        box.className = "col-12 alert " + (retry ? "alert-warning" : "alert-light");
+        box.setAttribute("role", "status");
+        const text = document.createElement("p");
+        text.textContent = message;
+        box.appendChild(text);
+        if (retry) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "btn btn-outline-secondary btn-sm";
+            button.textContent = "Reintentar";
+            button.addEventListener("click", retry);
+            box.appendChild(button);
+        }
+        container.replaceChildren(box);
+    },
+    image(img, fallback, lazy = true) {
+        if (!img) return;
+        if (lazy) img.loading = "lazy";
+        img.decoding = "async";
+        const recover = () => {
+            if (fallback && img.src !== new URL(fallback, document.baseURI).href) {
+                img.src = fallback;
+                img.addEventListener("error", () => { img.style.visibility = "hidden"; }, {once:true});
+            } else { img.style.visibility = "hidden"; }
+        };
+        img.addEventListener("error", recover, {once:true});
+        if (img.complete && img.naturalWidth === 0 && img.getAttribute("src")) recover();
+    }
+});
