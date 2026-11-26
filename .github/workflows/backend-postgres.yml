@@ -1,0 +1,74 @@
+name: Backend PostgreSQL checks
+
+on:
+  push:
+    branches:
+      - fix/instalacion-inicial
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  postgres-install:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: policia_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d policia_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    defaults:
+      run:
+        working-directory: backend
+
+    env:
+      APP_ENV: testing
+      APP_DEBUG: false
+      DB_CONNECTION: pgsql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      DB_DATABASE: policia_test
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      SUPERADMIN_NAME: CI SuperAdmin
+      SUPERADMIN_EMAIL: ci-superadmin@example.test
+      SUPERADMIN_PASSWORD: ci-test-password-12345
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, dom, fileinfo, pgsql, pdo_pgsql, gd, zip
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Generate application key
+        run: php artisan key:generate --force
+
+      - name: Run clean PostgreSQL migrations
+        run: php artisan migrate:fresh --force
+
+      - name: Seed initial SuperAdmin
+        run: php artisan db:seed --force
+
+      - name: Verify SuperAdmin was created
+        run: |
+          php artisan tinker --execute="\$user = App\\Models\\User::where('email', 'ci-superadmin@example.test')->first(); if (! \$user || \$user->role !== 'superadmin' || ! \$user->is_active) { throw new RuntimeException('Initial SuperAdmin was not created correctly.'); } echo 'Initial SuperAdmin verified.'.PHP_EOL;"
+
+      - name: Run application tests
+        run: php artisan test
