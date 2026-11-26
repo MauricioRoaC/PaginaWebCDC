@@ -3,16 +3,27 @@
             var calendarEl = document.getElementById('calendar');
             if (!calendarEl) return;
 
+            const status = document.createElement('div');
+            status.setAttribute('role', 'status');
+            status.className = 'small mb-2';
+            calendarEl.before(status);
+            const legend = document.createElement('p');
+            legend.className = 'small mb-3';
+            legend.textContent = 'Hora de Bolivia (UTC−4) · Azul: próximo · Verde: en curso · Gris: finalizado';
+            calendarEl.before(legend);
+            const mobile = window.matchMedia('(max-width: 767px)');
+            const toolbar = () => mobile.matches
+                ? {left:'prev,next', center:'title', right:'today,listWeek,dayGridMonth'}
+                : {left:'prev,next today', center:'title', right:'dayGridMonth,timeGridWeek,listWeek'};
             var calendar = new FullCalendar.Calendar(calendarEl, {
               
-                initialView: 'dayGridMonth',
+                initialView: mobile.matches ? 'listWeek' : 'dayGridMonth',
+                timeZone: 'America/La_Paz',
+                eventTimeFormat: {hour:'2-digit', minute:'2-digit', hour12:false},
+                dayMaxEvents: true,
                 locale: 'es',
                 height: "auto",
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,listWeek'
-                },
+                headerToolbar: toolbar(),
                 buttonText: {
                     today: 'Hoy',
                     month: 'Mes',
@@ -21,6 +32,32 @@
                 },
                 // URL de tu backend Laravel
                 events: window.APP_CONFIG.backendUrl + '/api/events',
+                loading: function(isLoading) {
+                    if (isLoading) status.textContent = 'Cargando eventos…';
+                    else if (status.textContent === 'Cargando eventos…') status.textContent = '';
+                },
+                eventSourceSuccess: function(events) {
+                    status.textContent = '';
+                    const now = Date.now();
+                    const today = luxon.DateTime.now().setZone('America/La_Paz').toISODate();
+                    return events.map(event => {
+                        const start = event.allDay ? event.start : Date.parse(event.start);
+                        const end = event.allDay ? event.end : Date.parse(event.end || event.start);
+                        const finished = event.allDay ? (end ? end <= today : start < today) : end < now;
+                        const active = !finished && (event.allDay ? start <= today : start <= now);
+                        const color = finished ? '#64748b' : active ? '#287448' : '#245c99';
+                        return {...event, backgroundColor:color, borderColor:color, textColor:'#ffffff'};
+                    });
+                },
+                eventSourceFailure: function() {
+                    status.replaceChildren(document.createTextNode('No se pudieron cargar los eventos. '));
+                    const retry = document.createElement('button');
+                    retry.type = 'button';
+                    retry.className = 'btn btn-outline-secondary btn-sm';
+                    retry.textContent = 'Reintentar';
+                    retry.addEventListener('click', () => calendar.refetchEvents());
+                    status.appendChild(retry);
+                },
 
                 // Añadir descripción también en la vista "Lista"
                 eventDidMount: function(info) {
@@ -49,15 +86,15 @@
 
                     var options = {
                         dateStyle: 'full',
-                        timeStyle: 'short'
+                        timeStyle: 'short',
+                        timeZone: 'America/La_Paz'
                     };
 
                     var dateText = '';
                     if (start) {
-                        dateText = start.toLocaleString('es-BO', options);
-                        if (end) {
-                            // Solo añadimos hora de fin para no repetir la fecha completa
-                            dateText += ' - ' + end.toLocaleTimeString('es-BO', { timeStyle: 'short' });
+                        dateText = info.event.allDay ? info.event.startStr + ' (Todo el día)' : start.toLocaleString('es-BO', options);
+                        if (end && !info.event.allDay) {
+                            dateText += ' — ' + end.toLocaleString('es-BO', options);
                         }
                     } else {
                         dateText = 'Sin fecha registrada';
@@ -70,11 +107,12 @@
 
                     // Mostrar modal con Bootstrap 5
                     var modalEl = document.getElementById('eventModal');
-                    var modal = new bootstrap.Modal(modalEl);
+                    var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
                     modal.show();
                 }
             });
 
             calendar.render();
+            mobile.addEventListener('change', () => calendar.setOption('headerToolbar', toolbar()));
         });
    
