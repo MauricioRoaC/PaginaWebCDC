@@ -23,9 +23,10 @@ async function initContactPage() {
     }).setView([-17.3895, -66.1568], 13);
 
     L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
         {
-            attribution: '&copy; OpenStreetMap & CartoDB'
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }
     ).addTo(map);
 
