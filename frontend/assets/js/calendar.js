@@ -20,7 +20,7 @@
                     list: 'Lista'
                 },
                 // URL de tu backend Laravel
-                events: 'http://127.0.0.1:8000/api/events',
+                events: window.APP_CONFIG.backendUrl + '/api/events',
 
                 // Añadir descripción también en la vista "Lista"
                 eventDidMount: function(info) {
