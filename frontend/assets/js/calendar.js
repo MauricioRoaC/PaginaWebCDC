@@ -21,6 +21,7 @@
                 timeZone: 'America/La_Paz',
                 eventTimeFormat: {hour:'2-digit', minute:'2-digit', hour12:false},
                 dayMaxEvents: true,
+                eventDisplay: 'block',
                 locale: 'es',
                 height: "auto",
                 headerToolbar: toolbar(),
