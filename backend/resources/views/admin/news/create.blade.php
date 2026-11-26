@@ -138,7 +138,7 @@
                             <i class='bx bx-calendar'></i> Fecha programada
                         </label>
                         <input type="datetime-local" 
-                               name="scheduled_at" 
+                               aria-label="Fecha y hora de publicación en Bolivia" name="scheduled_at" 
                                class="modern-input" 
                                value="{{ old('scheduled_at') }}">
                     </div>
