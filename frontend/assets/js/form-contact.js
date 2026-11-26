@@ -25,7 +25,7 @@ document.getElementById("contactForm").addEventListener("submit", async function
     }
 
     // <-- Aquí la ruta correcta según tu routes/api.php -->
-    const apiUrl = "http://127.0.0.1:8000/api/contact/messages";
+    const apiUrl = window.APP_CONFIG.backendUrl + "/api/contact/messages";
 
     try {
         const response = await fetch(apiUrl, {
