@@ -3,6 +3,7 @@ function renderDocuments(containerId, type) {
     var container = document.getElementById(containerId);
 
     if (!container) return;
+    PublicUX.loading(container, 2);
 
     fetch(window.APP_CONFIG.backendUrl + '/api/documents?type=' + type)
 
@@ -12,15 +13,12 @@ function renderDocuments(containerId, type) {
 
             if (!data.length) {
 
-                container.innerHTML = `
-                    <div class="text-muted">
-                        No hay documentos publicados por el momento.
-                    </div>
-                `;
+                PublicUX.state(container, 'No hay documentos publicados por el momento.');
 
                 return;
             }
 
+            container.removeAttribute('aria-busy');
             container.innerHTML = '';
 
             data.forEach(doc => {
@@ -62,11 +60,7 @@ function renderDocuments(containerId, type) {
 
             console.error(err);
 
-            container.innerHTML = `
-                <div class="text-danger">
-                    No se pudieron cargar los documentos.
-                </div>
-            `;
+            PublicUX.state(container, 'No se pudieron cargar los documentos.', () => renderDocuments(containerId, type));
 
         });
 }
