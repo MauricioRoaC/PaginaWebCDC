@@ -78,8 +78,8 @@ async function initContactPage() {
                                 contact.logo_path
                                 ? `
                                     <img
-                                        src="${API_BASE}/storage/${contact.logo_path}"
-                                        alt="${contact.name}"
+                                        src="${API_BASE}/storage/${SafeContent.escape(String(contact.logo_path).split("/").map(encodeURIComponent).join("/"))}"
+                                        alt="${SafeContent.escape(contact.name)}"
                                         class="contact-card__logo"
                                     >
                                 `
@@ -90,11 +90,11 @@ async function initContactPage() {
 
                             <div>
                                 <div class="contact-card__title">
-                                    ${contact.name}
+                                    ${SafeContent.escape(contact.name)}
                                 </div>
 
                                 <div class="contact-card__category">
-                                    ${categoryName}
+                                    ${SafeContent.escape(categoryName)}
                                 </div>
                             </div>
 
@@ -104,7 +104,7 @@ async function initContactPage() {
 
                             ${
                                 hasDescription
-                                ? contact.description
+                                ? SafeContent.escape(contact.description)
                                 : 'Sin descripción disponible'
                             }
 
@@ -118,11 +118,11 @@ async function initContactPage() {
                             contact.phone
                             ? `
                                 <a
-                                    href="tel:${contact.phone}"
+                                    href="tel:${SafeContent.escape(String(contact.phone).replace(/[^0-9+*#]/g, ""))}"
                                     class="contact-link"
                                 >
                                     <i class="fa-solid fa-phone"></i>
-                                    ${contact.phone}
+                                    ${SafeContent.escape(contact.phone)}
                                 </a>
                             `
                             : ''
@@ -132,8 +132,8 @@ async function initContactPage() {
                             contact.map_url
                             ? `
                                 <a
-                                    href="${contact.map_url}"
-                                    target="_blank"
+                                    href="${SafeContent.htmlUrl(contact.map_url, "#")}"
+                                    target="_blank" rel="noopener noreferrer"
                                     class="contact-link"
                                 >
                                     <i class="fa-solid fa-location-dot"></i>
@@ -168,8 +168,8 @@ async function initContactPage() {
 
         marker.bindPopup(`
             <div class="map-popup">
-                <h5>${contact.name}</h5>
-                <p>${categoryName}</p>
+                <h5>${SafeContent.escape(contact.name)}</h5>
+                <p>${SafeContent.escape(categoryName)}</p>
             </div>
         `);
 
