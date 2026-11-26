@@ -449,18 +449,18 @@
             const recentPostsEl = document.getElementById("recent-posts");
 
             const monthNames = [
-              "Jan",
+              "Ene",
               "Feb",
               "Mar",
-              "Apr",
+              "Abr",
               "May",
               "Jun",
               "Jul",
-              "Aug",
+              "Ago",
               "Sep",
               "Oct",
               "Nov",
-              "Dec",
+              "Dic",
             ];
 
             // --- Helpers ---
@@ -552,6 +552,7 @@
                     imageNode.src = SafeContent.url(img.url, "assets/images/blog/blog-single-image1.jpg");
                     imageNode.alt = `Imagen noticia ${index + 1}`;
                     imageNode.className = "news-detail-image";
+                    PublicUX.image(imageNode, "assets/images/blog/blog-single-image1.jpg", index !== 0);
                     trackEl.appendChild(imageNode);
 
                     // Crear los puntitos (dots) interactivos si existe el contenedor
@@ -620,6 +621,7 @@
                     data.image_url ||
                     "assets/images/blog/blog-single-image1.jpg";
                   trackEl.innerHTML = `<img src="${SafeContent.htmlUrl(fallbackSrc, "assets/images/blog/blog-single-image1.jpg")}" alt="Imagen noticia" class="news-detail-image">`;
+                  PublicUX.image(trackEl.querySelector("img"), "assets/images/blog/blog-single-image1.jpg", false);
                   if (prevBtn) prevBtn.classList.add("is-hidden");
                   if (nextBtn) nextBtn.classList.add("is-hidden");
                 }
@@ -635,7 +637,7 @@
                 loadRecentPosts(slug);
               } catch (error) {
                 console.error(error);
-                bodyEl.innerHTML = "<p>Error al cargar la noticia.</p>";
+                PublicUX.state(bodyEl, "No se pudo cargar la noticia.", loadNewsDetail);
               }
             }
 
@@ -694,12 +696,12 @@
           </div>
         `;
 
+                  PublicUX.image(wrapper.querySelector("img"), "assets/images/blog/blog-single-sm1.jpg");
                   recentPostsEl.appendChild(wrapper);
                 });
               } catch (error) {
                 console.error(error);
-                recentPostsEl.innerHTML =
-                  "<p>Error al cargar los post recientes.</p>";
+                PublicUX.state(recentPostsEl, "No se pudieron cargar las noticias recientes.", () => loadRecentPosts(excludeSlug));
               }
             }
 
