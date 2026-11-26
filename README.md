@@ -1,17 +1,6 @@
-# Pagina Web - Comando Departamental de Cochabamba
+# Página Web - Comando Departamental de Cochabamba
 
-Pagina web desarrollado con Laravel (backend) y HTML/CSS/JS (frontend) para la gestión de noticias, eventos, usuarios, contactos y transmisiones en vivo.
-
----
-
-## Estructura del proyecto
-
-
-backend/ → Laravel (panel administrativo)
-frontend/ → Página web pública
-
-
----
+Sitio institucional desarrollado con Laravel (backend administrativo) y HTML/CSS/JavaScript (frontend público). Gestiona noticias, imágenes, eventos, usuarios, contactos, documentos y transmisiones en vivo.
 
 ## Requisitos
 
@@ -21,153 +10,87 @@ frontend/ → Página web pública
 - Git
 - Navegador web
 
----
+## Instalación local
 
-## Instalación
-
-### 1. Clonar el repositorio
+1. Clonar el repositorio y entrar al backend:
 
 ```bash
 git clone https://github.com/MauricioRoaC/PaginaWebCDC.git
-```
-```bash
 cd PaginaWebCDC/backend
 ```
 
----
-
-### 2. Instalar dependencias
+2. Instalar dependencias y crear la configuración local:
 
 ```bash
 composer install
-```
-
----
-
-### 3. Crear archivo .env
-
-```bash
 cp .env.example .env
+php artisan key:generate
 ```
 
----
+3. Crear una base de datos PostgreSQL vacía, por ejemplo:
 
-### 4. Configurar base de datos
-
-Editar el archivo `.env`:
-IMPORTANTE: Crear una base de datos en PostgreSQL antes de continuar.
-
-Ejemplo:
-```SQL
+```sql
 CREATE DATABASE policiaDepCbb;
 ```
 
-```php
+4. Editar `.env` con los datos de conexión PostgreSQL y configurar el primer SuperAdmin:
+
+```dotenv
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
 DB_PORT=5432
 DB_DATABASE=policiaDepCbb
 DB_USERNAME=postgres
 DB_PASSWORD=tu_password
+
+SUPERADMIN_NAME="Administrador principal"
+SUPERADMIN_EMAIL=admin@tu-dominio.com
+SUPERADMIN_PASSWORD=una-clave-larga-de-al-menos-12-caracteres
 ```
 
----
+Usa una contraseña propia y segura. No publiques el archivo `.env`, no incluyas credenciales reales en Git y configura estas mismas variables como variables de entorno en el servicio de alojamiento.
 
-### 5. Generar clave de aplicación
+5. Crear las tablas y el primer usuario:
 
 ```bash
-php artisan key:generate
+php artisan migrate --force
+php artisan db:seed --force
 ```
 
----
+El seeder crea el SuperAdmin solo si el correo configurado todavía no existe. Ejecutarlo nuevamente no restablece la contraseña ni sobrescribe el perfil de una cuenta existente. Si el correo ya pertenece a un usuario que no es SuperAdmin, el seeder se detiene para evitar elevar permisos silenciosamente.
 
-### 6. Ejecutar migraciones
-
-```bash
-php artisan migrate
-```
-
----
-
-### 7. Crear usuario administrador
-
-```bash
-php artisan db:seed
-```
-
----
-
-### Credenciales de acceso
-
-```php
-Email: admin@admin.com
-
-Password: 12345678
-```
-
----
-
-### 8. Ejecutar servidor
+6. Iniciar el backend:
 
 ```bash
 php artisan serve
 ```
 
-👉 Backend disponible en:
-```bash
-http://127.0.0.1:8000
-```
----
+El backend estará disponible localmente en `http://127.0.0.1:8000`.
 
-## 🌐 Frontend
+## Frontend
 
-Abrir el archivo:
-
-```html
-frontend/index.html
-```
-
-👉 Se recomienda usar **Live Server (VS Code)**
-
----
-
-## Transmisiones en vivo
-
-El sistema permite:
-
-- Agregar lives desde el panel admin
-- Detectar automáticamente:
-  - TikTok (link)
-  - Facebook (iframe)
-- Mostrar solo si está activo
-
----
+El frontend está en la carpeta `frontend/`. Para desarrollo local, abrir `frontend/index.html` con Live Server (VS Code). La URL base de la API debe apuntar al backend local durante el desarrollo y a la URL pública del backend en producción.
 
 ## Funcionalidades principales
 
-- Gestión de usuarios (superadmin / admin)
+- Gestión de usuarios (SuperAdmin / Admin)
 - Noticias con imágenes
-- Eventos
+- Eventos y calendario
 - Contactos y categorías
 - Documentos
 - Historial de actividad
 - Transmisiones en vivo dinámicas
 
----
+## Notas
 
-## ⚠️ Notas
-
-- El correo para recuperación de contraseña requiere configuración en `.env`
-- Si no se configura, el sistema sigue funcionando normalmente
-- No se incluye `.env` por seguridad
-Si ocurre algún error, ejecutar:
+- La recuperación de contraseña requiere configurar el servicio de correo en `.env`.
+- Para limpiar configuraciones almacenadas después de cambiar variables:
 
 ```bash
 php artisan config:clear
 php artisan cache:clear
 php artisan view:clear
 ```
----
 
 ## Autor
 
