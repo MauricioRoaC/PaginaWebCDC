@@ -122,6 +122,10 @@ class UserController extends Controller
 
         $data['is_active'] = $request->boolean('is_active');
 
+        if ($user->id === Auth::id() && ($data['role'] !== 'superadmin' || !$data['is_active'])) {
+            return back()->withInput()->withErrors(['role' => 'No puedes cambiar tu propio rol ni desactivar tu cuenta.']);
+        }
+
         $user->update($data);
         ActivityLog::create([
     'user_id' => Auth::id(),
@@ -144,14 +148,15 @@ class UserController extends Controller
             return back()->with('error', 'No puedes eliminar tu propio usuario.');
         }
 
-        $user->delete();
+        // Conservar noticias y registros de auditoría asociados a la cuenta.
+        $user->forceFill(['is_active' => false, 'remember_token' => null])->save();
         ActivityLog::create([
     'user_id' => Auth::id(),
-    'action' => 'delete',
+    'action' => 'update',
     'module' => 'users',
-    'description' => 'Eliminó usuario: ' . $user->name
+    'description' => 'Desactivó usuario: ' . $user->name
 ]);
         return redirect()->route('admin.users.index')
-            ->with('success', 'Usuario eliminado correctamente.');
+            ->with('success', 'Usuario desactivado correctamente. Se conservó su historial.');
     }
 }
