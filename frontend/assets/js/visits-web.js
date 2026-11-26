@@ -1,6 +1,6 @@
 
     (function() {
-        const API_VISITS_URL = 'http://127.0.0.1:8000/api/visits';
+        const API_VISITS_URL = window.APP_CONFIG.backendUrl + '/api/visits';
 
         function registerVisit(pageName) {
             fetch(API_VISITS_URL, {
