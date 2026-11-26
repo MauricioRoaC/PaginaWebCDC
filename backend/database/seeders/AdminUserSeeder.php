@@ -1,24 +1,46 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\\Models\\User;
+use Illuminate\\Database\\Seeder;
+use Illuminate\\Support\\Facades\\Hash;
+use RuntimeException;
 
 class AdminUserSeeder extends Seeder
 {
+    /**
+     * Create the first SuperAdmin from deployment environment variables.
+     *
+     * This seeder is safe to run repeatedly: it never resets an existing
+     * account's password or overwrites its profile.
+     */
     public function run(): void
     {
-        User::updateOrCreate(
-            ['email' => 'jefe@policia.gob'], // correo del jefe
+        $name = trim((string) env('SUPERADMIN_NAME'));
+        $email = trim((string) env('SUPERADMIN_EMAIL'));
+        $password = (string) env('SUPERADMIN_PASSWORD');
+
+        if ($name === '' || ! filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($password) < 12) {
+            throw new RuntimeException(
+                'Configure SUPERADMIN_NAME, a valid SUPERADMIN_EMAIL and SUPERADMIN_PASSWORD (at least 12 characters) in the environment before running db:seed.'
+            );
+        }
+
+        $user = User::firstOrCreate(
+            ['email' => $email],
             [
-                'name'      => 'Jefe de Comando',
-                'password'  => Hash::make('password_segura_123'), // cámbiala luego
-                'role'      => 'superadmin',
+                'name' => $name,
+                'password' => Hash::make($password),
+                'role' => 'superadmin',
                 'is_active' => true,
             ]
         );
+
+        if ($user->role !== 'superadmin') {
+            throw new RuntimeException(
+                'The configured SUPERADMIN_EMAIL already belongs to a non-SuperAdmin account. Use a different email or review that account manually.'
+            );
+        }
     }
 }
-
