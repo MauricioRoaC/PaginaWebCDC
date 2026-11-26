@@ -52,8 +52,8 @@ async function loadNews(page = 1) {
 
             ${
                 item.image_url
-                ? `<img src="${item.image_url}" alt="${item.title}">`
-                : `<img src="assets/images/blog/blog-image1.jpg" alt="${item.title}">`
+                ? `<img src="${SafeContent.htmlUrl(item.image_url, "assets/images/blog/blog-image1.jpg")}" alt="${SafeContent.escape(item.title)}">`
+                : `<img src="assets/images/blog/blog-image1.jpg" alt="${SafeContent.escape(item.title)}">`
             }
 
             <div class="news-card-overlay"></div>
@@ -80,14 +80,14 @@ async function loadNews(page = 1) {
 
             <h3 class="news-card-title">
                 <a href="new-details.html?slug=${encodeURIComponent(item.slug)}">
-                    ${item.title}
+                    ${SafeContent.escape(item.title)}
                 </a>
             </h3>
 
             <p class="news-card-description">
                 ${
                     item.short_description
-                    ? item.short_description
+                    ? SafeContent.escape(item.short_description)
                     : 'Información oficial publicada por el Comando Departamental de Cochabamba.'
                 }
             </p>
