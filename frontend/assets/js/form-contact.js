@@ -14,6 +14,16 @@ document.getElementById("contactForm").addEventListener("submit", async function
         message: document.getElementById("message").value.trim()
     };
 
+    const normalize = value => value.toLowerCase().normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[01345@]/g, char => ({"0":"o","1":"i","3":"e","4":"a","5":"s","@":"a"})[char]);
+    const offensive = /(?:^|[^\p{L}\p{N}])(?:mierda|puta|putas|puto|putos|carajo|cojudo|cojuda|cojudos|cojudas|pendejo|pendeja|pendejos|pendejas|imbecil|imbeciles|idiota|idiotas|cabron|cabrones|gilipollas|pelotudo|pelotuda|huevon|huevona|huevones|webon|webona|jodete|maricon|maricones|cabrón|conchudo|conchuda)(?=$|[^\p{L}\p{N}])/u;
+    if ([formData.name, formData.message].some(value => offensive.test(normalize(value)))) {
+        errorEl.textContent = "Tu mensaje contiene lenguaje inapropiado. Por favor, reformúlalo antes de enviarlo.";
+        errorEl.style.display = "block";
+        return;
+    }
+
     // <-- Aquí la ruta correcta según tu routes/api.php -->
     const apiUrl = "http://127.0.0.1:8000/api/contact/messages";
 
@@ -35,7 +45,7 @@ document.getElementById("contactForm").addEventListener("submit", async function
             errorEl.style.display = "none";
             document.getElementById("contactForm").reset();
         } else {
-            errorEl.textContent = (result && (result.message || JSON.stringify(result))) || "Ocurrió un error al enviar el mensaje.";
+            errorEl.textContent = (result && (result.errors?.message?.[0] || result.errors?.name?.[0] || result.message || JSON.stringify(result))) || "Ocurrió un error al enviar el mensaje.";
             errorEl.style.display = "block";
             successEl.style.display = "none";
         }
