@@ -104,3 +104,42 @@ window.PublicUX = Object.freeze({
         if (img.complete && img.naturalWidth === 0 && img.getAttribute("src")) recover();
     }
 });
+
+window.PublicSearch = Object.freeze({
+    normalize(value) {
+        return String(value ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    },
+    attach(anchor, label, onChange) {
+        const box = document.createElement("div");
+        box.className = "mb-4";
+        const input = document.createElement("input");
+        input.type = "search";
+        input.className = "form-control";
+        input.placeholder = label;
+        input.setAttribute("aria-label", label);
+        input.maxLength = 120;
+        const status = document.createElement("small");
+        status.className = "d-block text-muted mt-2";
+        status.setAttribute("role", "status");
+        box.append(input, status);
+        anchor.before(box);
+        input.addEventListener("input", () => onChange(input.value.trim(), status));
+        return {input, status};
+    },
+    filter(cards, term, status) {
+        const needle = this.normalize(term);
+        let count = 0;
+        for (const card of cards) {
+            const match = this.normalize(card.textContent).includes(needle);
+            card.classList.toggle("d-none", !match);
+            if (match) count++;
+        }
+        status.textContent = needle ? (count ? count + " coincidencias" : "No se encontraron coincidencias.") : "";
+    }
+});
+document.addEventListener("DOMContentLoaded", () => {
+    const cards = [...document.querySelectorAll(".tramits-card")].map(card => card.parentElement);
+    if (cards.length && location.pathname.endsWith("tramits.html")) {
+        PublicSearch.attach(cards[0].parentElement, "Buscar trámites…", (term, status) => PublicSearch.filter(cards, term, status));
+    }
+});
