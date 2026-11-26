@@ -1298,6 +1298,8 @@
                         type="text"
                         id="name"
                         name="name"
+                        maxlength="255"
+                        autocomplete="name"
                         placeholder="José..."
                         required
                       />
@@ -1309,6 +1311,8 @@
                         type="email"
                         id="email"
                         name="email"
+                        maxlength="255"
+                        autocomplete="email"
                         placeholder="info@gmail.com"
                         required
                       />
@@ -1319,9 +1323,12 @@
                       <textarea
                         id="message"
                         name="message"
+                        maxlength="5000"
+                        aria-describedby="contactCount"
                         placeholder="Hola, quisiera saber..."
                         required
                       ></textarea>
+                      <small id="contactCount" class="d-block text-end mt-1">0 / 5000 caracteres</small>
                     </div>
                   </div>
 
@@ -1329,7 +1336,7 @@
                 </form>
 
                 <div
-                  id="contactSuccess"
+                  id="contactSuccess" role="status" aria-live="polite"
                   style="
                     margin-top: 15px;
                     display: none;
@@ -1341,7 +1348,7 @@
                 </div>
 
                 <div
-                  id="contactError"
+                  id="contactError" role="alert"
                   style="
                     margin-top: 15px;
                     display: none;
