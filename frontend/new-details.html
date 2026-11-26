@@ -478,7 +478,7 @@
 
               // Si el texto ya viene con etiquetas HTML del editor administrativo, lo devolvemos limpio
               if (/[<>].+?[<>]/.test(text)) {
-                return String(text);
+                return SafeContent.richText(text);
               }
 
               // En caso de que sea texto plano antiguo, mantiene el formateador de párrafos estándar
@@ -549,7 +549,7 @@
                   // Inyectar todas las imágenes al riel deslizante superior
                   data.images.forEach((img, index) => {
                     const imageNode = document.createElement("img");
-                    imageNode.src = img.url;
+                    imageNode.src = SafeContent.url(img.url, "assets/images/blog/blog-single-image1.jpg");
                     imageNode.alt = `Imagen noticia ${index + 1}`;
                     imageNode.className = "news-detail-image";
                     trackEl.appendChild(imageNode);
@@ -619,7 +619,7 @@
                   const fallbackSrc =
                     data.image_url ||
                     "assets/images/blog/blog-single-image1.jpg";
-                  trackEl.innerHTML = `<img src="${fallbackSrc}" alt="Imagen noticia" class="news-detail-image">`;
+                  trackEl.innerHTML = `<img src="${SafeContent.htmlUrl(fallbackSrc, "assets/images/blog/blog-single-image1.jpg")}" alt="Imagen noticia" class="news-detail-image">`;
                   if (prevBtn) prevBtn.classList.add("is-hidden");
                   if (nextBtn) nextBtn.classList.add("is-hidden");
                 }
@@ -679,7 +679,7 @@
             <a href="new-details.html?slug=${encodeURIComponent(item.slug)}">
               ${
                 item.image_url
-                  ? `<img src="${item.image_url}" alt="${escapeHtml(item.title)}" style="width:100%;height:auto;border-radius:12px;object-fit:cover;">`
+                  ? `<img src="${SafeContent.htmlUrl(item.image_url, "assets/images/blog/blog-single-sm1.jpg")}" alt="${escapeHtml(item.title)}" style="width:100%;height:auto;border-radius:12px;object-fit:cover;">`
                   : `<img src="assets/images/blog/blog-single-sm1.jpg" alt="${escapeHtml(item.title)}" style="width:100%;height:auto;border-radius:12px;object-fit:cover;">`
               }
             </a>
