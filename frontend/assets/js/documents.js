@@ -1,8 +1,15 @@
+const documentSearches = new Map();
 function renderDocuments(containerId, type) {
 
     var container = document.getElementById(containerId);
 
     if (!container) return;
+    if (!documentSearches.has(containerId)) {
+        const search = PublicSearch.attach(container, "Buscar documentos…", (term, status) => {
+            PublicSearch.filter(container.querySelectorAll(".document-card"), term, status);
+        });
+        documentSearches.set(containerId, search);
+    }
     PublicUX.loading(container, 2);
 
     fetch(window.APP_CONFIG.backendUrl + '/api/documents?type=' + type)
@@ -53,6 +60,8 @@ function renderDocuments(containerId, type) {
                 container.appendChild(card);
 
             });
+            const search = documentSearches.get(containerId);
+            PublicSearch.filter(container.querySelectorAll('.document-card'), search.input.value, search.status);
 
         })
 
