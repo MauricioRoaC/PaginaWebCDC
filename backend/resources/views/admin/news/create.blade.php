@@ -247,6 +247,57 @@ document.addEventListener('DOMContentLoaded', function () {
     const descriptionInput = document.getElementById('descriptionInput');
     const descriptionCount = document.getElementById('descriptionCount');
     
+
+    // Herramientas editoriales adicionales, sin dependencias externas.
+    const emojis = ['🚔','👮','🚨','⚠️','📢','📍','📅','🕒','🇧🇴','✅','❌','📞','🚦','🚧','🤝','🛡️','📸','🔴','ℹ️','📝'];
+    function addEmojiPicker(anchor, label, insert) {
+        const picker = document.createElement('details');
+        picker.className = 'mb-2 mt-2';
+        const summary = document.createElement('summary');
+        summary.textContent = '☺ ' + label;
+        summary.style.cursor = 'pointer';
+        const panel = document.createElement('div');
+        panel.className = 'd-flex flex-wrap gap-1 mt-2';
+        emojis.forEach(emoji => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn btn-outline-secondary btn-sm';
+            btn.textContent = emoji;
+            btn.setAttribute('aria-label', 'Insertar ' + emoji);
+            btn.addEventListener('click', () => insert(emoji));
+            panel.appendChild(btn);
+        });
+        picker.append(summary, panel);
+        anchor.before(picker);
+    }
+    let lastRange = null;
+    quill.on('selection-change', range => { if (range) lastRange = range; });
+    const toolbar = quill.getModule('toolbar').container;
+    [['Deshacer', () => quill.history.undo()], ['Rehacer', () => quill.history.redo()]].forEach(([label, action]) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = label === 'Deshacer' ? '↶' : '↷';
+        btn.title = label;
+        btn.setAttribute('aria-label', label);
+        btn.addEventListener('click', action);
+        toolbar.appendChild(btn);
+    });
+    addEmojiPicker(toolbar, 'Emojis del contenido', emoji => {
+        const range = quill.getSelection() || lastRange || {index:quill.getLength()-1,length:0};
+        const index = Math.min(range.index, quill.getLength()-1);
+        if (range.length) quill.deleteText(index, range.length, 'user');
+        quill.insertText(index, emoji, 'user');
+        quill.setSelection(index + emoji.length, 0, 'silent');
+    });
+    addEmojiPicker(descriptionInput, 'Emojis de la descripción', emoji => {
+        const start = descriptionInput.selectionStart;
+        const end = descriptionInput.selectionEnd;
+        if (descriptionInput.value.length - (end-start) + emoji.length > 500) return;
+        descriptionInput.setRangeText(emoji, start, end, 'end');
+        descriptionInput.dispatchEvent(new Event('input', {bubbles:true}));
+        descriptionInput.focus();
+    });
+
     let selectedFiles = [];
     let currentMainImage = 0;
 

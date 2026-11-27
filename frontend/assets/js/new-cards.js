@@ -94,8 +94,8 @@ async function loadNews(page = 1) {
 
             <p class="news-card-description">
                 ${
-                    item.description
-                    ? SafeContent.escape(item.short_description)
+                    item.description?.trim()
+                    ? SafeContent.escape(item.description)
                     : 'Información oficial publicada por el Comando Departamental de Cochabamba.'
                 }
             </p>

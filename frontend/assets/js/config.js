@@ -42,6 +42,10 @@ window.SafeContent = Object.freeze({
             const el = document.createElement(node.tagName.toLowerCase());
             const classes = (node.getAttribute("class") || "").split(/\s+/).filter(c => /^ql-(align-(center|right|justify)|indent-[1-8]|size-(small|large|huge)|direction-rtl)$/.test(c));
             if (classes.length) el.className = classes.join(" ");
+            for (const property of ["color", "backgroundColor"]) {
+                const color = node.style[property];
+                if (/^(?:#[0-9a-f]{3,8}|rgba?\([\d.,%\s]+\)|[a-z]+)$/i.test(color)) el.style[property] = color;
+            }
             if (node.tagName === "A") {
                 const href = this.url(node.getAttribute("href"));
                 if (href) el.href = href;
