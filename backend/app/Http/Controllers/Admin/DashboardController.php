@@ -21,7 +21,13 @@ class DashboardController extends Controller
         // CONTADORES
         // =====================
         $totalUsers    = User::count();
-        $totalNews     = News::count();
+        $totalNews     = News::where('is_published', true)->count();
+        $activeUsers = User::where('is_active', true)->count();
+        $inactiveUsers = $totalUsers - $activeUsers;
+        $draftNews = News::where('status', 'draft')->count();
+        $scheduledNews = News::where('status', 'scheduled')->count();
+        $todayVisits = Visit::where('created_at', '>=', now()->startOfDay())->where('created_at', '<', now()->addDay()->startOfDay())->count();
+        $nextScheduledNews = News::where('status', 'scheduled')->whereNotNull('published_at')->orderBy('published_at')->take(5)->get(['id', 'title', 'published_at']);
         $totalMessages = Message::count();
         $totalVisits   = Visit::count();
 
@@ -29,9 +35,9 @@ class DashboardController extends Controller
         // CONTENIDO PUBLICADO
         // =====================
 
-        $totalEvents    = Event::count();
-        $totalDocuments = Document::count();
-        $totalContacts  = Contact::count();
+        $totalEvents    = Event::where('is_public', true)->count();
+        $totalDocuments = Document::where('is_public', true)->count();
+        $totalContacts  = Contact::where('is_visible', true)->count();
 
         // =====================
         // VISITAS ÚLTIMOS 7 DÍAS
@@ -40,16 +46,17 @@ class DashboardController extends Controller
         $visitsLabels = [];
         $visitsData   = [];
 
+        $today = now()->startOfDay();
+        $dailyVisits = Visit::where('created_at', '>=', $today->copy()->subDays(6))
+            ->where('created_at', '<', $today->copy()->addDay())
+            ->selectRaw('DATE(created_at) as day, COUNT(*) as total')
+            ->groupByRaw('DATE(created_at)')
+            ->pluck('total', 'day');
+
         for ($i = 6; $i >= 0; $i--) {
-
-            $date = now()->subDays($i);
-
-            $visitsLabels[] = $date->translatedFormat('D');
-
-            $visitsData[] = Visit::whereDate(
-                'created_at',
-                $date->toDateString()
-            )->count();
+            $date = $today->copy()->subDays($i);
+            $visitsLabels[] = $date->locale('es')->translatedFormat('D d/m');
+            $visitsData[] = (int) ($dailyVisits[$date->toDateString()] ?? 0);
         }
         // =====================
         // ACTIVIDAD RECIENTE
@@ -75,7 +82,7 @@ class DashboardController extends Controller
         // NOTICIAS MÁS VISTAS
         // =====================
 
-        $topNews = News::orderByDesc('views')
+        $topNews = News::where('is_published', true)->where('views', '>', 0)->orderByDesc('views')
             ->take(5)
             ->get([
                 'id',
@@ -83,22 +90,6 @@ class DashboardController extends Controller
                 'views',
                 'slug'
             ]);
-
-        // =====================
-        // EVENTOS DEL CALENDARIO
-        // =====================
-        // Usamos start_at como fecha del evento
-        $events = Event::orderBy('start_at', 'asc')
-            // ->where('is_public', true) // si quieres solo los públicos, descomenta esta línea
-            ->get(['title', 'start_at']);
-
-        // Adaptamos para el JS del calendario
-        $calendarEvents = $events->map(function ($ev) {
-            return [
-                'date'  => Carbon::parse($ev->start_at)->toDateString(), // "YYYY-MM-DD"
-                'title' => $ev->title,
-            ];
-        });
 
         return view('admin.dashboard', compact(
             'totalUsers',
@@ -116,7 +107,7 @@ class DashboardController extends Controller
             'recentActivities',
             'upcomingEvents',
             'topNews',
-            'calendarEvents'
+            'activeUsers', 'inactiveUsers', 'draftNews', 'scheduledNews', 'todayVisits', 'nextScheduledNews'
 
         ));
     }
