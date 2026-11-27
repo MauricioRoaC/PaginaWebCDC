@@ -13899,3 +13899,10 @@
         align-items: flex-start;
     }
 }
+
+/* Standalone dashboard cards must size to their own content. */
+.dashboard-top-news,
+.dashboard-scheduled-news {
+    height: auto;
+    min-height: 0;
+}
