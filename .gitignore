@@ -10,3 +10,9 @@ backend/node_modules
 
 # otros
 .DS_Store
+
+# Private backup artifacts
+/backups/
+/backend/backups/
+*.dump
+*.backup
