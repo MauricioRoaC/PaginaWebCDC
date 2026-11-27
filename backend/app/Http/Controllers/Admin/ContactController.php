@@ -33,7 +33,7 @@ class ContactController extends Controller
         $data = $this->validateData($request);
 
         if ($request->hasFile('logo')) {
-            $data['logo_path'] = $request->file('logo')->store('contacts', 'public');
+            $data['logo_path'] = \App\Services\PublicMedia::store($request->file('logo'), 'contacts');
         }
 
         $data['is_visible'] = $request->boolean('is_visible');
@@ -64,7 +64,7 @@ class ContactController extends Controller
         $data = $this->validateData($request);
 
         if ($request->hasFile('logo')) {
-            $data['logo_path'] = $request->file('logo')->store('contacts', 'public');
+            $data['logo_path'] = \App\Services\PublicMedia::store($request->file('logo'), 'contacts');
         }
 
         $data['is_visible'] = $request->boolean('is_visible');
