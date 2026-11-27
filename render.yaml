@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: policia-cdc-demo
+    runtime: docker
+    plan: free
+    branch: fix/instalacion-inicial
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /up
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        sync: false
+      - key: APP_URL
+        sync: false
+      - key: ADMIN_ACCESS_MODE
+        value: demo
+      - key: ADMIN_RESTRICT_NETWORK
+        value: "false"
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_URL
+        sync: false
+      - key: DB_SSLMODE
+        value: require
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: SESSION_DRIVER
+        value: database
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
+      - key: CACHE_STORE
+        value: database
+      - key: BOOTSTRAP_SUPERADMIN
+        value: "true"
+      - key: SUPERADMIN_NAME
+        sync: false
+      - key: SUPERADMIN_EMAIL
+        sync: false
+      - key: SUPERADMIN_PASSWORD
+        sync: false
