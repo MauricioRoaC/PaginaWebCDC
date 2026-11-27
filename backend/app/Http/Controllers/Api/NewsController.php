@@ -9,6 +9,7 @@ class NewsController extends Controller
 {
     public function index(Request $request)
 {
+    News::publishDue();
     $request->validate(['q' => 'nullable|string|max:120']);
     $query = News::with('mainImage')->where('is_published', true);
     $term = trim($request->query('q', ''));
@@ -48,6 +49,7 @@ class NewsController extends Controller
 
     public function show($slug)
 {
+    News::publishDue();
     $news = News::with('images')
         ->where('slug', $slug)
         ->where('is_published', true)
@@ -74,6 +76,7 @@ class NewsController extends Controller
 }
     public function recent(Request $request)
 {
+    News::publishDue();
     $excludeSlug = $request->query('exclude_slug');
 
     $query = News::with('mainImage')
