@@ -115,3 +115,10 @@ Route::middleware([\App\Http\Middleware\EnsurePrivateNetwork::class, 'auth', \Ap
 Route::get('/api/live', function () {
     return Live::where('is_active', true)->latest()->first();
 });
+
+// Preserve existing media URLs when using external object storage.
+Route::get('/storage/{path}', function (string $path) {
+    abort_unless(\App\Services\PublicMedia::cloud(), 404);
+    abort_unless(preg_match('~^(news|users|contacts)/[A-Za-z0-9_.-]+$~D', $path) && !str_contains($path, '..'), 404);
+    return redirect()->away(\App\Services\PublicMedia::url($path), 302);
+})->where('path', '.*');
