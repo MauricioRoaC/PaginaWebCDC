@@ -9,11 +9,7 @@ Artisan::command('inspire', function () {
 
  
 Artisan::command('news:publish-scheduled', function () {
-    $count = \App\Models\News::where('status', 'scheduled')
-        ->where('is_published', false)
-        ->whereNotNull('published_at')
-        ->where('published_at', '<=', now())
-        ->update(['status' => 'published', 'is_published' => true]);
+    $count = \App\Models\News::publishDue();
 
     $this->info("Noticias publicadas: {$count}");
 })->purpose('Publicar noticias programadas cuya fecha ya llegó');
