@@ -40,18 +40,15 @@ class ProfileController extends Controller
 
         // Foto de perfil
         if ($request->hasFile('avatar')) {
-            // borrar la anterior si existe
-            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
-                Storage::disk('public')->delete($user->avatar);
-            }
-
-            // guardar nueva
-            $path = $request->file('avatar')->store('users', 'public');
-            $user->avatar = $path;
+            $previousAvatar = $user->avatar;
+            $user->avatar = $request->file('avatar')->store('users', 'public');
         }
         
 
         $user->save();
+        if (!empty($previousAvatar)) {
+            Storage::disk('public')->delete($previousAvatar);
+        }
 
         return redirect()
             ->route('admin.profile.edit')
