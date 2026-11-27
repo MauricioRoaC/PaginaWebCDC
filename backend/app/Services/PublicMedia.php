@@ -55,6 +55,9 @@ class PublicMedia
 
     public static function url(string $path): string
     {
+        if (!self::cloud()) {
+            return Storage::disk('public')->url($path);
+        }
         return str_replace('/storage/v1/object/', '/storage/v1/object/public/', self::endpoint($path));
     }
 }
