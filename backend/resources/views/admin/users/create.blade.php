@@ -141,12 +141,12 @@
                         <input
                             type="password"
                             name="password"
-                            class="modern-input password-input"
+                            class="modern-input password-input" autocomplete="new-password"
                             placeholder="Ingresa la contraseña"
                             required
                         >
 
-                        <button type="button" class="toggle-password">
+                        <button type="button" class="toggle-password" aria-label="Mostrar contraseña" aria-pressed="false">
                             <i class='bx bx-show'></i>
                         </button>
 
@@ -172,12 +172,12 @@
                         <input
                             type="password"
                             name="password_confirmation"
-                            class="modern-input password-input"
+                            class="modern-input password-input" autocomplete="new-password"
                             placeholder="Repite la contraseña"
                             required
                         >
 
-                        <button type="button" class="toggle-password">
+                        <button type="button" class="toggle-password" aria-label="Mostrar contraseña" aria-pressed="false">
                             <i class='bx bx-show'></i>
                         </button>
 
@@ -304,3 +304,19 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+document.querySelectorAll('.toggle-password').forEach(button => {
+    button.addEventListener('click', () => {
+        const field = button.closest('.password-wrapper').querySelector('input');
+        const visible = field.type === 'password';
+        field.type = visible ? 'text' : 'password';
+        button.setAttribute('aria-pressed', String(visible));
+        button.setAttribute('aria-label', visible ? 'Ocultar contraseña' : 'Mostrar contraseña');
+        button.querySelector('i').classList.toggle('bx-show', !visible);
+        button.querySelector('i').classList.toggle('bx-hide', visible);
+    });
+});
+</script>
+@endpush
