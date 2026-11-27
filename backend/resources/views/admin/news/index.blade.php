@@ -296,7 +296,7 @@
                                                 @if($item->mainImage)
 
                                                     <img
-                                                        src="{{ asset('storage/' . $item->mainImage->path) }}"
+                                                        src="{{ \App\Services\PublicMedia::url($item->mainImage->path) }}"
                                                         alt="{{ $item->title }}"
                                                     >
 
