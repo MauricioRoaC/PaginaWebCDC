@@ -69,7 +69,19 @@
 
     {{-- Contenido principal --}}
     <main class="flex-grow-1 p-4">
-        {{-- ELIMINADO EL BLOQUE ANTERIOR DE SESSIONS DESDE AQUÍ --}}
+        @if(session('error'))
+            <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
+        @endif
+        @if($errors->any())
+            <div class="alert alert-danger" role="alert">
+                <strong>Revisa los datos ingresados:</strong>
+                <ul class="mb-0">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         @yield('content')
     </main>
 </div>
@@ -127,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function(){
         toast: true,
         position: 'top-end',
         icon: 'success',
-        title: '{{ session('success') }}',
+        titleText: @json(session('success')),
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
@@ -142,6 +154,35 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 @endif
 
+<script>
+document.addEventListener('submit', async function(event) {
+    const form = event.target;
+    if (!(form instanceof HTMLFormElement) || form.dataset.confirmed === 'yes') return;
+    if (event.defaultPrevented) return;
+    const method = form.querySelector('input[name="_method"]');
+    if (!method || method.value.toUpperCase() !== 'DELETE') return;
+    // Existing module-specific confirmations are preserved.
+    if (form.hasAttribute('onsubmit') && !form.dataset.confirm) return;
+    event.preventDefault();
+    if (form.dataset.confirmPending === 'yes') return;
+    form.dataset.confirmPending = 'yes';
+    const message = form.dataset.confirm || 'Esta operación no se puede deshacer.';
+    try {
+        const accepted = window.Swal
+            ? (await Swal.fire({titleText:'Confirmar operación', text:message, icon:'warning',
+                showCancelButton:true, confirmButtonText:'Confirmar', cancelButtonText:'Cancelar',
+                confirmButtonColor:'#b42318', focusCancel:true})).isConfirmed
+            : window.confirm(message);
+        if (accepted) {
+            form.dataset.confirmed = 'yes';
+            form.requestSubmit(event.submitter || undefined);
+            delete form.dataset.confirmed;
+        }
+    } finally {
+        delete form.dataset.confirmPending;
+    }
+});
+</script>
 @stack('scripts')
 </body>
 </html>
