@@ -20,12 +20,12 @@ use App\Models\Live;
 // =========================
 Route::get('/', function () {
     return redirect()->route('login');
-});
+})->middleware(\App\Http\Middleware\EnsurePrivateNetwork::class);
 
 // =========================
 // LOGIN (solo invitados)
 // =========================
-Route::middleware('guest')->group(function () {
+Route::middleware([\App\Http\Middleware\EnsurePrivateNetwork::class, 'guest'])->group(function () {
 
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1')->name('login.post');
@@ -50,12 +50,12 @@ Route::middleware('guest')->group(function () {
 // =========================
 // LOGOUT
 // =========================
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware([\App\Http\Middleware\EnsurePrivateNetwork::class, 'auth'])->name('logout');
 
 // =========================
 // PANEL ADMIN (logueados)
 // =========================
-Route::middleware(['auth', \App\Http\Middleware\EnsureAdminAccess::class])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware([\App\Http\Middleware\EnsurePrivateNetwork::class, 'auth', \App\Http\Middleware\EnsureAdminAccess::class])->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
