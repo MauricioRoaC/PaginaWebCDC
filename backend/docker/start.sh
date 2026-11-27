@@ -10,7 +10,7 @@ php artisan migrate --force
 if [ "${BOOTSTRAP_SUPERADMIN:-false}" = "true" ]; then
     php artisan db:seed --class=AdminUserSeeder --force
 fi
-if [ ! -L public/storage ] && [ ! -e public/storage ]; then
+if [ "${MEDIA_DRIVER:-local}" = "local" ] && [ ! -L public/storage ] && [ ! -e public/storage ]; then
     php artisan storage:link
 fi
 php artisan config:cache
