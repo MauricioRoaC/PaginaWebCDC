@@ -14,6 +14,9 @@ if [ "${MEDIA_DRIVER:-local}" = "local" ] && [ ! -L public/storage ] && [ ! -e p
     php artisan storage:link
 fi
 php artisan config:cache
+# Rebuild Blade views from the deployed revision before serving requests.
+php artisan view:clear
+php artisan view:cache
 chown -R www-data:www-data storage bootstrap/cache
 php artisan news:publish-scheduled
 # Run the scheduler while the web container is awake.
