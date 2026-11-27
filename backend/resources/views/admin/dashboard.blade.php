@@ -434,7 +434,7 @@
     </div>
 
 </div>
-<div class="dashboard-widget mb-4">
+<div class="dashboard-widget dashboard-scheduled-news mb-4">
     <div class="widget-header"><div><h5>Noticias programadas</h5><span>Próximas publicaciones · hora de Bolivia</span></div></div>
     @forelse($nextScheduledNews as $news)
         <div class="d-flex justify-content-between align-items-center border-bottom py-3 gap-2">
@@ -442,7 +442,7 @@
             <span class="small text-muted">{{ $news->published_at->format('d/m/Y H:i') }}</span>
         </div>
     @empty
-        <p class="text-muted">No hay noticias con fecha de publicación programada.</p>
+        <p class="text-muted mb-0">No hay noticias con fecha de publicación programada.</p>
     @endforelse
 </div>
 @endsection
