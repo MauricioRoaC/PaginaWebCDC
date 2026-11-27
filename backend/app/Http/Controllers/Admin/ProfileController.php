@@ -41,13 +41,13 @@ class ProfileController extends Controller
         // Foto de perfil
         if ($request->hasFile('avatar')) {
             $previousAvatar = $user->avatar;
-            $user->avatar = $request->file('avatar')->store('users', 'public');
+            $user->avatar = \App\Services\PublicMedia::store($request->file('avatar'), 'users');
         }
         
 
         $user->save();
         if (!empty($previousAvatar)) {
-            Storage::disk('public')->delete($previousAvatar);
+            \App\Services\PublicMedia::delete($previousAvatar);
         }
 
         return redirect()
