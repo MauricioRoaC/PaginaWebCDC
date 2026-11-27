@@ -158,9 +158,17 @@
                         </h5>
 
                         <p>
-                            Deja los campos vacíos si no deseas cambiar tu contraseña.
+                            Deja los tres campos vacíos si no deseas cambiar tu contraseña. Para cambiarla, introduce primero tu contraseña actual.
                         </p>
 
+                    </div>
+
+                    {{-- CONTRASEÑA ACTUAL --}}
+                    <div class="modern-group">
+                        <label class="modern-label" for="current_password">Contraseña actual</label>
+                        <input type="password" id="current_password"
+                               name="current_password" autocomplete="current-password"
+                               class="modern-input" placeholder="Ingresa tu contraseña actual">
                     </div>
 
                     {{-- PASSWORD --}}
@@ -171,7 +179,7 @@
                         </label>
 
                         <input type="password"
-                               name="password"
+                               name="password" autocomplete="new-password"
                                class="modern-input"
                                placeholder="Ingresa tu nueva contraseña">
 
@@ -185,7 +193,7 @@
                         </label>
 
                         <input type="password"
-                               name="password_confirmation"
+                               name="password_confirmation" autocomplete="new-password"
                                class="modern-input"
                                placeholder="Confirma tu nueva contraseña">
 
