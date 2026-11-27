@@ -28,6 +28,13 @@ return [
     |
     */
 
+    'media' => [
+        'driver' => env('MEDIA_DRIVER', 'local'),
+        'url' => env('SUPABASE_URL'),
+        'bucket' => env('SUPABASE_MEDIA_BUCKET', 'media'),
+        'key' => env('SUPABASE_SERVICE_ROLE_KEY'),
+    ],
+
     'disks' => [
 
         'local' => [
