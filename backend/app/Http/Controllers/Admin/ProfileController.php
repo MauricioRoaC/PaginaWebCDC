@@ -25,8 +25,17 @@ class ProfileController extends Controller
         $data = $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
+            'current_password' => 'nullable|required_with:password,password_confirmation|string|current_password',
+            'password' => 'nullable|required_with:current_password,password_confirmation|string|min:8|confirmed',
+            'password_confirmation' => 'nullable|required_with:password,current_password|string',
             'avatar'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ], [
+            'current_password.required_with' => 'Debes ingresar tu contraseña actual.',
+            'current_password.current_password' => 'La contraseña actual es incorrecta.',
+            'password.required_with' => 'Debes ingresar una nueva contraseña.',
+            'password.min' => 'La nueva contraseña debe tener al menos 8 caracteres.',
+            'password.confirmed' => 'Las contraseñas nuevas no coinciden.',
+            'password_confirmation.required_with' => 'Debes confirmar la nueva contraseña.',
         ]);
 
         // Datos básicos
@@ -34,7 +43,7 @@ class ProfileController extends Controller
         $user->email = $data['email'];
 
         // Contraseña (solo si se llenó)
-        if (!empty($data['password'])) {
+        if ($request->filled('password')) {
             $user->password = Hash::make($data['password']);
         }
 
