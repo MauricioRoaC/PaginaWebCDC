@@ -1,7 +1,7 @@
 FROM node:22-bookworm-slim AS assets
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN if [ -f package-lock.json ]; then npm ci; else npm install --no-audit --no-fund; fi
 COPY . .
 RUN npm run build
 
@@ -16,6 +16,7 @@ WORKDIR /var/www/html
 COPY . .
 COPY --from=assets /app/public/build ./public/build
 RUN composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader \
+    && composer check-platform-reqs --no-dev \
     && mkdir -p storage/app/public storage/framework/cache/data storage/framework/sessions storage/framework/views bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache \
     && printf 'upload_max_filesize=6M\npost_max_size=24M\n' > /usr/local/etc/php/conf.d/uploads.ini
