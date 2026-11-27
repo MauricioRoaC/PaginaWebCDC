@@ -146,8 +146,14 @@
                     <td>
                         <div class="user-cell">
 
-                            <div class="user-avatar">
-                                {{ strtoupper(substr($user->name,0,1)) }}
+                            <div class="user-avatar position-relative overflow-hidden flex-shrink-0" aria-hidden="true">
+                                {{ mb_strtoupper(mb_substr($user->name, 0, 1)) }}
+                                @if($user->avatar)
+                                    <img src="{{ \App\Services\PublicMedia::url($user->avatar) }}"
+                                         alt="" loading="lazy"
+                                         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;"
+                                         onerror="this.hidden=true">
+                                @endif
                             </div>
 
                             <div>
