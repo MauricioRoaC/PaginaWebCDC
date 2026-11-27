@@ -122,7 +122,7 @@
 
                         @if($contact->logo_path)
 
-                            <img src="{{ asset('storage/'.$contact->logo_path) }}"
+                            <img src="{{ \App\Services\PublicMedia::url($contact->logo_path) }}"
                                  class="contact-preview-image">
 
                         @else
