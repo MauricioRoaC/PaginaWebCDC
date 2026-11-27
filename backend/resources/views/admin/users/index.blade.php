@@ -214,17 +214,17 @@
 
                             </a>
 
-                            @if($user->id !== auth()->id())
+                            @if($user->id !== auth()->id() && $user->is_active)
 
                             <form action="{{ route('admin.users.destroy', $user) }}"
                                   method="POST"
-                                  onsubmit="return confirm('¿Eliminar este usuario?');">
+                                  data-confirm="¿Desactivar esta cuenta? Se conservarán sus noticias y su historial.">
 
                                 @csrf
                                 @method('DELETE')
 
-                                <button class="action-btn danger">
-                                    <i class='bx bx-trash'></i>
+                                <button type="submit" class="action-btn danger" title="Desactivar cuenta" aria-label="Desactivar cuenta">
+                                    <i class='bx bx-user-x'></i>
                                 </button>
 
                             </form>
