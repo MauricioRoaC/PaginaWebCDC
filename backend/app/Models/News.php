@@ -23,6 +23,15 @@ class News extends Model
         'published_at' => 'datetime',
     ];
 
+    public static function publishDue(): int
+    {
+        return static::where('status', 'scheduled')
+            ->where('is_published', false)
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
+            ->update(['status' => 'published', 'is_published' => true]);
+    }
+
     public function images()
     {
         return $this->hasMany(NewsImage::class);
