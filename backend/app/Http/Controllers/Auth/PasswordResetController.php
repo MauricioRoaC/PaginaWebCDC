@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -30,8 +30,7 @@ class PasswordResetController extends Controller
 
         if (! $user) {
             return back()
-                ->withErrors(['email' => 'El correo no está registrado en el sistema'])
-                ->withInput();
+                ->with('status', 'Si el correo está registrado, recibirás un enlace de recuperación.');
         }
 
         // Generar token
@@ -43,7 +42,7 @@ class PasswordResetController extends Controller
         // Insertar nuevo token
         DB::table('password_reset_tokens')->insert([
             'email'      => $request->email,
-            'token'      => $token,
+            'token'      => hash('sha256', $token),
             'created_at' => Carbon::now(),
         ]);
 
@@ -55,15 +54,22 @@ class PasswordResetController extends Controller
 
 
 
-        Mail::raw(
-            "Hola, para restablecer tu contraseña del Panel Administrativo haz clic en el siguiente enlace:\n\n$resetLink\n\nSi no solicitaste este cambio, ignora este correo.",
-            function ($message) use ($request) {
-                $message->to($request->email)
-                        ->subject('Restablecer contraseña - Comando Departamental de Cochabamba');
-            }
-        );
+        try {
+            Http::withHeaders(['api-key' => config('services.brevo.key')])
+                ->acceptJson()->timeout(15)
+                ->post('https://api.brevo.com/v3/smtp/email', [
+                    'sender' => ['name' => config('mail.from.name'), 'email' => config('mail.from.address')],
+                    'to' => [['email' => $user->email]],
+                    'subject' => 'Restablecer contraseña - Comando Departamental de Cochabamba',
+                    'textContent' => "Para restablecer tu contraseña, abre este enlace (válido durante 60 minutos):\n\n$resetLink\n\nSi no solicitaste este cambio, ignora este correo.",
+                ])->throw();
+        } catch (\Throwable $exception) {
+            DB::table('password_reset_tokens')->where('email', $user->email)
+                ->where('token', hash('sha256', $token))->delete();
+            return back()->withErrors(['email' => 'No se pudo enviar el correo. Intenta nuevamente más tarde.']);
+        }
 
-        return back()->with('status', 'Hemos enviado un enlace de recuperación a tu correo.');
+        return back()->with('status', 'Si el correo está registrado, recibirás un enlace de recuperación.');
     }
 
     // Formulario de nueva contraseña
@@ -77,15 +83,16 @@ class PasswordResetController extends Controller
     public function resetPassword(Request $request)
     {
         $request->validate([
-            'token'    => ['required'],
+            'token'    => ['required', 'string', 'size:64'],
             'email'    => ['required', 'email'],
-            'password' => ['required', 'confirmed', 'min:8'],
+            'password' => ['required', 'string', 'confirmed', 'min:8'],
         ]);
 
         // Buscar el token en la tabla
         $tokenData = DB::table('password_reset_tokens')
             ->where('email', $request->email)
-            ->where('token', $request->token)
+            ->where('token', hash('sha256', $request->token))
+            ->where('created_at', '>=', now()->subMinutes(60))
             ->first();
 
         if (! $tokenData) {
