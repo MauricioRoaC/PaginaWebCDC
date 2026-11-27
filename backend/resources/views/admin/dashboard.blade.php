@@ -26,6 +26,8 @@
                     <p class="card-value mb-0">
                         {{ $totalUsers }}
                     </p>
+                    <p class="small text-muted mb-0">{{ $activeUsers }} activos · {{ $inactiveUsers }} inactivos
+                    </p>
 
                 </div>
 
@@ -54,8 +56,7 @@
                     <p class="card-value mb-0">
                         {{ $totalNews }}
                     </p>
-
-                </div>
+                    <p class="small text-muted mb-0">{{ $draftNews }} borradores · {{ $scheduledNews }} programadas</div>
 
                 <div class="dashboard-icon">
                     <i class='bx bx-news'></i>
@@ -110,6 +111,8 @@
                     <p class="card-value mb-0">
                         {{ $totalVisits }}
                     </p>
+                    <p class="small text-muted mb-0">{{ $todayVisits }} visitas hoy
+                    </p>
 
                 </div>
 
@@ -144,7 +147,7 @@
                     </h5>
 
                     <span>
-                        Últimos 7 días
+                        Últimos 7 días · {{ array_sum($visitsData) }} visitas registradas
                     </span>
 
                 </div>
@@ -153,7 +156,7 @@
 
             <div class="widget-chart">
 
-                <canvas id="visitsChart"></canvas>
+                <canvas id="visitsChart" role="img" aria-label="Visitas registradas durante los últimos siete días"></canvas>
 
             </div>
 
@@ -174,7 +177,7 @@
                     </h5>
 
                     <span>
-                        Distribución actual
+                        Solo contenido visible al público
                     </span>
 
                 </div>
@@ -183,7 +186,7 @@
 
             <div class="widget-chart">
 
-                <canvas id="contentChart"></canvas>
+                <canvas id="contentChart" role="img" aria-label="Distribución del contenido público"></canvas>
 
             </div>
 
@@ -430,6 +433,17 @@
     </div>
 
 </div>
+<div class="dashboard-widget mb-4">
+    <div class="widget-header"><div><h5>Noticias programadas</h5><span>Próximas publicaciones · hora de Bolivia</span></div></div>
+    @forelse($nextScheduledNews as $news)
+        <div class="d-flex justify-content-between align-items-center border-bottom py-3 gap-2">
+            <a href="{{ route('admin.news.edit', $news) }}">{{ $news->title }}</a>
+            <span class="small text-muted">{{ $news->published_at->format('d/m/Y H:i') }}</span>
+        </div>
+    @empty
+        <p class="text-muted">No hay noticias con fecha de publicación programada.</p>
+    @endforelse
+</div>
 @endsection
 
 
@@ -446,7 +460,7 @@
     const visitsCtx =
         document.getElementById('visitsChart');
 
-    if (visitsCtx) {
+    if (visitsCtx && typeof Chart !== 'undefined') {
 
         new Chart(visitsCtx, {
 
@@ -499,6 +513,7 @@
                     y: {
 
                         beginAtZero: true,
+                        ticks: { precision: 0 },
 
                         grid: {
                             color: 'rgba(148,163,184,.12)'
@@ -529,7 +544,7 @@
     const contentCtx =
         document.getElementById('contentChart');
 
-    if (contentCtx) {
+    if (contentCtx && typeof Chart !== 'undefined') {
 
         new Chart(contentCtx, {
 
