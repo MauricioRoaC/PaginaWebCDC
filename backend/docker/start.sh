@@ -15,4 +15,7 @@ if [ ! -L public/storage ] && [ ! -e public/storage ]; then
 fi
 php artisan config:cache
 chown -R www-data:www-data storage bootstrap/cache
+php artisan news:publish-scheduled
+# Run the scheduler while the web container is awake.
+su -s /bin/sh www-data -c 'while true; do php artisan schedule:run --no-interaction; sleep 60; done' &
 exec apache2-foreground
