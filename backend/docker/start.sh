@@ -1,0 +1,18 @@
+#!/bin/sh
+set -eu
+cd /var/www/html
+test -n "${APP_KEY:-}" || { echo "APP_KEY is required" >&2; exit 1; }
+sed -i 's/^Listen 80$/Listen 10000/' /etc/apache2/ports.conf
+mkdir -p "${PUBLIC_STORAGE_ROOT:-storage/app/public}"
+chown www-data:www-data "${PUBLIC_STORAGE_ROOT:-storage/app/public}"
+php artisan config:clear
+php artisan migrate --force
+if [ "${BOOTSTRAP_SUPERADMIN:-false}" = "true" ]; then
+    php artisan db:seed --class=AdminUserSeeder --force
+fi
+if [ ! -L public/storage ] && [ ! -e public/storage ]; then
+    php artisan storage:link
+fi
+php artisan config:cache
+chown -R www-data:www-data storage bootstrap/cache
+exec apache2-foreground
