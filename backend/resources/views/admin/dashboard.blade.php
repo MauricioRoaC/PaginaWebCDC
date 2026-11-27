@@ -56,7 +56,8 @@
                     <p class="card-value mb-0">
                         {{ $totalNews }}
                     </p>
-                    <p class="small text-muted mb-0">{{ $draftNews }} borradores · {{ $scheduledNews }} programadas</div>
+                    <p class="small text-muted mb-0">{{ $draftNews }} borradores · {{ $scheduledNews }} programadas</p>
+                </div>
 
                 <div class="dashboard-icon">
                     <i class='bx bx-news'></i>
