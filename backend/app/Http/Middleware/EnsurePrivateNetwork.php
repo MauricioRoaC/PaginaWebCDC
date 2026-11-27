@@ -15,6 +15,11 @@ class EnsurePrivateNetwork
             return $next($request);
         }
 
+        // Explicit temporary demonstration mode; authentication remains mandatory.
+        if (config('admin.access_mode') === 'demo' && !config('admin.restrict_network')) {
+            return $next($request);
+        }
+
         $ranges = config('admin.allowed_networks', []);
         abort_unless($ranges && IpUtils::checkIp($request->ip(), $ranges), 403);
         return $next($request);
