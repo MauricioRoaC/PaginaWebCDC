@@ -1,10 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css"/>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
 <div class="profile-page">
 
     {{-- HEADER --}}
@@ -105,20 +102,27 @@ href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css"/>
                             <div class="upload-box">
 
                                 <input type="file"
-                                       name="avatar"
+                                       name="avatar" id="avatarInput" accept="image/jpeg,image/png,image/webp"
                                        class="modern-file">
 
                                 <small>
-                                    PNG, JPG o GIF. Máx. 2MB
+                                    PNG, JPG o WebP. Máx. 2MB
                                 </small>
 
                             </div>
-                            <div class="crop-container mt-3">
+                            <div class="crop-container mt-3" id="avatarCrop" hidden style="max-width:100%; height:320px;">
 
     <img id="imageCropper"
          style="max-width:100%; display:none;">
 
 </div>
+<div id="cropControls" hidden class="mt-2">
+<button type="button" class="btn btn-outline-secondary btn-sm" id="zoomOut">−</button>
+<button type="button" class="btn btn-outline-secondary btn-sm" id="zoomIn">+</button>
+<button type="button" class="btn btn-outline-secondary btn-sm" id="cancelCrop">Cancelar recorte</button>
+<small class="d-block mt-2">Arrastra la foto y ajusta el zoom. El recorte se aplicará al guardar.</small>
+</div>
+<p id="cropStatus" role="status" class="small mt-2"></p>
 
                             @if($user->avatar)
 
@@ -286,62 +290,73 @@ href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css"/>
 
 @endsection
 @push('scripts')
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
-
 <script>
-
-let cropper;
-
-const input = document.querySelector('.modern-file');
-const image = document.getElementById('imageCropper');
-
-input.addEventListener('change', (e) => {
-
-    const file = e.target.files[0];
-
-    if (!file) return;
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-
-        image.src = reader.result;
-        image.style.display = 'block';
-
-        if (cropper) {
-            cropper.destroy();
+(() => {
+    const input = document.getElementById('avatarInput');
+    const image = document.getElementById('imageCropper');
+    const area = document.getElementById('avatarCrop');
+    const controls = document.getElementById('cropControls');
+    const status = document.getElementById('cropStatus');
+    const form = input.form;
+    let cropper = null, url = null, ready = false, busy = false, prepared = false;
+    function reset() {
+        if (cropper) cropper.destroy();
+        cropper = null; ready = false; prepared = false;
+        image.removeAttribute('src');
+        if (url) URL.revokeObjectURL(url);
+        url = null; area.hidden = true; controls.hidden = true;
+    }
+    input.addEventListener('change', () => {
+        reset(); status.textContent = '';
+        const file = input.files[0];
+        if (!file) return;
+        if (!['image/jpeg','image/png','image/webp'].includes(file.type) || file.size > 2048 * 1024) {
+            input.value = ''; status.textContent = 'Selecciona una imagen JPG, PNG o WebP de hasta 2 MB.'; return;
         }
-
+        if (typeof Cropper !== 'function') {
+            input.value = ''; status.textContent = 'No se pudo cargar el editor. Recarga la página.'; return;
+        }
+        area.hidden = false; controls.hidden = false;
+        image.style.display = 'block';
+        url = URL.createObjectURL(file);
+        image.src = url;
         cropper = new Cropper(image, {
-
-            aspectRatio: 1,
-            viewMode: 1,
-
-            dragMode: 'move',
-
-            guides: false,
-            center: false,
-
-            cropBoxMovable: false,
-            cropBoxResizable: false,
-
-            background: false,
-
-            responsive: true,
-
-            zoomable: true,
-            scalable: true,
-            movable: true,
-
+            aspectRatio: 1, viewMode: 1, dragMode: 'move',
+            autoCropArea: 0.85, cropBoxMovable: true, cropBoxResizable: true,
+            background: false, responsive: true, zoomable: true, movable: true,
+            ready() { ready = true; }
         });
-
-    };
-
-    reader.readAsDataURL(file);
-
-});
-
+    });
+    document.getElementById('zoomIn').onclick = () => { if (ready) cropper.zoom(0.1); };
+    document.getElementById('zoomOut').onclick = () => { if (ready) cropper.zoom(-0.1); };
+    document.getElementById('cancelCrop').onclick = () => { reset(); input.value = ''; status.textContent = ''; };
+    form.addEventListener('submit', event => {
+        if (prepared || !input.files.length) return;
+        event.preventDefault();
+        if (busy) return;
+        if (!ready || !cropper) { status.textContent = 'Espera a que se cargue el editor.'; return; }
+        busy = true;
+        const submitter = event.submitter;
+        try {
+            const canvas = cropper.getCroppedCanvas({width:512,height:512,fillColor:'#fff',imageSmoothingQuality:'high'});
+            if (!canvas) throw new Error('No canvas');
+            canvas.toBlob(blob => {
+                try {
+                    if (!blob) throw new Error('No image');
+                    const transfer = new DataTransfer();
+                    transfer.items.add(new File([blob], 'avatar.jpg', {type:'image/jpeg'}));
+                    input.files = transfer.files;
+                    prepared = true;
+                    form.requestSubmit(submitter || undefined);
+                } catch (error) {
+                    status.textContent = 'No se pudo preparar el recorte. Intenta nuevamente.';
+                } finally { busy = false; }
+            }, 'image/jpeg', 0.9);
+        } catch (error) {
+            busy = false; status.textContent = 'No se pudo recortar la imagen.';
+        }
+    });
+})();
 </script>
-
 @endpush
