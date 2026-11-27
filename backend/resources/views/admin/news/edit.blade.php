@@ -156,7 +156,7 @@
                         <div class="current-images-grid">
                             @foreach($news->images as $img)
                                 <div class="current-image-item">
-                                    <img src="{{ asset('storage/'.$img->path) }}" alt="">
+                                    <img src="{{ \App\Services\PublicMedia::url($img->path) }}" alt="">
                                     <div class="current-image-overlay">
                                         @if($img->is_main)
                                             <span class="main-badge active-main">
