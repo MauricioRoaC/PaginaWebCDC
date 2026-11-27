@@ -12,7 +12,7 @@ class NewsController extends Controller
     News::publishDue();
     $request->validate(['q' => 'nullable|string|max:120']);
     $query = News::with('mainImage')->where('is_published', true);
-    $term = trim($request->query('q', ''));
+    $term = trim((string) $request->query('q', ''));
     if ($term !== '') {
         $from = 'áéíóúüñ';
         $to = 'aeiouun';
