@@ -13,8 +13,29 @@ class ContactController extends Controller
         $data = $request->validate([
             'name'    => 'required|string|max:255',
             'email'   => 'nullable|email|max:255',
-            'message' => 'required|string|max:5000',
+            'message' => 'required|string|max:1000',
+        ], [
+            'message.max' => 'El mensaje no puede superar los 1000 caracteres.',
         ]);
+
+        $message = $data['message'];
+        preg_match_all('/\p{L}+/u', $message, $matches);
+        $hasWord = false;
+        $suspicious = preg_match('/(\p{L})\1{5,}/iu', $message) === 1;
+        foreach ($matches[0] as $word) {
+            $length = mb_strlen($word, 'UTF-8');
+            $hasWord = $hasWord || $length >= 2;
+            if ($length >= 24
+                || ($length >= 8 && !preg_match('/[aeiouáéíóúü]/iu', $word))
+                || ($length >= 12 && preg_match('/[bcdfghjklmnñpqrstvwxyz]{5,}/iu', $word))) {
+                $suspicious = true;
+            }
+        }
+        if (!$hasWord || $suspicious) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'message' => 'Escribe una consulta comprensible, sin cadenas aleatorias ni repeticiones excesivas.',
+            ]);
+        }
 
         foreach (['name', 'message'] as $field) {
             $normalized = mb_strtolower($data[$field], 'UTF-8');
