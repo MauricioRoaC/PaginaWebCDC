@@ -15,6 +15,12 @@ class ContactApiController extends Controller
             ->whereNotNull('lng')
             ->get();
 
+        $contacts->each(function (Contact $contact) {
+            $contact->setAttribute('logo_url', $contact->logo_path
+                ? \App\Services\PublicMedia::url($contact->logo_path)
+                : null);
+        });
+
         return response()->json($contacts);
     }
 }
