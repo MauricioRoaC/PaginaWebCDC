@@ -149,3 +149,15 @@ document.addEventListener("DOMContentLoaded", () => {
         PublicSearch.attach(cards[0].parentElement, "Buscar trámites…", (term, status) => PublicSearch.filter(cards, term, status));
     }
 });
+
+// Actualizar únicamente el año del copyright en todas las páginas públicas.
+document.addEventListener("DOMContentLoaded", () => {
+    const year = new Intl.DateTimeFormat("es-BO", {year: "numeric", timeZone: "America/La_Paz"}).format(new Date());
+    document.querySelectorAll(".footer__copyright").forEach(footer => {
+        const walker = document.createTreeWalker(footer, NodeFilter.SHOW_TEXT);
+        while (walker.nextNode()) {
+            const node = walker.currentNode;
+            node.nodeValue = node.nodeValue.replace(/(©\s*)\d{4}(?=\s+Copyright\b)/i, (_, prefix) => prefix + year);
+        }
+    });
+});
