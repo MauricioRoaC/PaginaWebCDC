@@ -4,7 +4,7 @@ const contactMessage = document.getElementById("message");
 const contactCount = document.getElementById("contactCount");
 const contactSubmit = contactForm.querySelector('button[type="submit"]');
 const updateContactCount = () => {
-    if (contactCount) contactCount.textContent = contactMessage.value.length + " / 5000 caracteres";
+    if (contactCount) contactCount.textContent = contactMessage.value.length + " / 1000 caracteres";
 };
 contactMessage.addEventListener("input", updateContactCount);
 updateContactCount();
@@ -28,6 +28,24 @@ contactForm.addEventListener("submit", async function(e) {
 
     if (!formData.name || !formData.message || !formData.email) {
         errorEl.textContent = "Completa todos los campos obligatorios.";
+        errorEl.style.display = "block";
+        return;
+    }
+
+    if (formData.message.length > 1000) {
+        errorEl.textContent = "El mensaje no puede superar los 1000 caracteres.";
+        errorEl.style.display = "block";
+        return;
+    }
+    const messageText = formData.message;
+    const words = messageText.match(/\p{L}+/gu) || [];
+    const suspicious = /(\p{L})\1{5,}/iu.test(messageText)
+        || !words.some(word => word.length >= 2)
+        || words.some(word => word.length >= 24
+            || (word.length >= 8 && !/[aeiouáéíóúü]/iu.test(word))
+            || (word.length >= 12 && /(?:[bcdfghjklmnñpqrstvwxyz]{5,})/iu.test(word)));
+    if (suspicious) {
+        errorEl.textContent = "Escribe una consulta comprensible, sin cadenas aleatorias ni repeticiones excesivas.";
         errorEl.style.display = "block";
         return;
     }
