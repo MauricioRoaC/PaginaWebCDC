@@ -21,7 +21,8 @@ class ContactController extends Controller
         $message = $data['message'];
         preg_match_all('/\p{L}+/u', $message, $matches);
         $hasWord = false;
-        $suspicious = preg_match('/(\p{L})\1{5,}/iu', $message) === 1;
+        $suspicious = preg_match('/(\p{L})\1{5,}/iu', $message) === 1
+            || preg_match('/^\s*\p{L}{18,}\s*$/u', $message) === 1;
         foreach ($matches[0] as $word) {
             $length = mb_strlen($word, 'UTF-8');
             $hasWord = $hasWord || $length >= 2;
