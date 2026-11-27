@@ -80,10 +80,10 @@ async function initContactPage() {
                         <div class="contact-card__top">
 
                             ${
-                                contact.logo_path
+                                contact.logo_url
                                 ? `
                                     <img
-                                        src="${API_BASE}/storage/${SafeContent.escape(String(contact.logo_path).split("/").map(encodeURIComponent).join("/"))}"
+                                        src="${SafeContent.htmlUrl(contact.logo_url, "")}"
                                         alt="${SafeContent.escape(contact.name)}"
                                         class="contact-card__logo"
                                     >
