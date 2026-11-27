@@ -89,7 +89,7 @@ public function index(Request $request)
         if ($request->hasFile('images')) {
            foreach ($request->file('images') as $index => $image) {
 
-    $path = $image->store('news', 'public');
+    $path = \App\Services\PublicMedia::store($image, 'news');
 
     $isMain =
         $index ==
@@ -151,13 +151,13 @@ public function index(Request $request)
         if ($request->hasFile('images')) {
             // Eliminar las imágenes anteriores tanto del disco como de la BD
             foreach ($news->images as $img) {
-                Storage::disk('public')->delete($img->path);
+                \App\Services\PublicMedia::delete($img->path);
                 $img->delete();
             }
 
            foreach ($request->file('images') as $index => $image) {
 
-    $path = $image->store('news', 'public');
+    $path = \App\Services\PublicMedia::store($image, 'news');
 
     $isMain =
         $index ==
@@ -184,7 +184,7 @@ public function index(Request $request)
 
         // Eliminar archivos físicos del storage
         foreach ($news->images as $img) {
-            Storage::disk('public')->delete($img->path);
+            \App\Services\PublicMedia::delete($img->path);
         }
 
         $news->delete();
