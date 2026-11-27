@@ -33,7 +33,7 @@ class NewsController extends Controller
                 'description' => $item->description,
                 'published_at'=> optional($item->published_at)->toDateTimeString(),
                 'image_url'   => $item->mainImage
-                    ? asset('storage/'.$item->mainImage->path)
+                    ? \App\Services\PublicMedia::url($item->mainImage->path)
                     : null,
             ];
         }),
@@ -68,7 +68,7 @@ class NewsController extends Controller
         'published_at' => optional($news->published_at)->toDateTimeString(),
         'images'       => $news->images->map(function ($img) {
             return [
-                'url'     => asset('storage/' . $img->path),
+                'url'     => \App\Services\PublicMedia::url($img->path),
                 'is_main' => $img->is_main,
             ];
         }),
@@ -98,7 +98,7 @@ class NewsController extends Controller
                 'slug'        => $item->slug,
                 'published_at'=> optional($item->published_at)->toDateTimeString(),
                 'image_url'   => $item->mainImage
-                    ? asset('storage/'.$item->mainImage->path)
+                    ? \App\Services\PublicMedia::url($item->mainImage->path)
                     : null,
             ];
         })
