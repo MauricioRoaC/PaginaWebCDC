@@ -24,48 +24,40 @@
             background: #f4f6f9;
             color: #111827;
         }
-        .sidebar {
-            min-height: 100vh;
+        .admin-shell {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .admin-shell > .sidebar {
+            flex: 0 0 240px;
+            height: 100%;
+            min-height: 0;
+            overflow-y: auto;
+            position: relative;
+            top: auto;
+        }
+        .admin-shell > main {
+            flex: 1 1 0;
+            min-width: 0;
+            min-height: 0;
+            overflow: auto;
+        }
+        body.admin-desktop {
+            min-width: 1024px;
+            margin: 0;
         }
     </style>
 
     {{-- Estilos extra por página (opcional) --}}
     @stack('styles')
 </head>
-<body class="bg-light">
+<body class="bg-light admin-desktop">
 
-{{-- NAVBAR SUPERIOR SOLO EN MÓVIL/TABLET --}}
-<nav class="navbar navbar-dark bg-dark d-md-none">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#mobileSidebar"
-                aria-controls="mobileSidebar"
-                aria-label="Abrir menú">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <span class="navbar-brand ms-2">
-            Panel administrativo
-        </span>
-    </div>
-</nav>
-
-<div class="d-flex">
-    {{-- SIDEBAR ESCRITORIO (≥ md) --}}
-    <nav class="sidebar bg-dark text-white p-3 d-none d-md-block" style="width: 240px;">
+<div class="admin-shell">
+    <nav class="sidebar bg-dark text-white p-3" aria-label="Navegación administrativa">
         @include('layouts.partials.sidebar-content')
     </nav>
-
-    {{-- SIDEBAR MÓVIL/TABLET (OFFCANVAS) --}}
-    <div class="offcanvas offcanvas-start bg-dark text-white d-md-none sidebar" tabindex="-1" id="mobileSidebar">
-        <div class="offcanvas-header border-bottom">
-            <h5 class="offcanvas-title">Menú</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
-        </div>
-        <div class="offcanvas-body p-3">
-            @include('layouts.partials.sidebar-content')
-        </div>
-    </div>
 
     {{-- Contenido principal --}}
     <main class="flex-grow-1 p-4">
