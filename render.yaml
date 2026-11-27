@@ -42,3 +42,13 @@ services:
         sync: false
       - key: SUPERADMIN_PASSWORD
         sync: false
+      - key: MEDIA_DRIVER
+        value: supabase
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_MEDIA_BUCKET
+        value: media
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: LOG_CHANNEL
+        value: stderr
