@@ -26,7 +26,7 @@ class DocumentController extends Controller
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
             'type'        => 'required|in:rendicion,poa,pei',
-            'file_url'    => 'required|url',
+            'file_url'    => 'required|url:http,https|max:2048',
             'is_public'   => 'nullable|boolean',
         ]);
 
@@ -52,7 +52,7 @@ class DocumentController extends Controller
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
             'type'        => 'required|in:rendicion,poa,pei',
-            'file_url'    => 'required|url',
+            'file_url'    => 'required|url:http,https|max:2048',
             'is_public'   => 'nullable|boolean',
         ]);
 
