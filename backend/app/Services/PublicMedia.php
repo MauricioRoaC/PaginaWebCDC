@@ -48,7 +48,9 @@ class PublicMedia
             Storage::disk('public')->delete($path);
             return;
         }
-        self::client()->delete(self::endpoint($path))->throw();
+        $base = rtrim((string) config('filesystems.media.url'), '/');
+        $bucket = rawurlencode((string) config('filesystems.media.bucket'));
+        self::client()->delete($base.'/storage/v1/object/'.$bucket, ['prefixes' => [$path]])->throw();
     }
 
     public static function url(string $path): string
