@@ -16,3 +16,5 @@ backend/node_modules
 /backend/backups/
 *.dump
 *.backup
+
+/frontend/dist/
