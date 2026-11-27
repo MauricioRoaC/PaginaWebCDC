@@ -10,7 +10,7 @@
     <div class="sidebar-user-avatar mx-auto mb-2">
         <img
             src="{{ Auth::user()->avatar
-                    ? asset('storage/' . Auth::user()->avatar)
+                    ? \App\Services\PublicMedia::url(Auth::user()->avatar)
                     : asset('assets/images/users/user_predeterm.png') }}"
             alt="Foto de perfil"
         >
