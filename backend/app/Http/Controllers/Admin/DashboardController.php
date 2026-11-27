@@ -17,6 +17,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        News::publishDue();
         // =====================
         // CONTADORES
         // =====================
