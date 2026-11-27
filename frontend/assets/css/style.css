@@ -8503,3 +8503,23 @@ button {
 .public-skeleton span:last-child { width: 55%; }
 @keyframes public-pulse { 50% { opacity: .45; } }
 @media (prefers-reduced-motion: reduce) { .public-skeleton div, .public-skeleton span { animation: none; } }
+
+/* Centro de transmisiones institucional */
+#live-section[hidden], #liveButton[hidden] { display:none !important; }
+#live-section:not([hidden]) { display:block; }
+#live-section .live-card { background:#111b18; color:#fff; border:1px solid #35443a; border-radius:20px; padding:clamp(16px,4vw,32px); }
+#live-section .live-top { margin-bottom:18px; flex-wrap:wrap; gap:12px; }
+#live-section .live-title { color:#fff; font-size:clamp(24px,4vw,36px); margin:0 0 6px; }
+#live-section .live-description, #live-section .live-status, #live-platform-name { color:#b8c6bd; }
+#live-section .live-preview-area { width:100%; padding:0; margin:20px 0; background:#080e0b; border-radius:14px; overflow:hidden; }
+#live-container { width:100%; height:auto; min-height:0; aspect-ratio:16/9; display:grid; place-items:center; }
+#live-container iframe { display:block; width:100%; height:100%; border:0; }
+#live-container .live-platform-card { width:100%; height:100%; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px; text-align:center; }
+#live-container .live-platform-card p { margin:0; color:#b8c6bd; }
+#live-section .live-bottom { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+#live-event-title { font-size:1.15rem; overflow-wrap:anywhere; }
+#live-platform-name { margin:4px 0 0; }
+#live-section .live-btn { background:#637227; color:white; margin:0; }
+#live-section .live-footer { border-top:1px solid #ffffff26; margin-top:20px; padding-top:14px; color:#b8c6bd; font-size:.85rem; }
+@media(max-width:576px) { #live-container:has(.live-platform-card) { aspect-ratio:4/3; } #live-section .live-btn { width:100%; justify-content:center; } }
+@media(prefers-reduced-motion:reduce) { #live-section .live-pulse { animation:none; } }
