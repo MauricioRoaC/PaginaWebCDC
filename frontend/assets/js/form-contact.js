@@ -40,6 +40,7 @@ contactForm.addEventListener("submit", async function(e) {
     const messageText = formData.message;
     const words = messageText.match(/\p{L}+/gu) || [];
     const suspicious = /(\p{L})\1{5,}/iu.test(messageText)
+        || /^\s*\p{L}{18,}\s*$/u.test(messageText)
         || !words.some(word => word.length >= 2)
         || words.some(word => word.length >= 24
             || (word.length >= 8 && !/[aeiouáéíóúü]/iu.test(word))
