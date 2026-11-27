@@ -125,7 +125,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css"/>
                                 <div class="current-avatar">
 
     <img id="avatarPreview"
-         src="{{ asset('storage/'.$user->avatar) }}"
+         src="{{ \App\Services\PublicMedia::url($user->avatar) }}"
          alt="avatar">
 
     <button type="button"
