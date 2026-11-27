@@ -92,6 +92,10 @@ php artisan cache:clear
 php artisan view:clear
 ```
 
+## Respaldo y recuperación
+
+Consultar [el procedimiento de respaldo PostgreSQL y multimedia](docs/respaldo-recuperacion.md). Guardar los respaldos fuera de Git y comprobar la restauración en una base aislada.
+
 ## Autor
 
 Mauricio Roa
