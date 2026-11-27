@@ -14,6 +14,7 @@ class NewsController extends Controller
     // 🔹 index para el panel administrativo (tabla de noticias)
 public function index(Request $request)
 {
+    News::publishDue();
     $query = News::query();
 
     // 🔍 BUSCADOR
